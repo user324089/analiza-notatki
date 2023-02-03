@@ -1,0 +1,3863 @@
+\documentclass[9pt]{article}
+\usepackage[a4paper, total={7in, 8in}]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[polish]{babel}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\begin{document}
+\title{Analiza Matematyczna}
+\author{}
+\maketitle
+
+\newcommand{\sat}{\ |\ }
+\newcommand{\fb}{\! : \,}
+\newcommand{\fa}[1]{\ensuremath{\forall_{#1} \fb}}
+\newcommand{\ex}[1]{\ensuremath{\exists_{#1} \fb}}
+\newcommand{\seq}[1]{\ensuremath{\left(#1\right)_{n = 1,2,...}}}
+\newcommand{\seqq}[2]{\ensuremath{\left(#1\right)_{#2 = 1,2,...}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+\newcommand{\for}{\ensuremath{\text{ dla }}}
+\newcommand{\tg}{\operatorname{tg}}
+\newcommand{\arctg}{\operatorname{arctg}}
+
+\newtheorem{Twi}{Twierdzenie}
+\newtheorem{Def}{Definicja}
+\newtheorem{Lem}{Lemat}
+\newtheorem{Przy}{Przykład}
+\newtheorem{Wni}{Wniosek}
+
+\subsection*{Z czego się uczyć}
+
+Na wykładzie będzie cała potrzebna teoria. Można też korzystać z podręcznika Birkholca, Rudina,
+Fichtenholza, Kuratowskiego. Polecane są skrypty i notatki Strzeleckiego, można je znaleźć na
+stronie moodle. Także Krycha, Bodnara, Goldsteina. Jako zbiory zadań polecane są książki Banasia +
+Wędrychowicza Kaczor+Nowak, Demidowicza, Bernana, i zadania z ''Jawnej Puli'' zadań kolokwialnych
+MIMUW.
+
+\section{Liczby Rzeczywiste}
+
+\subsection{Aksjomatyka liczb rzeczywistych}
+
+\begin{Def}
+    Liczby rzeczywiste to zbiór $\mathbb{R} $ wraz z działaniami dwuargumentowymi dodawania $+:
+    \mathbb{R}\times \mathbb{R} \rightarrow \mathbb{R}$ i mnożenia $*: \mathbb{R}\times\mathbb{R} \rightarrow \mathbb{R}$ oraz relacja ''<'' które spełniają następujące warunki:
+\end{Def}
+
+\begin{description}
+    \item[D1] $\forall_{a,b\in \mathbb{R}} \fb a+b=b+a$
+    \item[D2] $\forall_{a,b\in \mathbb{R}} \fb (a+b)+c = a+(b+c)$
+    \item[D3] $\exists_{0\in \mathbb{R}} \! :\forall_{a \in \mathbb{R}} \fb a+0=0+a=a$
+    \item[D4] $\forall_{a\in \mathbb{R}} \! : \exists{b \in \mathbb{R}} \fb a+b = 0$
+    \item[M1] $\forall_{a,b\in \mathbb{R}} \fb a*b=b*a$
+    \item[M2] $\forall_{a,b,c\in \mathbb{R}} \fb (a*b)*c = a*(b*c)$
+    \item[M3] $\exists_{1\in \mathbb{R}} \! : \forall_{a \in \mathbb{R}} \! : a*1=1*a=a$
+    \item[M4] $\forall_{a\in \mathbb{R}, a \ne 0} \! : \exists_{c\in \mathbb{R}} \! : a*c=1$
+    \item[MD1] $0 \ne 1$
+    \item[MD2] $\forall_{a,b,c\in \mathbb{R}} \! : (a+b)*c = a*c + b*c$
+    \item[P1] $\forall_{a,b\in \mathbb{R}} \! :$ zachodzi dokładnie jedno z trzech $a<b$, $b<a$, $a=b$
+    \item[P2] $\forall_{a,b,c\in \mathbb{R}} \! : a<b, b<c \Rightarrow a<c$
+    \item[P3] $\forall_{a,b,c\in \mathbb{R}} \! : a<b \Rightarrow a+c < b+c$
+    \item[P4] $\forall_{a,b,c\in \mathbb{R}} \! : a<b, c>0 \Rightarrow ac < bc$
+    \item[C] Aksjomat ciągłości (zdefiniowany później)
+\end{description}
+
+Przykład wykorzystania aksjomatów. Chcemy udowodnić 
+
+\[
+    a\ne 0 \Rightarrow a^2 > 0
+\]
+
+\subsubsection*{Dowód}
+%\begin{Dow}
+Mamy z (P1) albo $a>0$, $a<0$ albo $a=0$, jednak $a=0$ jest wykluczone w treści zadania.
+
+Jeśli $a>0$, to na mocy (P4) pomnóżmy $a>0$ przez $a>0$ i dostajemy $a^2=a*a>a*0=0$.
+
+Jeśli $a<0$ to na mocy (P3) dodajemy -a stronami do $a<0$ $0 = a-a < 0-a = -a$. Teraz powtórzmy
+rozumowanie z pierwszego punktu dla $-a>0$ i mamy $a^2 = (-a)*(-a) > 0$
+%\end{Dow}
+
+
+\begin{Def}
+    Wartość bezwzględna (moduł) liczby rzeczywistej $a\in \mathbb{R}$ 
+    \[
+        |a| = 
+        \left\{
+            \begin{array}{c}
+                a \text{ dla }  a \ge 0 \\
+                -a \text{ dla }  a < 0
+            \end{array}
+        \right.
+    \]
+\end{Def}
+
+
+\subsection{Aksjomat ciągłości i pojęcie kresu}
+
+Przekrojem w zbiorze $\mathbb{R}$ nazywamy parę podzbiorów $A,B \subset \mathbb{R}$ takich, że
+\begin{enumerate}
+    \item $A, B \ne \emptyset$
+    \item $A \cup B = \mathbb{R}$
+    \item $\forall_{a\in A, b\in B} \fb a\le b$
+\end{enumerate}
+
+\subsection{Aksjomat ciągłości}
+
+Aksjomat ciągłości (Dedekinda): Dla danego przekroju $(A,B)$ zbioru $\mathbb{R}$ istnieje pewien
+element $c\in \mathbb{R}$ taki, że $\forall_{a\in A, b \in B} \fb a \le c \le b$
+
+Z aksjomatu ciągłości wynika własność Archimedesa:
+$\forall_{a\in R, a> 0} \fb \exists_{n \in \mathbb{N}} \fb n > a$
+czyli zbiór liczb naturalnych nie jest ograniczony z góry.
+
+\subsection{Ograniczenia górne i dolne}
+
+\begin{Def}
+    Zbiór $A\subset \mathbb{R}$ nazywamy ograniczonym z góry, jeśli istnieje element $d \in
+    \mathbb{R}$ taki, że $\forall_{a \in \mathbb{A}} \fb a \le d$. Analogicznie $A$ może być
+    ograniczony z dołu.
+\end{Def}
+
+Liczba $e \in \mathbb{R}$ jest krańcem górnym (supremum) zbioru $A \subset \mathbb{R}$, gdy:
+
+\begin{itemize}
+    \item $\forall_{a \in A} \fb a \le c$ (a więc a jest A)
+    \item Jeśli $b \in \mathbb{R}$ jest innym ograniczeniem górnym $A$, to $ c \le b$ Znaczy $c$ to
+        najmniejsza z ograniczeń górnych zbioru $A$.
+\end{itemize}
+
+Analogicznie element $d \in \mathbb{R}$ jest kresem dolnym (infimum) zbioru $A \subset R$, gdy 
+
+\begin{itemize}
+    \item $\forall_{a \in A} \fb d \le a$ ($d$ jest ograniczeniem dolnym $A$)
+    \item Jeśli $e \in \mathbb{R}$ jest innym ograniczeniem dolnym $A$, to $e \le d$
+\end{itemize}
+
+Umawiamy się, że jeśli $A \subset \mathbb{R}$ nie jest ograniczony z góry to 
+
+\[
+    sup(A) = +\infty
+\]
+
+a jeśli nie jest ograniczony z dołu to 
+
+\[
+    inf(A) = -\infty
+\]
+
+\begin{Twi}
+    Równoważne są:
+    \begin{enumerate}
+        \item Zbiór $\mathbb{R}$ spełnia aksjomat ciągłości (C)
+        \item Każdy niepusty ograniczony z góry podzbiór $A \subset \mathbb{R}$ ma kres górny $c \in
+            \mathbb{R}$
+        \item Każdy niepusty ograniczony z dołu podzbiór $A \subset \mathbb{R}$ ma kres dolny $c \in
+            \mathbb{R}$
+    \end{enumerate}
+\end{Twi}
+
+\subsubsection*{Dowód}
+%\begin{Dow}
+Najpierw udowodnijmy, że (1) $\Rightarrow$ (2). Weźmy dowolny niepusty ograniczony z góry zbiór
+$A \subset \mathbb{R}$. Chce\-my pokazać, że $A$ ma kres górny. Zdefiniujmy $B' := \{b \in
+\mathbb{R} \sat \forall_{a \in A} \fb a < b\}$, $A' := \mathbb{R} \setminus B'$ Sprawdzamy, że
+$\left( A', B'\right)$ jest przekrojem w $A$.
+\begin{itemize}
+    \item $B' \ne \emptyset$, bo $A$ jest ograniczony z góry
+    \item $A' \supset A$ (bo żaden element $a \in A$ nie może należeć do $B'$) zatem jest
+        niepusty
+    \item $A' \cup B' = \mathbb{R}$, bo $A'$ jest zdefiniowany jako dopełnienie $B'$.
+    \item chcemy pokazać, że dla każdego $a' \in A$ i $b' \in B'$ zachodzi nierówność $a' \le
+        b'$. Załóżmy, że tak nie jest i dla pewnych elementów $\bar{a} \in A', \bar{b} \in B'$
+        zachodzi $\bar{b} < \bar{a}$ w szczególności $\forall_{a \in A} \fb a < \bar{b} <
+        \bar{a}$, ale to oznacza, że $\bar{a} \in B'$ a zatem $\bar{a} \in A' \cap B'$.
+        Sprzeczność, bo $A'$ i $B'$ są rozłączne. Czyli $\left(A', B'\right)$ faktycznie jest
+        przekrojem, stąd mamy na mocy (1), że istnieje pewien $c \in A$ taki, że $\forall_{a'
+        \in A} \fb \forall_{b' \in B'} \fb a' \le c \le b'$.
+        Pozostaje pokazać, że $c$ to szukane supremum zbioru $A$.
+        \begin{itemize}
+            \item Ponieważ $A \subset A'$ i dla każdego $a' \in A'$ mamy $a' \le c$ więc w
+                szczególności dla $a \in A$ mamy $a \le c$.
+            \item załóżmy, że jakieś $c' < c$ jest również ograniczeniem górnym $A$. Wówczas
+                $\forall_{a\in A} \fb a \le c' < \frac{c'+c}{2} < c$ wobec tego liczba
+                $\frac{c'+c}{2} \in B'$, ale $\frac{c'+c}{2} < c$, wbrew warunkowi, że $c \le
+                b'$ dla wszystkich $b' \in B'$.
+        \end{itemize}
+\end{itemize}
+Następnie udowodnijmy, że (2) $\Rightarrow$ (1). Weźmy dowolny przekrój $(A, B)$ zbioru
+$\mathbb{R}$. Szukamy elementu $c$ jak w aksjomacie ciągłości. Zbiór $A$ jest ograniczony z
+góry, a zatem na mocy (2) ma swój kres górny, $c = sup(A)$. Chcemy pokazać, że to $c$ spełnia
+warunki z aksjomatu ciągłości.
+\begin{enumerate}
+    \item $\forall_{a \in A} \fb a \le c$ bo $c$ jest w szczególności ograniczeniem górnym
+        zbioru $A$.
+    \item chcemy pokazać, że $\forall_{b \in B} \fb c \le b$. Załóżmy przeciwnie, że $c >
+        \bar{b}$ dla pewnego $\bar{b} \in B$. Jednak wtedy $\forall_{a \in A} a \le \bar{b} <
+        c$, zatem $\bar{b}$ jest mniejszym niż $c$ ograniczeniem górnym zbioru $A$. Sprzeczność
+        z wyborem $c$ jako najmniejszego takiego ograniczenia.
+\end{enumerate}
+
+Łatwo potem udowodnić, że (2) $\iff$ (3). Zauważmy, że jeśli $A \subset R$ jest ograniczony z
+góry, to $-A = \{-a \sat a \in A\}$ jest ograniczony z dołu. Na tej samej zasadzie, jeśli $c$ było
+kresem górnym $A$, to $-c$ będzie kresem dolnym $-A$. Zatem (2) dla $A$ $\iff$ (3) dla $-A$ i
+(3) dla $B$ $\iff$ (2) dla $-B$.
+
+%\end{Dow}
+
+Fakt
+Liczba $c \in \mathbb{R}$ jest kresem górnym zbioru $A \subset R$ wtedy i tylko wtedy, gdy spełnione
+są warunki:
+\begin{itemize}
+    \item $c$ jest ograniczeniem górnym $A$
+    \item $\forall_{\epsilon > 0} \fb \exists_{a \in A} \fb c - \epsilon < a$
+\end{itemize}
+Znaczy to, że można podejść elementami $A$ dowolnie blisko $c$.
+
+
+\section{Wybrane podzbiory liczb $\mathbb{R}$}
+
+Wśród podzbiorów liczb rzeczywistych, najczęściej użyteczne są zbiory:
+
+\begin{description}
+    \item[Liczb naturalnych:] $\mathbb{N} = \{1, 2, 3, ...\}$
+    \item[Liczb całkowitych:] $\mathbb{Z} = -N \cup {0} \cup N = \{0, 1, -1, 2, -2, 3, ...\}$
+    \item[Liczby wymierne:] $\mathbb{Q} = \{\frac{p}{q} \sat p, q \in \mathbb{Z}, q \ne 0\}$
+\end{description}
+
+
+
+Liczby wymierne spełniają aksjomaty (D1) do (P4), to znaczy wszystkie poza aksjomatem ciągłości.
+Innym przykładem takiego zbioru jest $\mathbb{Q}[\sqrt{2}] = \{q + r\sqrt{2} \sat q,r \in
+\mathbb{Q}\}$. Za to $\mathbb{N}$ jest zbiorem spełniającym aksjomat ciągłości. Pokażemy teraz, że
+$Q$ nie spełnia aksjomatu ciągłości.
+
+\begin{Twi}
+    Istnieje dokładnie jedna liczba $c > 0$ taka, że $c^2 = 2$ i ponadto $c \notin \mathbb{Q}$
+\end{Twi}
+
+%\begin{Dow}
+\subsubsection*{Dowód}
+\begin{enumerate}
+    \item Jednoznaczność $c$. Gdyby $c$ i $\bar{c}$ były takie, że $c^2 = \bar{c}^2 = 2$ i 
+        $c, \bar{c} > 0$, to 
+        \[
+            0 = 2-2 = c^2 - \bar{c}^2 = (c-\bar{c})(c + \bar{c})
+        \]
+        Zatem $c-\bar{c} = 0$, bo $c$ i $\bar{c}$ są dodatnie, więc ich suma jest dodatnia. Stąd
+        wynika, że $c = \bar{c}$.
+    \item Istnienie $c$. Rozważmy zbiór $A = \{a > 0 \sat a\in \mathbb{R}, a^2 < 2\}$. $A$ jest
+        niepusty, bo $1 \in A$. $A$ jest ograniczony z góry, na przykład przez $2$. Zatem
+        istnieje kres górny $c = sup(A)$. Sprawdźmy, że $c^2 = 2$. Są trzy możliwości
+        \begin{itemize}
+            \item $c^2 < 2$
+            \item $c^2 > 2$
+            \item $c^2 = 2$
+        \end{itemize}
+        Wykluczymy pierwsze dwie. Załóżmy, że $c^2 < 2$. Będziemy rozważali liczby postaci $c +
+        \frac{1}{n}$, gdzie $n$ spełnia warunek $n > \frac{5}{2-c^2}$. Wtedy
+        \[
+            \left(c+\frac{1}{n}\right)^2 = c^2 + \frac{2c}{n}+ \frac{1}{n^2} \le c^2 +
+            \frac{2*2}{n} + \frac{1}{n} = c^2 + \frac{5}{n} < 2
+        \]
+        Czyli $c$ nie może być kresem górnym $A$, bo istnieje większa liczba należąca do $A$.
+
+        Załóżmy, że $c^2 > 2$. Rozważmy liczbę $c-\frac{1}{n}$, gdzie $n > \frac{4}{c^2-2}$.
+        Wówczas
+        \[
+            \left(c-\frac{1}{n}\right)^2 = c^2 - \frac{2c}{n} + \frac{1}{n^2} > c^2 -
+            \frac{2c}{n} \ge c^2 - \frac{2*2}{n} = c^2 - \frac{4}{n} > 2
+        \]
+        Sprzeczność, bo wtedy $c-\frac{1}{n}$ jest ograniczeniem górnym zbioru $A$ mniejszym niż
+        $c$, ale $c$ miał być najmniejszym takim ograniczeniem.
+\end{enumerate}
+%\end{Dow}
+Dowód, że $c \notin \mathbb{Q}$. Załóżmy przeciwnie, że $\sqrt{2} = \frac{p}{q}$, gdzie $p, q \in
+\mathbb{Z}$. Możemy przyjąć, że $p$ i $q$ są względnie pierwsze. Wówczas,
+
+\[
+    2 = \frac{p^2}{q^2} \iff p^2 = 2q^2 \Rightarrow 2 | p^2 \Rightarrow 2|p \Rightarrow p=2k
+\]
+
+Gdzie $k$ jest całkowite
+
+\[
+    p^2 = (2k)^2 = 4k^2 = 2q^2 \iff q^2 = 2k^2 \Rightarrow 2 | q
+\]
+
+Sprzeczność, bo bo $p$ i $q$ względnie pierwsze.
+
+\begin{Twi}
+    Niech $A, B \subset R$ będą takie, że $A, B \ne \emptyset$ oraz
+    \begin{enumerate}
+        \item $\fa{a \in A, b \in B} a \le b$
+        \item $\fa{\epsilon > 0} \ex{a_\epsilon \in A, b_\epsilon \in B} b_\epsilon - a_\epsilon <
+            \epsilon$
+    \end{enumerate}
+    Wtedy $\sup(A) = \inf(B)$.
+\end{Twi}
+
+\subsection*{Izomorfizm ciał uporządkowanych}
+
+Izomorfizmem ciał uporządkowanych nazywamy bijekcję 
+\[
+    (R, +, *, <) \Rightarrow (R', +', *', <')
+\]
+taką, że
+
+\begin{enumerate}
+    \item $f(x+y) = f(x)+f(y)$
+    \item $f(x*y) = f(x)*f(y)$
+    \item $x < y \Rightarrow f(x) < f(y)$
+\end{enumerate}
+
+Okazuje się, że liczby rzeczywiste zdefiniowane aksjomatycznie są izomorficzne z liczbami
+rzeczywistymi zdefiniowanymi przez przekroje Dedekinda.
+
+\section{Liczby naturalne i zasada indukcji}
+
+Stwierdzenie (*): Zbiór liczb naturalnych możemy scharakteryzować następująca: $\mathbb{N}$ jest
+najmniejszym (w sensie zawierania) zbiorem $A \subset \mathbb{R}$ spełniającym następne dwa warunki:
+
+\begin{enumerate}
+    \item $1 \in A$
+    \item $a \in A \Rightarrow a+1 \in A$
+\end{enumerate}
+
+To znaczy $\mathbb{N} = \bigcap_{A \subset \mathbb{R}, A \text{ spełnia powyższe warunki}} A$.
+
+\subsubsection*{Wniosek 1}
+Zbiór $\mathbb{N}$ nie jest ograniczony z góry. Udowadnia się to następująco: załóżmy
+przeciwnie, wtedy istnieje liczba $c = sup(\mathbb{N})$, ale w szczególności 
+$\forall_{n \in \mathbb{N}} n \le c$, z drugiej strony jeśli $n \in \mathbb{N}$ to $n+1$ też, zatem
+$\forall_{n \in \mathbb{N}} n+1 \le c \Rightarrow \forall_{n \in \mathbb{N}} n \le c-1$ a więc $c-1$
+jest mniejszym ograniczeniem górnym zbioru $\mathbb{N}$, co prowadzi do sprzeczności.
+
+\subsubsection*{Wniosek 2}
+Aksjomat Archimedesa: Dla dowolnych dodatnich liczb rzeczywistych $a$ i $b$ istnieje $n \in
+\mathbb{N}$ takie, że $n*a > b$. Dowód: gdyby tak nie było, to $\forall_{n \in \mathbb{N}} \fb n*a
+\le b \Rightarrow \forall_{n \in \mathbb{N}} \fb n \le \frac{b}{a}$. Co przeczy poprzedniemu
+wnioskowi.
+
+\subsubsection*{Wniosek 3}
+
+Zasada indukcji: Przypuśćmy, że $W$ jest własnością przysługującą pewnym liczbom naturalnym (tzn
+$W(n)$ jest zdaniem logicznym prawdziwym bądź fałszywym. Jeśli:
+
+\begin{itemize}
+    \item $W(1)$ jest prawdziwe
+    \item Z prawdziwości $W(n)$ wynika prawdziwość $W(n+1)$
+\end{itemize}
+
+To $W(n)$ jest prawdziwe dla wszystkich $n \in \mathbb{N}$. Dowód: Rozważmy $A = \{n \in \mathbb{N}
+\sat W(n) \text { prawdziwe}\}$. Wtedy $A$ spełnia warunki $1$ i $2$ ze stwierdzenia (*) $\Rightarrow N \subset A
+\iff \forall_{n \in \mathbb{N}} W(n)$ jest prawdziwe.
+
+\subsubsection*{Nierówność Bernoulliego}
+
+Twierdzenie Bernoulliego: Dla dowolnej liczby rzeczywistej $x \ge -1$ i dowolnego $n \in \mathbb{N}$
+zachodzi:
+
+\[
+    (1+x)^n \ge 1+n*x
+\]
+
+Udowodnimy przez indukcję:
+\begin{description}
+    \item[Baza indukcyjna (dowód $W(n)$):] dla $n=1$ mamy 
+        \[
+            (1+x)^1 = 1+x \ge 1+1*lx
+        \]
+        Więc warunek jest spełniony.
+    \item[Krok indukcyjny (dowód $W(n) \Rightarrow W(n+1)$):]
+        Załóżmy, że warunek jest prawdziwy dla $n$. Trzeba udowodnić, że jest prawdziwy dla $n+1$.
+        \[
+            (1+x)^{n+1} \ge (1+nx)*(1+x) = 1+nx + x + nx^2 =
+        \]
+        \[
+            = 1+(n+1)x + nx^2 \ge 1+(n+1)x
+        \]
+\end{description}
+
+\begin{Twi}
+    Zbiór liczb wymiernych $\mathbb{Q}$ jest gęsty w liczbach rzeczywistych $\mathbb{R}$, to znaczy 
+    $\forall_{x, y \in \mathbb{R}, x < y}\exists_{q \in \mathbb{Q}} \fb q \in (x,y)$
+\end{Twi}
+
+\subsubsection*{Dowód}
+
+Wybierzmy $n$ tak duże, aby $n(y-x) > 2$. Takie $n$ istnieje na mocy aksjomatu Archimedesa.
+Przedział $(nx, ny)$ ma długość większą od dwóch, a zatem musi zawierać pewną liczbę $k \in
+\mathbb{Z}$. Zatem mamy $nx < k < ny \iff x < \frac{k}{n} < y$. Znaleźliśmy liczbę wymierną
+$\frac{k}{n}$ spełniającą szukane warunki.
+
+\bigbreak
+
+W podobny sposób pokażemy, że liczby niewymierne $\mathbb{R}\backslash\mathbb{Q}$ są gęste w
+$\mathbb{R}$. Wybierzmy $n \in \mathbb{N}$ tak duże, aby $n(y-x) > 3$. Wtedy w przedziale $(nx, ny)$
+leżą co najmniej $3$ kolejne liczby całkowite, a więc $\exists_{k \in \mathbb{Z}} \fb nx < k <
+k+\sqrt{2} < k + 2 < ny \iff x < \frac{k}{n} + \frac{\sqrt{2}}{n} < y$ i widać, że $\frac{k}{n} +
+\frac{\sqrt{2}}{n}$ jest szukaną liczbą.
+
+\subsubsection*{Nierówność średnich}
+
+Dla dowolnych liczb nieujemnych $a_1, a_2, ..., a_n$ i dodatniego $n \in \mathbb{N}$ prawdziwa jest
+nierówność
+
+\[
+    A(a_1, a_2, ..., a_n) = \frac{a_1+a_2+a_3+...+a_n}{n} \ge \sqrt[n]{a_1a_2a_3...a_n} = G(a_1,
+    a_2, ..., a_n)
+\]
+
+Gdzie $A(...)$ jest średnią arytmetyczną, a $G(...)$ jest średnią geometryczność. Zobaczmy co się
+wydarzy, gdy przeskalujemy każdą z liczb $a_1, a_2, ..., a_n$ o ten sam czynnik dodatni $\lambda$.
+
+\[
+    A(\lambda a_1, \lambda a_2, ..., \lambda a_n) = \lambda A(a_1, a_2, ..., a_n)
+\]
+\[
+    G(\lambda a_1, \lambda a_2, ..., \lambda a_n) = \lambda G(a_1, a_2, ..., a_n)
+\]
+
+Przy tej operacji dwie strony nierówności skalują się o ten sam czynnik dodatni, a zatem nierówność
+$A \ge G$ jest prawdziwa dla $(a_1, a_2, ..., a_n)$ wtedy i tylko wtedy, gdy jest prawdziwa dla
+$(\lambda a_1, \lambda a_2, ..., \lambda a_n)$ gdzie $\lambda > 0$. Na mocy tej obserwacji, aby
+udowodnić nierówność $A \ge G$ wystarczy pokazać znacznie prostszy fakt, że $a_1 * a_2 * ... *a_n =
+1$, to $a_1+a_2+...+a_n \ge n$ (szczególny przypadek nierówności $A \ge G$, gdy $G(a_1, a_2, ...,
+a_n) = 1$. Udowodnienie tego faktu jest równoważne z udowodnieniem nierówności, bo możemy liczby z
+pierwotnej nierówności przeskalować biorąc $\lambda = \sqrt[n]{\frac{1}{a_1*a_2*...*a_n}}$.
+Udowodnijmy ten szczególny przypadek nierówności indukcyjnie.
+
+\begin{description}
+    \item[Baza indukcyjna:] dla $n=1$ $a_1 = 1$, $a_1 \ge 1$ prawda.
+    \item[Krok indukcyjny:] załóżmy, że teza zachodzi dla pewnego $n$ i pokażmy, że zachodzi dla
+        $n+1$. Rozważmy $a_1, a_2, ..., a_{n+1}$ takie, że $a_1*a_2*...*a_{n+1} = 1$. Wtedy 
+        $1 = (a_1*a_{n+1})*a_2*...*a_n$ z kroku indukcyjnego wiemy, że biorąc $\bar{a_1} =
+        a_1*a_{n+1}$, to $1 + a_1*a_{n+1} + a_2 + ... + a_n \ge n+1$. Chcemy pokazać, że $1 +
+        a_1*a_{n+1} + a_2 + ... + a_n \le a_1 + a_2 + ... + a_{n+1} \iff 1+a_1a_{n+1} \le a_1 +
+        a_n+1 \iff 1-a_1-a_{n+1} + a_1 a_{n+1} \le 0 \iff (1-a_1)(1-a_{n+1}) \le 0$. To będzie
+        prawdą, o ile $(1-a_1) \le 0 \le (1-a_{n+1}) \iff a_{n+1} \le 1 \le a_1$. Zauważmy, że
+        liczby $a_1, a_2, ..., a_{n+1}$ nie mogą wszystkie spełniać nierówności $a_i < 1$ dla
+        wszystkich $i$ ani $a_i > $. Wobec tego, jeśli uporządkujemy je w sposób malejący $a_1 \ge
+        a_2 \ge ... \ge a_{n+1}$ to wówczas musi zachodzić nierówność $a_1 \ge 1 \ge a_{n+1}$ i
+        wówczas nierówność oryginalna będzie prawdziwa, a więc $a_1 + a_2 + ... + a_{n+1} \ge n+1$.
+\end{description}
+
+\section{Ciągi liczb w $\mathbb{R}$}
+
+\subsection{Pojęcie ciągu i granicy}
+
+\begin{Def}
+    Ciągiem liczb rzeczywistych nazywamy funkcję określoną na zbiorze liczb naturalnych  $a_i:
+    \mathbb{N} \rightarrow \mathbb{R}$ typowo oznaczamy $\seq{a_n}$
+\end{Def}
+
+\begin{Def}
+    Powiemy, że ciąg liczb rzeczywistych $\seq{a_n}$ zbiega do granicy $g \in \mathbb{R}$ (ma
+    granicę $g$) co oznaczamy $a_n \rightarrow^{n\rightarrow \infty} g$, $a_n \rightarrow g$ lub
+    $\lim_{n\rightarrow \infty}a_n = g$ wtedy, gdy
+    \[
+        \forall_{\epsilon > 0} \fb \exists_{n_0 \in \mathbb{R}} \fb \forall_{n \in \mathbb{N}, n >
+        n_0} \fb |a_n - g| < \epsilon
+    \]
+    Ciąg może nie mieć żadnej granicy. Jeśli ma granicę mówimy, że jest zbieżny, inaczej jest
+    rozbieżny.
+\end{Def}
+
+Ta definicja jest równoważna z tym, że $a_n \rightarrow g$ jeśli dla dowolnie małego $\epsilon$ od
+pewnego $a_{n_0}$ wszystkie następne $a_n$ będą w przedziale $(g-\epsilon, g+\epsilon)$.
+
+TODO Wkleić obrazek
+
+\subsubsection*{Przykłady}
+
+\begin{itemize}
+    \item $\seq{a_n = 2}$ jest ciągiem stałym, wtedy $a_n \rightarrow 2$. Weźmy dowolne $\epsilon > 0$,
+        dla wszystkich $n \in \mathbb{N}$ zachodzi $|a_n - 2| = 0 < \epsilon$ zatem można przyjąć
+        $n_0 = 0$.
+    \item $\seq{b_n = \frac{1}{n}}$ jest ciągiem, wtedy $b_n \rightarrow 0$. Wybierzmy dowolne $\epsilon
+        > 0$. Szukamy takiego $n_0$, żeby $|\frac{1}{n} - 0| = \frac{1}{n} < \epsilon$ dla
+        wszystkich $n > n_0$. To będzie spełnione o ile $\frac{1}{n} < \epsilon \iff n >
+        \frac{1}{\epsilon}$ a zatem można wziąć $n_0 = \frac{1}{\epsilon}$.
+    \item $\seq{c_n = (-1)^n}$ jest ciągiem. Pokażmy, że ciąg $c_n$ nie ma granicy. Załóżmy przeciwnie,
+        że pewne $g \in \mathbb{R}$ jest granicą ciągu $\seq{c_n}$. W szczególności rozważmy $\epsilon -
+        \frac{1}{2}$ i $n_0$ takie, że $|a_n - g| < \frac{1}{2}$ dla wszystkich $n > n_0$. Jednak
+        wówczas dla $n > n_0$ zachodzi
+        \[
+            |a_{n+1} - a_n| = |a_{n+1}-g+g-a_n| = |(a_{n+1} - a_n) - (a_n-g)| \le |a_{n+1} - g| +
+            |a_n - g| < \frac{1}{2} + \frac{1}{2} = 1
+        \]
+        Tymczasem $|a_{n+1} - a_n| = 2$ dla wszystkich $n$. Mamy sprzeczność.
+\end{itemize}
+
+\begin{Twi}
+    Ciąg może mieć co najwyżej jedną granicę
+\end{Twi}
+
+\subsubsection*{Dowód}
+
+Załóżmy przeciwnie, że $g$ i $h$ są dwiema różnymi granicami ciągu $\seq{a_n}$. Wtedy wybierzmy
+$\epsilon < \frac{|g-h|}{2}$. Wówczas z faktu, że $g$ jest granicą wynika, że $\exists_{n_g \in
+\mathbb{R}}$ takie, że $\forall_{n \in \mathbb{N}, n > n_g}$ zachodzi $g-\epsilon < a_n < g +
+\epsilon$. Podobnie, z faktu, że $h$ jest granicą wynika, że $\exists_{n_h \in \mathbb{R}}$ takie,
+że $\forall_{n \in \mathbb{N}, n > n_h}$ zachodzi $h - \epsilon < a_n < h + \epsilon$. Przyjmijmy
+bez straty ogólności, że $h < g$. Wtedy dla $n > max (n_g, n_h)$ mamy jednocześnie $a_n < h +
+\epsilon$ i $g - \epsilon < a_n$, ale $\epsilon$ był tak dobrany, żeby $h+\epsilon < g-\epsilon$
+stąd dostajemy $a_n < h + \epsilon < g-\epsilon < a_n$. Sprzeczność.
+
+\begin{Def}
+    Ciąg $\seq{a_n}$ nazywamy ograniczonym, gdy zbiór jego wartości $\{a_n\sat n \in \mathbb{N}\}$ jest
+    ograniczony (z góry i z dołu).
+\end{Def}
+
+\begin{Twi}
+    Jeśli ciąg jest zbieżny, to jest ograniczony (Ale nie każdy ciąg ograniczony jest zbieżny, na
+    przykład $\seq{a_n = (-1)^n}$, jest ciągiem ograniczonym lecz nie mającym granicy.
+\end{Twi}
+
+\subsubsection*{Dowód}
+
+Rozważmy ciąg $\seq{a_n}$ zbieżny do $g \in \mathbb{R}$. Weźmy $\epsilon = 1$ i niech $n_0$ będzie
+takie, że $g-1 < a_n < g+1$ dla wszystkich $n > n_0$. Wobec tego
+
+\[
+    \forall_{n \in \mathbb{N}} \fb a_n \le max(g+1, a_1, a_2, ..., a_{n_0}) \land a_n \ge min (g-1,
+    a_1, a_2, ..., a_{n_0})
+\]
+
+Wobec tego widzimy dolne i górne ograniczenie zbioru wartości $\seq{a_n}$.
+
+\subsection{Podstawowe wartości ciągów zbieżnych}
+
+\begin{Twi}[Arytmetyka granic]
+    Załóżmy, że ciągi $\seq{a_n}$ i $\seq{b_n}$ są zbież\-ne odpowiednio do granic $a$ i $b$. Wówczas
+    \begin{enumerate}
+        \item Ciąg $\seq{a_n+b_n}$ jest zbieżny do granicy $a+b$.
+        \item Ciąg $\seq{a_n-b_n}$ jest zbieżny do granicy $a-b$.
+        \item Ciąg $\seq{a_n*b_n}$ jest zbieżny do granicy $a*b$.
+        \item o ile dla każdego $n \in \mathbb{N}$ $b_n \ne 0$ oraz $b \ne 0$ to ciąg
+            $\seq{\frac{a_n}{b_n}}$ jest zbieżny do granicy $\frac{a}{b}$
+    \end{enumerate}
+\end{Twi}
+
+\subsubsection*{Dowód}
+
+Dowód (1): Wybierzmy $\epsilon > 0$ i ustalmy $\epsilon' = \frac{\epsilon}{2}$ z założenia
+$\exists_{n_a \in \mathbb{R}}$ takie, że $\forall_{n \in \mathbb{N}, n > n_a}$ zachodzi $a-\epsilon'
+< a_n < a+\epsilon'$. I podobnie $\exists_{n_b \in \mathbb{R}}$ takie, że $\forall_{n \in
+\mathbb{N}, n > n_b}$ zachodzi $b-\epsilon' < b_n < b+\epsilon'$. Teraz dla $n > n_0 = max(n_a,
+n_b)$ mamy jednocześnie $a-\epsilon' < a_n < a+\epsilon'$ i $b-\epsilon' < b_n < b+\epsilon'$.
+Dodając stronami dostajemy, że
+
+\[
+    a+b-\epsilon = a+b - 2\epsilon' < a_n + b_n < a+b + 2\epsilon' = a+b+\epsilon
+\]
+
+Co udowadnia (1).
+
+\bigbreak
+
+Dowód (2): punkt (2) wynika prosto z punktów (1) i (3).
+
+\bigbreak
+
+Dowód (3): Na mocy twierdzenia o ograniczoności ciągów zbieżnych, ciągi $\seq{a_n}$ i $\seq{b_n}$ są
+ograniczone. W szczególności istnieje pewna liczba $M > 0$ taka, że $|a_n| < M$ i $|b_n < M$ dla
+wszystkich $n \in \mathbb{N}$. Weźmy dane $\epsilon > 0$ i ustalmy $\epsilon' =
+\frac{\epsilon}{M+|b|}$. Jak poprzednio
+\[
+    \ex{n_a \in \mathbb{R}} \fa{n \in \mathbb{N}, n > n_a} |a_n| < \epsilon'
+\]
+\[
+    \ex{n_b \in \mathbb{R}} \fa{n \in \mathbb{N}, n > n_b} |b_n| < \epsilon'
+\]
+Teraz dla $n > max(n_a, n_b) = n_0$ szacujemy $|a_n*b_n - a*b| = |a_n*b_n - a_n*b + a_n*b-a*b| =
+|a_n*(b_n-b) + b*(a_n-a)| \le |a_n*(b_n-b)| + |b*(a_n-a)| = |a_n|*|b_n-b| + |b|*|a_n-a| <
+M*\epsilon' + |b|*\epsilon' = (M+|b|)*\epsilon' = \epsilon$ co kończy dowód.
+
+\bigbreak
+
+Dowód (4): Wystarczy, że udowodnimy, że jeśli ciąg $\seq{b_n}$ spełnia założenia punktu (4) (a więc
+$b_n -rightarrow b$, $b_n \ne 0$ $b \ne 0$) to ciąg $\frac{1}{b_n}$ jest zbieżny do $\frac{1}{b}$.
+Istotnie, jeśli mamy co wyżej to używając punktu (3) do ciągów $\seq{a_n}$ i $\seq{\frac{1}{b_n}}$
+otrzymamy $\frac{a_n}{b_n} \rightarrow \frac{a}{b}$
+
+Zauważmy, że istnieje pewne $\Delta > 0$ takie, że $|b_n| > \Delta$ dla wszystkich $n \in
+\mathbb{N}$ Istotnie mamy, że $b_n \rightarrow b \ne 0$, zatem biorąc $\epsilon = \frac{|b|}{2}$
+otrzymujemy $\exists_{n_0 \in \mathbb{R}}$ takie, że dla $n > n_0$ zachodzi $b - \frac{|b|}{2} < b_n
+< b+\frac{|b|}{2}$. Stąd widać, że dla $b_n, n > n_0$ mamy $|b_n| > \frac{|b|}{2}$. Wobec tego
+wystarczy przyjąć $\Delta = \min(\frac{|b|}{2}, |b_1|, |b_2|, ...)$.
+
+Wybierzmy teraz $\epsilon > 0$ i dobierzmy $\epsilon' = \epsilon * |b| *\Delta$. Istnieje takie
+$n_0$, że $\forall_{n > n_0}$ mamy $|b_n| - b < \epsilon'$
+
+\[
+    \left|\frac{1}{b_n} - \frac{1}{b}\right| = \left|\frac{b-b_n}{b_n * b} \right| <
+    \frac{\epsilon'}{|b| * |b_n|} < \frac{\epsilon}{|b|*\Delta} = \epsilon
+\]
+
+\begin{Twi}
+    Jeśli dla ciągu $\seq{a_n}$ mamy $\frac{a_{n+1}}{a_n} \to g$ oraz $|g| < 1$, to $\lim_{n \to
+    \infty}{a_n} = 0$
+\end{Twi}
+
+\subsubsection*{Dowód}
+Bez straty ogólności przyjmijmy, że $a_n \ge 0$. Wtedy
+\[
+    \ex{\epsilon \in R, \epsilon > 0} g + \epsilon < 1
+\]
+Dla dostatecznie dużych $n$ mamy $\frac{a_{n+1}}{a_n} < g+\epsilon$ więc
+$0 \le a_{N+k} < (g+\epsilon)^k*a_N$. Czyli $\lim_{k \to \infty}a_{n+k} = 0$
+
+
+Teraz będziemy badać, jak przejścia graniczne zachowują się względem nierówności ''$<$'' i ''$\le$''
+
+\begin{Twi}[O trzech ciągach]
+    Jeśli wyrazy trzech ciągów $\seq{a_n}$, $\seq{b_n}$, $\seq{c_n}$ spełniają dla dostatecznie dużych $n$
+    nierówność $a_n \le b_n \le c_n$ oraz ciągi $\seq{a_n}, \seq{c_n}$ zbiegają do wspólnej granicy
+    $g$ to również $\seq{b_n}$ zbiega do $g$.
+\end{Twi}
+
+\subsubsection*{Dowód}
+Wybierzmy $\epsilon > 0$. Niech $n_0$ będzie takie, że nierówność jest spełniona dla wszystkich $n >
+n_0$. Istnieją liczby $n_a$ i $n_c$ takie, że $|a_n - g| < \epsilon$ dla $n > n_a$ i $|c_n - g| <
+\epsilon$ dla $n > n_c$. Teraz dla $n > \max (n_a, n_b, n_c)$ mamy
+\[
+    g-\epsilon < a_n \le b_n \le c_n < g + \epsilon 
+\]
+\[
+    \Rightarrow g-\epsilon < b_n < g+\epsilon
+\]
+co dowodzi, że $b_n$ zbiega do $g$.
+
+\begin{Twi}[O zachowaniu nierówności słabej]
+    Jeśli ciągi $\seq{a_n}$, $\seq{b_n}$ są zbieżne odpowiednio do $a$ i do $b$ oraz dla dostatecznie
+    dużych $n$ zachodzi nierówność $a_n \le b_n$ to $a \le b$. W powyższym twierdzeniu nierówności
+    nieostrej nie możemy zastąpić nierównością ostrą.
+\end{Twi}
+
+\subsubsection*{Dowód}
+Wybierzmy $\epsilon > 0$ i niech $n_a$ będzie takie, że $|a_n - a| < \epsilon$ dla $n > n_a$ i niech
+$n_b$ będzie takie, że $|b_n - b| < \epsilon$ dla $n > n_b$. Przyjmijmy, że $a_n \le b_n$ dla
+wszystkich $n > n_0$. Wtedy dla $n > \max (n_0, n_a, n_b)$ mamy
+\[
+    a - \epsilon < a_n \le b_n < b + \epsilon
+\]
+Stąd $a - \epsilon < b+ \epsilon \iff a < b+2\epsilon$ ale ostatnia nierówność zachodzi dla
+dowolnego $\epsilon > 0$. Zatem $a \le b$.
+
+\begin{Twi}[O szacowaniu]
+    Załóżmy, że ciąg $\seq{a_n}$ jest zbieżny do granicy $g$ i $g < c$. Wtedy dla dostatecznie
+    dużych $n$ $a_n > c$
+\end{Twi}
+
+\subsubsection*{Dowód}
+Wybierzmy $\epsilon = \frac{g-c}{2} > 0$ Wtedy istnieje $n_0$ takie, że dla $n > n_0$ mamy
+\[
+    a_n > g-\epsilon > c
+\]
+
+\subsubsection*{Przykład}
+
+Wykażemy $\lim_{n \rightarrow \infty} \sqrt[n]{n} = 1$. Najpierw wykażemy prawdziwość następującego
+oszacowania
+
+\[
+    1 \leftarrow 1 \le \sqrt[n]{n} \le \left(1+\frac{1}{\sqrt{n}}\right)^2 \rightarrow 1
+\]
+
+Jeśli tak, to z twierdzenia o trzech ciągach teza będzie wykazana. Szacowanie $1 \le \sqrt[n]{n}$
+jest jasne, bo $1 \le n$.
+\[
+    \sqrt[n]{n} \le \left(1+\frac{1}{\sqrt{n}}\right)^2 \iff n \le
+    \left(1+\frac{1}{\sqrt{n}}\right)^{2n}
+\]
+\[
+    \iff \sqrt{n} \le \left(1 + \frac{1}{\sqrt{n}}\right)^n
+\]
+Ostatnia nierówność wynika łatwo z twierdzenia Bernoulliego.
+\[
+    \left(1 + \frac{1}{\sqrt{n}}\right)^n \ge 1 + n\frac{1}{\sqrt{n}} = 1 + \sqrt{n} \ge \sqrt{n}
+\]
+
+\subsection{Ciągi monotoniczne}
+
+Ciąg $\seq{a_n}$ nazwiemy
+\begin{enumerate}
+    \item rosnącym, gdy $\fa{n \in \mathbb{N}} a_{n+1} > a_n$.
+    \item niemalejącym, gdy $\fa{n \in \mathbb{N}} a_{n+1} \ge a_n$.
+    \item malejącym, gdy $\fa{n \in \mathbb{N}} a_{n+1} < a_n$.
+    \item nierosnącym, gdy $\fa{n \in \mathbb{N}} a_{n+1} \le a_n$.
+\end{enumerate}
+
+Ciąg spełniający jeden z powyższych warunków nazwiemy ciągiem monotonicznym.
+
+\begin{Twi}[O ciągu monotonicznym i ograniczonym]
+    Każdy ciąg monotoniczny i ograniczony jest zbieżny 
+\end{Twi}
+
+\subsubsection*{Dowód}
+
+Bez straty ogólności przyjmijmy, że $\seq{a_n}$ jest ciągiem niemalejącym i ograniczonym. Oznaczmy
+$A = \{a_n \sat n \in \mathbb{N}\}$. $A$ jest niepustym i ograniczonym podzbiorem $\mathbb{R}$, a
+zatem ma kres górny $c = \sup(A)$. Wykażemy, że $c = \lim_{n \to \infty}$. Po pierwsze $c$ jest
+ograniczeniem górnym $A$, a zatem $\fa{n} a_n \le c$. Z drugiej strony, dla dowolnego $\epsilon > 0
+\ex {a \in A}$ taki, że $c - \epsilon < a$ ale powyższe $a \in A$ jest pewnym wyrazem ciągu $a_n$, a
+więc $a = a_{n_0}$ dla pewnego $n_0 \in \mathbb{N}$, ale $a_n$ jest niemalejący, stąd $\fa{n > n_0}$
+mamy $a_{n_0} \le a_n$. Podsumowując $c - \epsilon < a_{n_0} \le a_n < c < c+\epsilon$ dla $n >
+n_0$. To znaczy $c - \epsilon < a_n < c+ \epsilon$ dla $n > n_0$.
+
+\subsection{Granice niewłaściwe}
+
+Mamy ciąg $\seq{a_n = n^2}$. Chcielibyśmy móc powiedzieć, że ciąg $\seq{n^2}$ ''zbiega'' do plus
+nieskończoności.
+
+\begin{Def}
+    Powiemy, że ciąg $\seq{a_n}$ jest rozbieżny do plus nieskończoności, gdy
+    \[
+        \fa{M \in \mathbb{R}, M > 0}\ex{n_0 \in \mathbb{N}} \fa{n \in \mathbb{N}, n > n_0} a_n > M
+    \]
+    Piszemy $\lim_{n \to \infty} a_n = \infty$.
+\end{Def}
+
+\begin{Def}
+    Analogicznie powiemy, że $\seq{a_n}$ rozbiega do minus nieskończoności, gdy
+    \[
+        \fa{M \in \mathbb{R}, M > 0} \ex {n_0 \in \mathbb{N}} \fa{n\in \mathbb{N}, n > n_0} a_n <
+        -M;
+    \]
+    Piszemy $\lim_{n \to \infty} a_n = -\infty$.
+\end{Def}
+
+Czasem mówimy, że ciąg $\seq{a_n}$ zbiega do granicy niewłaściwej $\infty$ lub $-\infty$.
+
+\subsubsection*{Przykład}
+
+Ciąg $\seq{a_n = n}$ jest rozbieżny do $\infty$. To wynika wprost z aksjomatu Archimedesa.
+
+\begin{Twi}[O dwóch ciągach]
+    Jeśli wyrazy ciągów $\seq{a_n}$ i $\seq{b_n}$ spełniają dla dostatecznie dużych $n \in
+    \mathbb{N}$ nierówność
+    \[
+        a_n \le b_n
+    \]
+    i dodatkowo $a_n \to \infty$ to również $b_n \to \infty$.
+\end{Twi}
+
+\subsubsection*{Dowód}
+
+Wybierzmy $M \in \mathbb{R}, M > 0$ i niech $n_0 \in \mathbb{N}$ będzie takie, że $a_n > M$ dla $n >
+n_0$, oraz dla $n > n_0$ zachodzi nierówność $a_n \le b_n$. Wówczas oczywiście $M < a_n \le b_n$
+zatem $b_n > M$ dla $n > n_0$. Z definicji oznacza to, że $b_n \to \infty$.
+
+\subsubsection*{Przykład}
+
+Niech $\seq{a_n = n}$, $\seq{b_n = n^2}$. $\fa{n \in \mathbb{N}}$ i skoro $n \to \infty$ to $n^2 \to
+\infty$.
+
+\begin{Twi}[O arytmeryce granic]
+    Twierdzenie o arytmetyce granic można łatwo rozszerzyć na przypadek granic niewłaściwych, jeśli
+    przyjmiemy następujące konwencje.
+    \[
+        \begin{array}{ll}
+            a + \infty = \infty & -(+\infty) = -\infty \\
+            a - \infty = -\infty & g * \infty = \infty \text{ dla } g > 0\\
+            \infty + \infty = \infty & -g * \infty = -\infty \text{ dla } g > 0\\
+            -\infty - \infty = -\infty & g * (-\infty) = -\infty \text{ dla } g > 0\\
+            (-g)(-\infty) = \infty & \frac{a}{\infty} = 0\\
+            (\infty)*(\infty) = \infty & \frac{a}{-\infty} = 0\\
+            (\infty)*(-\infty) = -\infty & \frac{\infty}{g} = \infty \text{ dla } g > 0\\
+            (-\infty)*(-\infty) = \infty & \frac{-\infty}{g} = -\infty \text{ dla } g > 0\\
+            \frac{\infty}{-g} = -\infty & \frac{-\infty}{-g} = \infty \text{ dla } g > 0
+        \end{array}
+    \]
+\end{Twi}
+
+\subsubsection*{Przykład}
+
+\begin{enumerate}
+    \item Niech 
+\end{enumerate}
+
+\subsubsection*{Uwaga}
+Nie można jednoznacznie przypisać wartości symbolom: $\infty - \infty$, $0*(\pm \infty)$,
+$\frac{\infty}{\infty}$
+
+\subsubsection*{Przykład}
+
+Ciąg $\seq{a_n = \frac{n^k}{c^n}}$ gdzie $k \in \mathbb{N}$, ustalone $c > 1$ jest przykładem
+granicy $\frac{\infty}{\infty}$. Poprzednio pokazaliśmy, że ten ciąg jest od pewnego miejsca
+malejący. Ponieważ $k$ jest dowolne naturalne, to w ten sam sposób udowodnimy, że ciąg $\seq{b_n =
+\frac{n^{k+1}}{c^n}}$ jest od pewnego miejsca malejący. W szczególności $\seq{b_n}$ jest ograniczony
+z góry przez pewną liczbę $B$ to znaczy $\frac{n^{k+1}}{c^n} < B$. Zatem mamy 
+\[
+    0 < a_n = \frac{n^k}{c^n} < \frac{B}{n} \to \frac{B}{\infty}
+\]
+
+\begin{Twi}[O ciągu monotonicznym]
+    Każdy ciąg monotoniczny jest zbieżny bądź do granicy skończonej (gdy jest ograniczony) bądź do
+    granicy niewłaściwej (gdy nie jest ograniczony)
+\end{Twi}
+
+\subsubsection*{Dowód}
+Bez straty ogólności przyjmijmy, że ciąg $\seq{a_n}$ jest niemalejący. Albo $\seq{a_n}$ jest
+ograniczony (z góry) i wtedy działa twierdzenie o ciągu monotonicznym ograniczonym, albo $\seq{a_n}$
+nie jest ograniczony. Wówczas, dla dowolnego $M > 0$ istnieje pewien wyraz ciągu, powiedzmy
+$a_{n_0}$ taki, że $M < a_{n_0}$, ale dla $n > n_0$ mamy $a_n \ge a_{n_0}$ bo ciąg jest niemalejący.
+W szczególności dla $n > n_0$ mamy $M < a_{n_0} \le a_n \implies M < a_n$ to znaczy $a_n \to
+\infty$.
+
+\begin{Twi}[Stolza]
+    Rozważmy dwa ciągi $\seq{a_n}$ i $\seq{b_n}$. Jeśli $\seq{b_n}$ jest ściśle monotoniczny dla
+    dostatecznie dużych $n \in \mathbb{N}$ oraz jeden z następujących dwóch warunków zachodzi
+    \begin{enumerate}
+        \item Ciąg $\seq{b_n}$ rozbiega do $\infty$.
+        \item Ciągi $\seq{a_n}$ i $\seq{b_n}$ zbiegają do zera
+    \end{enumerate}
+    wówczas jeśli istnieje granica ciągu $\frac{a_{n+1}-a_n}{b_{n+1}-b_n}$ (skończona lub
+    niewłaściwa) to istnieje granica (skończona lub niewłaściwa) ciągu $\frac{a_n}{b_n}$ oraz
+    \[
+        \lim_{n \to \infty} \frac{a_{n+1}-a_n}{b_{n+1}-b_n} = \lim_{n \to \infty} \frac{a_n}{b_n}
+    \]
+\end{Twi}
+
+\subsubsection*{Dowód}
+
+\begin{description}
+
+    \item[Przypadek 1), gdy $\lim_{n \to \infty} {\frac{a_{n+1}-a_n}{b_{n+1}-b_n}} = g$ jest
+        skończone]. Ustalmy $\epsilon > 0$ i przyjmijmy $\epsilon' = \min(\frac{\epsilon}{3+|g|},
+        1)$. Istnieje $n_0$ takie, że dla $s > n_0$
+
+        \[
+            g-\epsilon' < \frac{a_{n+1}-a_n}{b_{n+1}-b_n} < g+\epsilon'
+        \]
+        Możemy przyjąć, że $n_0$ jest tak duże, że $b_n$ jest rosnący dla $n > n_0$. Teraz wobec
+        $b_{s+1} > b_s$ dla $s \ge n_0$ mamy
+        \[
+            (g - \epsilon') (b_{s+1} - b_s) < a_{s+1}-a_s < (g + \epsilon')(b_{s+1} - b_s)
+        \]
+        teraz dodam stronami powyższą nierówność dla indeksów $n_0 = s, n_0+1, ..., n-1$. Wychodzi
+        nam
+        \[
+            (g - \epsilon') (b_n - b_{n_0}) < a_n - a_{n_0} < (g+\epsilon')(b_n - b_{n_0})
+        \]
+        Teraz dzielę otrzymaną nierówność stronami przez $b_n$ (Ponieważ $b_n \to \infty$ możemy
+        przyjąć, że $b_n > 0$) i dostajemy
+        \[
+            \frac{a_{n_0}}{b_n} + (g - \epsilon') (1 - \frac{b_{n_0}}{b_n}) < \frac{a_n}{b_n} < (g+\epsilon')(1 -
+            \frac{b_{n_0}}{b_n}) + \frac{a_{n_0}}{b_n}
+        \]
+        Ponieważ $b_n \to \infty$ zatem $\frac{a_{n_0}}{b_n} \to 0$ i $\frac{b_{n_0}}{b_n} \to 0$, a więc
+        istnieje $n_1$ takie, że dla $n > n_1$ zachodzi $\left|\frac{a_{n_0}}{b_n}\right| < \epsilon'$
+        oraz $\left|\frac{b_{n_0}}{b_n}\right| < \epsilon'$ Stąd dla $n > n_1$
+
+        \[
+            -\epsilon' + (g-\epsilon')(1 \pm \epsilon') < \frac{a_n}{b_n} < (g+\epsilon')(1\pm
+            \epsilon') + \epsilon'
+        \]
+        \[
+            g - \epsilon < g - 3\epsilon' - |g|\epsilon' < \frac{a_n}{b_n} < (g+\epsilon')(1\pm
+            \epsilon') + \epsilon' < g + 3\epsilon' + |g|\epsilon' < g+\epsilon
+        \]
+    \item[Przypadek 1), gdy $\lim_{n \to \infty} {\frac{a_{n+1}-a_n}{b_{n+1}-b_n}} = \infty$.]
+        Wybierzmy $M > 0$, rozważmy $M' = []$. Istnieje takie $n_0$, że dla $s \ge n_0$ mamy
+        \[
+            M' < \frac{a_{s+1} - a_s}{b_{s+1}-b_s}
+        \]
+        dostaję
+        \[
+            M'(b_{s+1}-b_s) < a_{s+1} - a_s
+        \]
+        Teraz dodaję stronami powyższe nierówności dla indeksów $s = n_0, n_0+1, ..., n-1$
+        otrzymując
+        \[
+            M'(b_n - b_{n_0}) < a_n - a_{n_0}
+        \]
+        Dzieląc obie strony przez $b_n$ otrzymujemy
+        \[
+            M'(1 - \frac{b_{n_0}}{b_n}) < \frac{a_n}{b_n} - \frac{a_{n_0}}{b_n}
+        \]
+
+        Stąd $M' - M'\frac{b_{n_0}}{b_n} + \frac{a_{n_0}}{b_n} < \frac{a_n}{b_n}$. Zauważmy, że
+        $\frac{b_{n_0}}{b_n}$ i $\frac{a_{n_0}}{b_n}$ zbiegają do $0$ przy $n \to \infty$. Zatem
+        lewa strona powyższej nierówności zbiega (przy $n \to \infty$) do $M'$, więc $M' -
+        M'\frac{b_{n_0}}{b_n} + \frac{a_{n_0}}{b_n}$ zbiega do $M'$, a skoro $M' > \frac{M'}{2}$, to
+        z twierdzenia o szacowaniu dla dostatecznie dużych $n$ lewa strona nierówności jest $ >
+        \frac{M'}{2}$, więc dla dostatecznie dużych $n$ mamy
+        \[
+            M = \frac{M'}{2} < \frac{a_n}{b_n}
+        \]
+        a więc $\frac{a_n}{b_n} \to \infty$.
+    \item[Przypadek 2), gdy $\lim_{n \to \infty} {\frac{a_{n+1}-a_n}{b_{n+1}-b_n}} = g$ jest
+        skończone] Przyjmijmy dla ustalenia uwagi, że ciąg $\seq{b_n}$ jest rosnący. Wybierzmy
+        $\epsilon > 0$. Niech $\epsilon' = \frac{\epsilon}{2}$. Istnieje $n_0$ takie, że dla $s \ge n_0$ zachodzi
+        nierówność
+        \[
+            g - \epsilon' < \frac{a_{s+1} - a_s}{b_{s+1}-b_s} < g + \epsilon'
+        \]
+        \[
+            \iff (g - \epsilon')*(b_{s+1}-b_s) < a_{s+1} - a_s < (g + \epsilon')*(b_{s+1}-b_s)
+        \]
+        Sumujemy te nierówności stronami dla indeksów $s = n, n+1, ..., n+k+1$ ($n > n_0$) i
+        dostajemy
+        \[
+            (g - \epsilon')*(b_{n+k}-b_n) < a_{n+k} - a_n < (g + \epsilon')*(b_{n+k}-b_n)
+        \]
+        Dzielę tę nierówność przez $b_n$ (ponieważ $b_n \to 0$ i $\seq{b_n}$ jest ciągiem rosnącym,
+        to $b_n < 0$) i dostajemy
+        \[
+            (g - \epsilon')*(\frac{b_{n+k}}{b_n}-1) > \frac{a_{n+k}}{b_n} - \frac{a_n}{b_n} > (g +
+            \epsilon')*(\frac{b_{n+k}}{b_n}-1)
+        \]
+        Po drobnej obróbce dostaję
+        \[
+            (g - \epsilon')*(1 - \frac{b_{n+k}}{b_n}) < \frac{a_{n+k}}{b_n} - \frac{a_n}{b_n} < (g +
+            \epsilon')*(1 - \frac{b_{n+k}}{b_n})
+        \]
+        Przejdźmy teraz do granicy z $k \to \infty$ przy ustalonym $n$. Wtedy
+        \[
+            \lim_{k \to \infty} b_{n+k} = 0
+            \lim_{k \to \infty} a_{n+k} = 0
+        \]
+        Stąd
+        \[
+            \lim_{k \to \infty} \frac{a_{n+k}}{b_n} = 0
+            \lim_{k \to \infty} \frac{b_{n+k}}{b_n} = 0
+        \]
+        A więc biorąc $k$ dążące do nieskończoności
+        \[
+            g - \epsilon' \leftarrow (g - \epsilon')*(1 - \frac{b_{n+k}}{b_n}) < \frac{a_{n+k}}{b_n} - \frac{a_n}{b_n} < (g +
+            \epsilon')*(1 - \frac{b_{n+k}}{b_n}) \to g + \epsilon'
+        \]
+
+        Wobec tego dla dostatecznie dużych $k$ wartość lewej strony jest większa niż $g -
+        2\epsilon'$, analogicznie dla dużych $k$ wartość prawej strony jest mniejsza niż $g +
+        2\epsilon'$. Zatem środek nierówności szacuję następująco:
+        \[
+            g - 2\epsilon' < \frac{a_n}{b_n} < g+2\epsilon'
+        \]
+        Ponieważ $\epsilon' = \frac{\epsilon}{2}$ mamy $g - \epsilon < \frac{a_n}{b_n} < g+\epsilon$
+        a zatem $\frac{a_n}{b_n} \to g$. Podobnie dowodzimy przypadek, gdy granica jest nieskończona
+\end{description}
+
+\subsubsection*{Przykład}
+
+Niech $\seq{a_n}$ będzie ciągiem zbieżnym do granicy $a$. Rozważmy ciąg średnich arytmetycznych
+$\seq{A_n = \frac{a_1 + a_2 + ... + a_n}{n}}$. Wówczas $A_n \to a$ (Ten fakt nazywamy czasami
+twierdzeniem Cauchy'ego). W dowodzie skorzystamy z twierdzenia Stolza. $A_n = \frac{a_1+a_2 + ... +
+a_n}{n}$ jest ciągiem postaci $\frac{x_n}{y_n}$ gdzie $x_n = a_1+a_2 + ... + a_n$, a $y_n = n$. Ciąg
+$\seq{y_n}$ jest rozbieżny do $\infty$ oraz ściśle rosnący. Teraz ciąg $\frac{x_{n+1}-x_n}{y_{n+1} -
+y_n} = \frac{a_{n+1}}{1} = a_{n+1}$ jest zbieżny do $a$, zatem również ciąg $\frac{x_n}{y_n} = A_n$
+jest zbieżny do $a$.
+
+\subsection{Twierdzenie Bolzana-Weierstraßa, warunek Cauchy'ego}
+
+\begin{Def}
+    Rozważmy ciąg $\seq{a_n}$. Jego podciągiem nazywamy ciąg postaci
+    \[
+        \seqq{b_k}{k} = \seqq{a_{n_k}}{k}
+    \]
+    gdzie $\seqq{n_k}{k}$ jest rosnącym ciągiem liczb naturalnych. (Innymi słowy $\seq{b_n}$
+    powstaje z $\seq{a_n}$ przez wybranie jego niektórych wyrazów, z zachowaniem kolejności).
+\end{Def}
+
+\begin{Twi}
+    Jeśli ciąg $\seq{a_n}$ jest zbieżny do granicy $g$, to każdy jego podciąg jest zbieżny do $g$
+    ($g$ skończone lub nieskończone)
+\end{Twi}
+
+\subsubsection*{Dowód}
+$a_n \to g$, to znaczy $\fa{\epsilon}\ex{n_0} n > n_0 \implies |a_n - g| < \epsilon$, ale wówczas dla
+ciągu $\seqq{a_{n_k}}{k}$ mamy $|a_{n_k} - g| < \epsilon$ o ile $n_k > n_0$ zatem istnieje pewne
+$k_0$ (mianowicie $k_0$ takie, że $n_{k_0} > n_0$) że dla $k > k_0$ mamy $|a_{n_k} - g| < \epsilon$
+
+\begin{Twi}[Bolzana-Weierstraßa]
+    Każdy ciąg ograniczony ma podciąg zbieżny 
+\end{Twi}
+
+\subsubsection*{Dowód}
+
+Istnieje przedział $[x_1, y_1]$ zawierający wszystkie wyrazy ciągu. Wybierzmy $a_{n_1} \in [x_1,
+y_1]$ w dowolny sposób. Podzielmy teraz ten przedział $[x_1, y_1]$ na dwie połowy $\left[x_1,
+\frac{x_1+x_2}{2}\right]$ i $\left[\frac{x_1+y_1}{2}, y_1\right]$. Co najmniej jeden z tych
+przedziałów zawiera nieskończenie wiele wyrazów ciągu $a_n$. Wybieram taki przedział i oznaczam jego
+końce przez $[x_2, y_2]$. W kolejnym kroku dzielę $[x_2, y_2]$ na połowy: $\left[x_w,
+\frac{x_2+y_2}{2}\right]$ i $\left[\frac{x_2+y_2}{2}, y_2\right]$ i wybieram z nich taką, w której
+jest nieskończenie wiele wyrazów ciągu, oznaczam ją przez $\left[x_3, y_3\right]$ i wybieram element
+$a_{n_3} \in \left[x_3, y_3\right]$ tak, aby $n_3 > n_2$ i tak dalej. W rezultacie skonstruowaliśmy
+$3$ ciągi: $\seqq{x_k}{k}$, $\seqq{y_k}{k}$ i $\seqq{a_{n_k}}{k}$ o następujących własnościach:
+\begin{enumerate}
+    \item $x_k \le a_{n_k} \le y_k$
+    \item $\seqq{x_k}{k}$ jest ciągiem niemalejącym, a $\seqq{y_k}{k}$ jest ciągiem nierosnącym i
+        oba są ograniczone z dołu przez $x_1$, a z góry przez $y_1$
+    \item $y_n - x_n = \frac{y_1-x_1}{2^{n-1}}$.
+\end{enumerate}
+Podsumowując, z twierdzenia o ciągu monotonicznym i ograniczonym $\seqq{x_k}{k}$ jest zbieżny do
+pewnej granicy $x$, oraz $\seqq{y_k}{k}$ jest zbieżny do pewnej granicy $y$. Jednak z $3$ mamy
+$\lim_{n \to \infty} y_n - x_n = \lim_{n \to \infty} \frac{y_1-x_1}{2^{n-1}} = 0$ Zatem $x = y$.
+Teraz na mocy 1) i twierdzenia o $3$ ciągach $a_{n_k} \to x=y$
+
+\begin{Twi}
+    Ciąg $\seq{a_n}$ jest nie ma granicy (skończonej ani niewłaściwej) wtedy i tylko wtedy gdy ma
+    dwa podciągi zbieżne do różnych granic (skończonych lub niewłaściwych
+\end{Twi}
+
+\subsubsection*{Dowód}
+
+Wiemy, że jeśli $a_n \to g$ to każdy jego podciąg zbiega do $g$, a zatem $\seq{a_n}$ ma $2$
+podciągi zbieżne do różnych granic, to nie może być zbieżny. W drugą stronę rozważmy ciąg
+$\seq{a_n}$ który nie ma granicy. Możliwe są dwa przypadki:
+
+\begin{enumerate}
+    \item $\seq{a_n}$ jest ograniczony
+    \item $\seq{a_n}$ nie jest ograniczony
+\end{enumerate}
+
+Przypadek 1: Na mocy twierdzenia Bolzano Weierstraßa z ciągu $\seq{a_n}$ mogę wybrać podciąg
+$\seqq{a_{n_k}}{k}$ zbieżny do granicy $g$. Ponieważ $a_n \not\to g$ z założenia, to nie jest
+prawdą, że
+\[
+    \fa{\epsilon \in \R, \epsilon > 0} \ex{n_0 \in \N} \fa{n \in N, n > n_0} |a_n - g| < \epsilon
+\]
+a więc
+\[
+    \ex{\epsilon \in R, \epsilon > 0} \fa{n \in N} \fa {n \in \N, n > n_0} |a_n-g| \ge \epsilon
+\]
+To znaczy nieskończenie wiele wyrazów spełnia nierówność $a_n \ge g + \epsilon'$ bądź $a_n \le g -
+\epsilon'$. Bez straty ogólności możemy zatem założyć, że ciąg $\seq{a_n}$ ma podciąg
+$\seqq{a_{n_s}}{s}$, którego wyrazy spełniają nierówność $a_{n_s} \ge g + \epsilon'$ dla wszystkich
+$s$. Ale $\seqq{a_{n_s}}{s}$ jest oczywiście ograniczony (bo $\seq{a_n}$ był), więc z twierdzenia
+Bolzano Weierstraßa ma pewien podciąg $\seqq{a_{n_{s_p}}}{p}$ zbieżny do granicy $h$. Z twierdzenia
+o zachowaniu nierówności słabej
+\[
+    h \ge g + \epsilon' > g
+\]
+Podciągi $\seqq{a_{n_k}}{k}$ i $\seqq{a_{n_{s_p}}}{p}$ spełniają twierdzenie zadania.
+
+Przypadek 2: $\seq{a_n}$ nie jest ograniczony. Bez straty ogólności przyjmijmy, że $\seq{a_n}$ nie
+jest ograniczony z góry. To oznacza, że $\seq{a_n}$ ma pewien podciąg $\seqq{a_{n_k}}{k}$ rozbieżny
+do $\infty$. Uzasadnienie: zbuduję podciąg $\seqq{a_{n_k}}{k}$ spełniający nierówności
+$\seqq{a_{n_k}}{k}$ start. Liczba $1$ nie jest ograniczeniem zbioru wartości wyrazów ciągu
+$\seq{a_n}$, a więc istnieje pewien element $a_{n_1}$ większy niż $1$. Załóżmy, że znalazłem wyrazy
+$a_{n_1}, a_{n_2}, ..., a_{n_l}$. Liczba $M - max (k, a_1, a_2, ..., a_{n_k})$ nie jest ograniczeniem
+górnym ciągu $\seq{a_n}$, zatem istnieje pewien element $a_{n_{k+1}}$ większy od $M$. Oczywiście
+$a_{n_{k+1}} > k+1$ i indeks $n_{k+1} > n_k$, bo $a_{n_{k+1}} > a_s$ dla $s = 1,2,...,n_k$. Przy
+okazji udowodniliśmy, że Ciąg $\seq{a_n}$ jest ograniczony wtedy i tylko wtedy, gdy ma podciąg
+rozbieżny do $\infty$ lub $-\infty$. Zatem ciąg $\seq{a_n}$ ma podciąg rozbieżny do $\infty$. Jednak
+ciąg $\seq{a_n}$ nie jest rozbieżny do $\infty$  z założenia, że nie ma granicy. Zatem nie jest
+prawdą, że
+\[
+    \fa{M \in \N, n > 0} \ex{n_0 \in N} \fa{n \in \N, n > n_0} a_n > M
+\]
+a więc
+\[
+    \ex {M_0 \in N, M_0 > 0} \fa {n_0 \in N} \ex{n > n_0} a_n \le M_0
+\]
+
+To znaczy $\seq{a_n}$ ma pewien podciąg $\seqq{a_{n_s}}{s}$ którego wyrazy spełniają nierówność
+$a_{n_s} \le M_0$ dla wszystkich $s$. Teraz możliwe są $2$ przypadki: w pierwszym przypadku
+$\seqq{a_{n_s}}{s}$ jest nieograniczony (z dołu, bo $M_0$ jest ograniczeniem górnym), wtedy z
+$\seqq{a_{n_s}}{s}$ wybiorę podciąg $\seqq{a_{n_{s_p}}}{p}$ rozbieżny do $-\infty$. W drugim
+przypadku $\seqq{a_{n_s}}{s}$ jest ograniczony. Wtedy z twierdzenia Bolzano Weierstraßa z
+$\seqq{a_{n_s}}{s}$ wybiorę podciąg $\seqq{a_{n_{s_{p}}}}{p}$ zbieżny do granicy skończonej.
+Podciągi $\seqq{a_{n_k}}{k}$ i $\seqq{a_{n_{s_p}}}{p}$ spełniają tezę twierdzenia.
+
+\begin{Def}
+    Powiemy, że ciąg $\seq{a_n}$ spełnia warunek Cauchy'ego (inaczej $\seq{a_n}$ jest ciągiem
+    Cauchy'ego) wtedy i tylko wtedy, gdy
+    \[
+        \fa{\epsilon \in \R, \epsilon > 0} \ex{n_0 \in \N} \fa {n, m \in \N, n,m > n_0} \text{
+        zachodzi } |a_n - a_m| < \epsilon
+    \]
+    (czyli wyrazy o dużych indeksach są sobie bliskie)
+\end{Def}
+
+\begin{Twi}
+    Ciąg $\seq{a_n}$ jest zbieżny do granicy skończonej wtedy i tylko wtedy, gdy spełnia warunek
+    Cauchy'ego.
+\end{Twi}
+
+\subsubsection*{Dowód}
+Dowód z lewej w prawą: Załóżmy, że $\seq{a_n}$ zbiega do granicy $g$. Wybierzmy $\epsilon > 0$ i
+ustalmy $\epsilon' = \frac{\epsilon}{2}$ istnieje $n_0$ takie, że dla $n > n_0$ mamy $|a_n - g| <
+\epsilon'$. Zatem dla $n, m > n_0$ mamy
+\[
+    |a_n - a_m| = |a_n - g + g - a_m| = 
+\]
+\[
+    = |(a_n - g) - (a_m - g)| \le |a_n - g| + |a_m - g| < \epsilon' + \epsilon' = \epsilon
+\]
+
+Dowód z prawej w lewą: załóżmy, że $\seq{a_n}$ spełnia warunek Cauchy'ego. Pokażemy kolejno:
+
+\begin{enumerate}
+    \item $\seq{a_n}$ jest ograniczony
+    \item $\seq{a_n}$ ma podciąg $\seqq{a_{n_k}}{k}$ zbieżny do pewnego $g$.
+    \item $g$ jest granicą całego ciągu.
+\end{enumerate}
+
+Istotnie: wybierzmy $\epsilon = 1$. Istnieje $n_0$ takie, że dla $n, m > n_0$ mamy $|a_n - a_m| <
+1$. W szczególności $|a_n - a_{n_0}| < 1$, a więc dla indeksów $n \ge n_0$ wyrazy ciągu $\seq{a_n}$
+leżą w przedziale $(a_{n_0} - 1, a_{n_0} - 1)$. Pozostałe skończenie wiele wyrazów $a_1, a_2, ...,
+a_{n_0-1}$ nie popsuje ograniczoności ciągu. Teraz na mocy twierdzenia Bolzano Weierstraßa z ciągu
+$\seq{a_n}$ wybierzmy podciąg $\seqq{a_{n_k}}{k}$ zbieżny do pewnego $g$. Wybierzmy $\epsilon > 0$,
+ustalmy $\epsilon' = \frac{\epsilon}{2}$. Z warunku Cauchy'ego istnieje $n_0$, że dla $n, m > n_0$
+mamy $|a_n - a_m| < \epsilon'$. Z drugiej strony istnieje $k_0$ takie, że $|a_{n_k} - g| < \epsilon$
+dla $k > k_0$. Ewentualnie powiększając $k_0$ możemy zapewnić, że $n_k > n_0$, gdy $k > k_0$. Teraz
+dla $n > n_0$ i $k > k_0$ mamy
+\[
+    |a_n - g| = |a_n - a_{n_k} + a_{n_k} - g| \le |a_n - a_{n_k}| + |a_{n_k} - g| \le \epsilon' +
+    \epsilon' = \epsilon
+\]
+
+\section{Funkcja wykładnicza i logarytm}
+
+\begin{Def}
+    Funkcję wykładniczą $\exp: \R \to \R$ definiujemy jako granicę
+    \[
+        \exp(x) = \lim_{n \to \infty} \left(1+\frac{x}{n}\right)^n
+    \]
+    (inne oznaczenie $e^x$)
+\end{Def}
+
+\begin{Twi}
+    Funkcja $\exp$ jest dobrze określona (to znaczy granica
+    \[
+        \lim_{n \to \infty} \left(1 + \frac{x}{n}\right)^n
+    \]
+    istnieje i jest skończona dla każdego $x \in \R$.
+\end{Twi}
+
+\subsubsection*{Dowód}
+
+Ustalmy $x \in \R$ i oznaczmy $a_n = \left(1 + \frac{x}{n}\right)^n$. Pokażemy, że ciąg $\seq{a_n}$
+jest rosnący od pewnego miejsca
+\[
+    a_n \le a_{n+1} \iff \left(1+\frac{x}{n}\right)^n \le \left(1+\frac{x}{n+1}\right)^{n+1} \iff
+\]
+\[
+    \iff \left(\frac{n+x}{n}\right)^n \le \left(\frac{n+1+x}{n+1}\right)^{n+1} \iff
+\]
+\[
+    \iff \left(\frac{n+x}{n}\right)^{n+1} * \frac{n}{n+x} \le \left(\frac{n+1+x}{n+1}\right)^{n+1} \iff
+\]
+\[
+    \iff \frac{n}{n+x} \le \left(\frac{n(n+1+x)}{(n+1)(n+x)}\right)^{n+1} \iff
+\]
+\[
+    \iff 1 - \frac{x}{n+x} \le \left(\frac{n^2 + nx + n}{n^2 + nx + n + x}\right)^{n+1} \iff
+\]
+\[
+    \iff 1 - \frac{x}{n+x} \le \left(1 - \frac{x}{n^2 + nx + n + x}\right)^{n+1} \iff
+\]
+To jest nierówność Bernoulliego dla $n+1$ i $a = \frac{-x}{(n+1)(n+x)}$, $1 + (n+1)a = 1 -
+\frac{x}{n+x}$ a więc $le$ jest prawdą, o ile $\frac{-x}{(n+1)(n+x)} > -1$ co jest prawdą dla $n$
+dostatecznie dużych, bo $\frac{-x}{(n+1)(n+x)} \to 0$. Pokazaliśmy, że $\seq{a_n}$ jest od pewnego
+miejsca niemalejący. Wystarczy zatem pokazać, że $\seq{a_n}$ jest ograniczony z góry. Dla $x \le 0$
+jest łatwo, bo mamy
+
+\[
+    \left(1+\frac{x}{n}\right) \le 1
+\]
+
+Po spotęgowaniu mamy
+
+\[
+    \left(1+\frac{x}{n}\right)^n \le 1^n = 1
+\]
+
+Czyli istnieje ograniczenie górne. Dla $x > 0$ niech $k$ będzie liczbą naturalną większą niż $x$ (na
+przykład $\lceil x \rceil$). Rozważmy ciąg $b_n = \left(1 + \frac{x}{n}\right)^{n+k}$. Oczywiście
+mamy
+
+\[
+    a_n = \left(1 + \frac{x}{n}\right)^n \le \left(1 + \frac{x}{n}\right)^{n+k} =
+    \left(1+\frac{x}{n}\right)^n * \left(1 + \frac{x}{n}\right)^k
+\]
+
+Pokażemy, że ciąg $\seq{b_n}$ jest malejący od pewnego momentu. To zakończy dowód bowiem mamy
+wówczas nierówność $a_n \le a_{n+1} \le a_{n+2} \le ... \le b_{n+2} \le b_{n+1} \le b_n$ i widzimy,
+że dowolny z wyrazów ciągu $b_n$ ogranicza z góry ciąg $\seq{a_n}$. Istotnie 
+
+\[
+    b_n \ge b_{n+1} \iff \left(\frac{n+x}{n}\right)^{n+k} \ge \left(\frac{n+1+x}{n+1}\right)^{n+1+k}
+    \iff
+\]
+\[
+    \iff \left(\frac{(n+x)(n+1)}{n(n+1+x)}\right)^{n+k} \ge \frac{n+1+x}{n+1} = 1 + \frac{x}{n+1}
+\]
+
+Jednakże dla lewej strony
+
+\[
+    \left(\frac{n^2 + n + nx + x}{n^2 + n + nx}\right)^{n+k} = \left(1 +
+    \frac{x}{n(n+1+x)}\right)^{n+k} \ge 1+\frac{(n+k)x}{n(n+1+x)}
+\]
+Używając nierówności Bernoulliego. Wtedy 
+
+\[
+    LS = 1+\frac{(n+k)x}{n(n+1+x)} \ge 1+\frac{x}{n+1} = RS \iff
+\]
+\[
+    \iff (n+k)(n+1) \ge n(n+1+x) \iff n+k+k \ge nx
+\]
+
+Wypada sprawdzić, czy były spełnione założenia w nierówności Bernoulliego, to znaczy czy
+$\frac{x}{n(n+x+1)} > -1$. Tak, bo $x > 0$ więc to jest liczba dodatnia. Pokazaliśmy zatem, że ciąg
+$\seq{a_n}$ jest rosnący (od pewnego miejsca) i ograniczony, więc jest zbieżny.
+
+\begin{Def}
+    W szczególności istnieje skończona granica
+    \[
+        e = \exp(1) = \lim_{n \to \infty}\left(1+\frac{1}{n}\right)^n \approx 2.71828
+    \]
+    Nazywamy ją stałą Eulera (albo liczbą $e$). To jest obok $\pi$ oraz $i$ jedna z najważniejszych
+    liczb w matematyce.
+\end{Def}
+
+\subsection{Własności funkcji exp}
+
+\begin{Twi} [Własności exp]
+    Funkcja $\exp$ ma następujące własności:
+    \begin{enumerate}
+        \item $\exp$ jest ściśle rosnące $\iff \fa{x < y} \exp(x) < \exp(y)$
+        \item $\fa{x,y} \exp(x+y) = \exp(x) * \exp(y)$
+        \item $\exp$ jest ciągły, to znaczy jeśli $\seq{x_n}$ jest danym ciągiem zbieżnym do $x$, to
+            $\exp(x_n) \to \exp(x)$
+        \item Prawdziwe są nierówności:
+            \begin{itemize}
+                \item $\fa{x \in R} 1 + x \le \exp(x)$
+                \item $\fa{x \in R, x < 1} \exp(x) \le \frac{1}{1-x}$
+            \end{itemize}
+        \item Jeśli $\seq{x_n}$ jest danym ciągiem zbieżnym do zera, to
+            \[
+                \lim_{n \to \infty} \frac{\ln(x_n+1)}{x_n} = 1
+            \]
+        \item Funkcja $\exp$ jest bijekcją $\R$ na $\R_+$
+    \end{enumerate}
+\end{Twi}
+
+\begin{Def}
+    Logarytmem naturalnym, $\ln: \R_+ \to \R$ nazywamy funkcję odwrotną do $\exp: \R \to \R_+$ to
+    znaczy
+    \[
+        x = \ln(y) \iff \exp(x) = y 
+    \]
+    A więc $\exp(\ln(y)) = y$ i $\ln(\exp(x)) = x$
+\end{Def}
+
+\begin{Twi}[Własności logarytmu]
+    Funkcja $\ln$ ma następujące własności
+    \begin{enumerate}
+        \item $\ln$ jest funkcją ściśle rosnącą, to znaczy $\fa{x, y \in \R_+, x < y} \ln(x) <
+            \ln(y)$
+        \item $\fa{x, y \in \R_+} \ln(x*y) = \ln(x) + \ln(y)$
+        \item $\ln$ jest funkcją ciągłą, to znaczy jeśli $\seq{x_n}$ jest dowolnym ciągiem liczb
+            dodatnich zbieżnym do $x > 0$ to $\ln(x_n) \to \ln(x)$
+        \item Prawdziwe są nierówności:
+            \[
+                \frac{x}{1+x} \le \ln(1+x) \le x \text{ dla } x > -1
+            \]
+        \item Jeśli $\seq{x_n}$ jest dowolnym ciągiem zbieżnym do zera, to
+            \[
+                \lim_{n \to \infty} \frac{1+x_n}{x_n} = 1
+            \]
+        \item $\ln$ jest bijekcją $\R_+$ na $\R$.
+    \end{enumerate}
+\end{Twi}
+
+
+Aby udowodnić te właściwości, udowodnijmy najpierw następujący fakt.
+\begin{Lem}
+    Dla $N \in \N$ mamy
+    \[
+        \exp\left(\frac{1}{N}\right) = 
+        \sqrt[N]{\exp(1)} = \sqrt[N]{e}
+    \]
+    \[
+        \exp\left(\frac{-1}{N}\right) = 
+        \sqrt[N]{\exp(-1)}
+    \]
+\end{Lem}
+
+\subsubsection*{Dowód}
+
+$\exp\left(\frac{1}{N}\right)$ to granica ciągu $a_n$ = $\left(1 + \frac{\frac{1}{N}}{n}\right)^n =
+\left(1 + \frac{1}{Nn}\right)^n$ Zatem $\seq{a_n^N}$ jest podciągiem ciągu
+$\seq{\left(1+\frac{1}{n}\right)^n}$ zbieżnego do $e$. Wnioskujemy, że $\seq{a_n^N}$ dąży do e. Z
+drugiej strony $a_n \to \exp\left(\frac{1}{N}\right)$ a więc $\seq{a_n^N} \to \exp(\frac{1}{N})^N$ z
+arytmetyki granic. Zatem $\exp\left(\frac{1}{N}\right)^N = e$
+
+\bigbreak
+
+Dowód 1) własności $\exp$: $\exp$ jest niemalejący. Weźmy $x < y$. Wtedy mamy $0 < \left(1 +
+\frac{x}{n}\right) < \left(1 + \frac{y}{n}\right)$. Po spotęgowaniu mamy
+
+\[
+    \exp(x) \leftarrow \left(1+\frac{x}{n}\right)^n < \left(1 + \frac{y}{n}\right)^n \to \exp (y)
+\]
+
+Z twierdzenia o zachowaniu nierówności słabej wnioskujemy, że $\exp(x) \le \exp(y)$.
+
+\bigbreak
+
+Dowód 2) własności $\exp$: Zbadamy ciąg
+
+\[
+    a_n = \frac{\left(1 + \frac{x}{n}\right)^n * \left(1 + \frac{y}{n}\right)^n}{\left(1+\frac{x+y}{n}\right)^n}
+\]
+
+Który jest zbieżny do $\frac{\exp(x)*\exp(y)}{\exp{x+y}}$
+
+\[
+    a_n = \left(\frac{\frac{n+x}{n} * \frac{n+y}{n}}{\frac{n+x+y}{n}}\right)^n
+    = \left(\frac{(n+x)(n+y)}{n(n+x+y)}\right)^n = \left(\frac{n^2 + nx + ny + xy}{n^2 + nx + ny}\right)^n
+    = \left(1 + \frac{xy}{n^2 + nx + ny}\right)^n \le \left(1 + \frac{2|xy|}{n^2}\right)^n
+\]
+
+Ostatnia nierówność jest prawdziwa, bo
+
+\[
+    \frac{n(n+x+y)}{n^2} \to 1
+\]
+
+Stąd dla dostatecznie dużych $n$ $n(n+x+y) > \frac{n^2}{2}$. Zauważmy, że dla dowolnego $N \in \N$
+istnieje $n_0$ takie, że dla $n > n_0$
+
+\[
+    \left(1 + \frac{2|xy|}{n^2}\right) < 1 + \frac{1}{nN}
+\]
+
+Wystarczy $n_0$ takie, że $\frac{2|xy|}{n_0} < \frac{1}{N}$. Stąd
+
+\[
+    a_n < \left(1 + \frac{2|xy|}{n^2}\right)^n < \left(1 + \frac{1}{nN}\right)^n \to
+    \sqrt[N]{\exp(1)}
+\]
+
+Analogicznie szacujemy $a_n$ z dołu przez
+
+\[
+    a_n = \left(1 + \frac{xy}{n(n+x+y)}\right)^n \ge \left(1 - \frac{2|xy|}{n^2}\right)^n > \left(1
+        - \frac{1}{nN}\right)^n \to \exp\left(\frac{-1}{N}\right)
+\]
+
+Ostatecznie oszacowujemy
+
+\[
+    \sqrt[N]{\exp(-1)} \le a_n \le \sqrt[N]{\exp(1)}   
+\]
+
+A lewa i prawa część tego dążą do $1$ przy $N \to \infty$
+Zatem $\lim_{n \to \infty}a_n = 1 = \frac{\exp(x)*\exp(y)}{\exp{x+y}}$
+
+\bigbreak
+
+Dowód 3) ciągłości: Rozważmy ciąg $x_n \to x \iff x_n - x \to 0$. Mamy $\exp(x_n) = \exp(x_n - x +
+x)$. Skoro $x_n - x \to 0$, to $\fa{N \in \N}\ex{n_0} \fa{n > n_0} \frac{-1}{N} < x_n - x <
+\frac{1}{N}$. Z $A$ mamy zatem $1 \leftarrow \sqrt[N]{\exp(-1)} = \exp\left(\frac{-1}{N}\right) <
+\exp(x_n - x) < \exp\left(\frac{1}{N}\right) =\sqrt[N]{\exp(1)} \to 1$. Z twierdzenia o trzech
+ciągach $\exp(x_n - x) \to 1$. Stąd $\exp(x_n) \to 1\exp(x) = \exp(x)$.
+
+\bigbreak
+
+Dowód 4) własności nierówności: Użyjmy nierówności Bernoulliego
+
+\[
+    \left(a+\frac{x}{n}\right)^n \ge 1+n*\frac{x}{n} = 1+x
+\]
+
+Możemy, ponieważ dla dostatecznie dużych $n$ ($\frac{x}{n} > -1$). Przechodząc do granicy po obu
+stronach nierówności (korzystamy z twierdzenia o zachowaniu nierówności słabej) dostaję $\exp(x) \ge
+1+x$. Zauważmy, że z własności 2) mamy $1 = \exp(0) = \exp(x)*\exp(-x)$ Stąd $\exp(x) =
+\frac{1}{\exp(-x)}$. Dla $\exp(-x)$ mamy $\exp(-x) \ge 1-x$ jeśli $1-x > 0$ ($\iff x < 1$) mogę
+odwrócić tę nierówność. $\exp(x) = \frac{1}{\exp(-x)} \le \frac{1}{1-x}$.
+
+\bigbreak
+
+Dowód 5) własności ważnej granicy: To wynika łatwo z 4). Rozważmy ciąg $\seq{x_n}$ zbieżny do zera.
+Odrzucając pewną początkową liczbę wyrazów możemy przyjąć, że $x_n < 1$. Wtedy
+
+\[
+    1 + x_n \le \exp(x_n) \le \frac{1}{1-x_n}
+\]
+\[
+    \iff x_n \le \exp(x_n)-1 \le \frac{x_n}{x_n-1}
+\]
+
+Dla $x_n > 0$ mamy $1 \le \frac{\exp(x_n) - 1}{x_n} \le \frac{1}{1-x_n} \to 1$ , a dla $x_n < 0$
+mamy $1 \ge \frac{\exp(x_n) - 1}{x_n} \ge \frac{1}{1-x} \to 1$. Zatem ciąg $\frac{\exp(x_n) -
+1}{x_n}$ jest w obu przypadkach ograniczony przez parę ciągów zbieżnych do $1$. Z twierdzenia o
+trzech ciągach mamy $\lim_{n \to \infty} \frac{\exp(x_n)-1}{x_n} = 1$
+
+\bigbreak
+
+Dowód 6) własności o bijekcji. Po pierwsze granica ciągu $\seq{\left(1+\frac{x}{n}\right)^n}$ jest
+zawsze dodatnia, bo dla dostatecznie dużych $n$ mamy $\left(1 + \frac{x}{n}\right) > 0$ więc tego
+$n$ta potęga też jest dodatnia i ciąg jest niemalejący. Stąd granica jest dodatnia. Widać także, że
+$\exp$ jest różnowartościowa, bo jest rosnąca. Pokażemy na koniec, że $\exp$ jest na $\R_+$.
+Wybierzmy dowolne $y \in \R_+$ i rozważmy $A = \left\{x \in \R \sat \exp(x) \le y\right\}$ Pokażemy,
+że $A$ ma supremum $c = sup(A)$ i $\exp(c) = y$. Istotnie, $A$ jest niepusty i ograniczony. Aby
+wykazać ograniczoność zauważmy, że $\exp(n) = \exp(1 + 1 + ... + 1) = \exp(1)^n > 2^n$. Stąd wynika,
+że $A$ jest ograniczony z góry, bowiem istnieje takie $n_0$, że $y < 2^{n_0}$. Wobec tego
+(korzystamy z 1) dla $x > n_0$ mamy $\exp(x) > \exp(n_0) > 2^n > y$, a więc $x \ne A$ zatem $n_0$
+jest ograniczeniem górnym $A$. Skorzystajmy teraz z 2 otrzymując $\exp(-n) = \frac{1}{\exp(n)} <
+\frac{1}{2^n}$. Ponieważ $\frac{1}{2^n}$ zbiega do $0$ istnieje $n_1$ takie, że $\frac{1}{2^n} < y$
+zatem $\exp(-n_1) < \frac{1}{2^n} < y \implies -n_1 \in A \implies A \ne \emptyset$. Zatem istnieje
+supremum zbioru $A$, $c \in \R$. Ponieważ $c$ to supremum, istnieje ciąg $\seq{x_n} \subset A$ taki,
+że $x_n \to C$, więc z własności 3 mamy $\exp(x_n) \to \exp(c)$. Ale $x_n \in A$, zatem z definicji
+$\exp(x_n) \le y$. Przechodząc do granicy korzystamy z twierdzenia o zachowaniu nierówności słabej i
+dostajemy $\exp(c) \le y$. Gdyby $\exp(c) < y$ to dla dostatecznie dużych $n$ mamy
+$\exp(c+\frac{1}{n}) = \exp(c) \exp(\frac{1}{n} = \exp(c) \sqrt[n]{\exp(1)}$. Chcemy udowodnić, że
+ta ostatnia rzecz jest mniejsza od $y$. Ponieważ $\sqrt[n]{\exp(1)} \to 1$, zatem $\exp(c)
+\sqrt[n]{\exp(1)} \to \exp(c) < y$. Z twierdzenia o szacowaniu wyrazy ciągu $\exp(c)
+\sqrt[n]{\exp(1)}$ są od pewnego momentu mniejsze od $y$. Zatem $c + \frac{1}{n} \in A$, co przeczy
+wyborowi $c$ jako supremum $A$. Ostatecznie $\exp(c) = y$.
+
+\subsubsection*{Dowody dla własności logarytmu}
+
+Przypomnienie: $\exp(x) = y \iff x = \ln(y)$. 
+
+\bigbreak
+
+Dowód 1) własności monotoniczności: Rozważmy $0 < x <y$. Gdyby $\ln(x) \ge \ln(y)$ to przykładając
+$\exp$ i korzystając z jego monotoniczności mamy $x = \exp(\ln(x)) \ge \exp(\ln(y)) \ge y$, czyli $x
+\ge y$ co daje nam sprzeczność.
+
+\bigbreak
+
+Dowód 2) własności $\ln(xy) = \ln(x) + \ln(y)$. Rozważmy $x, y \in \R_+$ i oznaczmy $a = \ln(x), b =
+\ln(y)$. Innymi słowy $\exp(a) = x, \exp(b) = y$. Wtedy $\exp(a+b) = \exp(a)\exp(b) = xy$, a więc
+$\exp(a+b) = xy \iff \ln(xy) = a+b = \ln(x) + \ln(y)$
+
+\bigbreak
+
+Dowód 3) własności ciągłości. Rozważmy $x_n$ zbieżny do $x$, jak założeniach. Wówczas niech $y_n =
+\frac{x_n}{x} \to 1$. Z kolei: $\ln(x_n) = \ln\left(\frac{x_n}{x} * x\right) =
+\ln\left(\frac{x_n}{x}\right) + \ln(x)$. Wystarczy zatem pokazać, że jeśli $y_n \to 1$, to $\ln(y_n)
+\to 0$. To wykażemy za chwilę.
+
+\bigbreak
+
+Dowód 4) własności nierówności $\frac{x}{1+x} \le \ln(1+x) \le x$. Mamy $e^x \ge 1+x$ dla $x \in
+\R$. Jeśli $1+x > 0$ to mogę przyłożyć $\ln$ do tej nierówności i korzystając z 1 dostać $x =
+\ln(\exp(x)) \ge \ln(1+x)$. Z kolei $\ln(\frac{1}{1+x}) = \ln(1) - \ln(1+x) = -\ln(1+x)$. Czyli
+$-\ln(1+x) = \ln(\frac{1}{1+x}) = \ln(1 + \frac{-x}{1+x}) = \ln(1+y)$. Chcemy dowodnić, że to
+ostatnie jest mniejsze lub równe $y$, gdzie $y = \frac{-x}{1+x}$
+
+TODO przepisać ze zdjęcia 08/11
+
+\bigbreak
+
+Reszta dowodu 3: Weźmy $y_n \to 1$, wtedy $1 + z_n$, gdzie $z_n \to 0$. Zatem z $D$ mamy
+$0 \leftarrow \frac{z_n}{1+z_n} \le \ln(y_n) = \ln (1+z_n) \le z_n \to 0$. Z twierdzenia o trzech
+ciągach mamy $\ln(y_n) \to 0$.
+
+\bigbreak
+
+Dowód 5) własności ważnej granicy. Weźmy $\seq{x_n}$ zbieżny do $0$. Bez straty ogólności możemy
+przyjąć, że $x_n > -1$. Wtedy z 4 mamy $\frac{x_n}{1+x_n} \le \ln(1+x+n) \le x_n$. Dla $x_n > 0$
+mamy $1 \leftarrow \frac{1}{1+x_n} \le \frac{\ln(1+x_n)}{x_n} \le 1 \to 1$. Dla $x_n < 0$ mamy $1
+\leftarrow \frac{1}{1+x_n} \ge \frac{\ln(x_n + 1)}{x_n} \ge 1 \to 1$. Zatem w obu sytuacjach szacuję
+wyrażenie $\frac{\ln(1+x_n)}{x_n}$ przez dwa ciągi zbieżne do $1$. Z twierdzenia o trzech ciągach
+mamy tezę.
+
+\subsection{Funkcja potęgowa i wykładnicza}
+
+\begin{Def}
+    Korzystając z definicji $\exp$ i $\ln$ dla dowolnych $a \in \R_+$ i $b \in R$ mam zdefiniowaną
+    potęgę:
+    \[
+        a^b = \exp(b * \ln(a))
+    \]
+    Funkcję $\R \ni x \to a^x \in \R_+$ nazywamy funkcją wykładniczą przy podstawie $a \in \R_+$,
+    zaś funkcję $\R_+ \ni x \to x^b \in \R_+$ nazywamy funkcję potęgową o wykładniku $B$. Widać
+    stąd, iż $e^x = \exp(x)$.
+\end{Def}
+
+Ta definicja zgadza się z potęgowaniem $a^n$.
+
+\subsubsection{Własności funkcji $a^x$}
+
+\begin{enumerate}
+    \item $a^x*a^y = a^{x+y}$.
+    \item $a^{xy} = \left(a^x\right)^y = \left(a^y\right)^x$
+    \item jeśli $a > 1$ to $a^x$ jest rosnąca.
+    \item jeśli $a < 1$ to $a^x$ jest malejąca.
+    \item jeśli $a = 1$ to $a^x$ jest stała.
+\end{enumerate}
+
+Dla $a \ne 1$ funkcja $a^x$ jest bijekcją $\R \to \R_+$. Funkcję odwrotną do niej nazywamy
+logarytmem przy podstawie $a$. Łatwo pokazać, że $\log_a(x) = \frac{\ln(x)}{\ln(a)}$
+
+\bigbreak
+
+\subsubsection{Własności funkcji $x^b$}
+
+\begin{enumerate}
+    \item $(x*y)^b = x^b * y^b$
+    \item dla $b > 0$ $x^b$ jest rosnąca.
+    \item dla $b < 0$ $x^b$ jest malejąca.
+    \item dla $b = 0$ $x^b$ jest stałą.
+\end{enumerate}
+
+\begin{Twi} [Przechodzenie do granicy przy potęgowaniu]
+    Rozważmy ciąg $\seq{x_n}$ oraz $\seq{y_n}$. Załóżmy, że $x_n > 0$ oraz $x_n \to x > 0$, a $y_n
+    \to y$. Wtedy $\seq{x_n^{y_n}} \to x^y$
+\end{Twi}
+
+\subsubsection*{Dowód}
+
+Z ciągłości logarytmy $\ln(x_n) \to \ln(x)$. Teraz z twierdzenia o arytmetyce granic $y_n * \ln(x_n)
+\to y * \ln(x)$. Korzystając z ciągłości $\exp$ mamy $\exp(x_n)^y_n = \exp(y_n * \ln(x_n)) \to
+\exp(y * \ln(x)) \to x$
+
+\begin{Twi}
+    Jeśli $\seq{x_n}$ jest ciągiem rozbieżnym do $+\infty$, to $\lim_{n \to +\infty} \left(1 +
+\frac{1}{x_n}\right)^{x_n} = e$. Podobnie działa, gdy $|x_n| \to \infty$.
+\end{Twi}
+
+\subsubsection*{Dowód}
+
+Odrzucając skończenie wiele początkowych wyrazów ciągu możemy przyjąć, że $x_n > 1$. Oznaczamy
+przez $k_n$ liczbę naturalną taką, że $k_n \le x_n < k_n + 1$ ($k_n = \left\lfloor x_n
+\right\rfloor$). Oczywiście $k_n \to \infty$. Możemy oszacować
+
+\[
+    1 + \frac{1}{k_n + 1} \le 1 + \frac{1}{x_n} \le 1 + \frac{1}{k_n}
+\]
+
+Teraz
+
+\[
+    e \leftarrow \left(1 + \frac{1}{k_n + 1}\right)^{k_n+1} * \left(1 + \frac{1}{k_n + 1}\right)
+    ^{-1}= \left(1 + \frac{1}{k_n + 1}\right)^{k_n} \le \left(1 + \frac{1}{x_n}\right)^{x_n}
+\le \left(1 + \frac{1}{k_n}\right)^{k_n + 1} = 
+\]
+
+\[
+    = \left(1 + \frac{1}{k_n}\right)^{k_n} * (1 +
+    \frac{1}{k_n}) \to e
+\]
+
+Zauważmy, że ciąg $\left(1 + \frac{1}{k_n + 1}\right)^{k_n + 1} * \left(1 + \frac{1}{k_n +
+1}\right)^{-1}$ jest podciągiem ciągu $\left(1 + \frac{1}{n + 1}\right)^{n + 1} * \left(1 +
+\frac{1}{n + 1}\right)^{-1}$ zbieżnego do $e$. Podobnie, ciąg $\left(1+\frac{1}{k_n}\right)^{k_n} *
+\left(1 + \frac{1}{k_n}\right)$ jest podciągiem ciągu $\left(1+\frac{1}{n}\right)^{n} * \left(1 +
+\frac{1}{n}\right)$ zbieżnego do $e$. Z twierdzenia o trzech ciągach mamy $\left(1 +
+\frac{1}{x_n}\right)^{x_n} \to e$.
+
+\section{Granica i ciągłość funkcji}
+
+\subsection{Podstawowe definicje i przykłady}
+
+\begin{Def}
+    Rozważmy przedział $(a, b)$ i punkt $p \in (a, b)$. Niech $A = (a, b) \setminus
+    \left\{p\right\}$  i $f: A \to \R$ będzie funkcją. Powiemy, że $f$ ma w $p$ granicę $g$
+    (oznaczane $\lim_{x \to p} f(x) = g$) jeśli zachodzi jeden z dwóch równoważnych warunków:
+    \begin{enumerate}
+        \item
+            \[
+                \fa{\seq{x_n} \subset A} x_n \to p \implies f(x_n) \to g
+            \]
+        \item 
+            \[
+                \fa{\epsilon > 0} \ex{\delta > 0} \fa {x \in A} |x-p| < \delta \implies |f(x) - g| <
+                \epsilon
+            \]
+    \end{enumerate}
+\end{Def}
+
+\begin{Def}
+    Rozważmy przedział $(a, b)$ i funkcję $f: (a, b) \to R$. Niech $p \in (a, b)$. Powiemy, że $f$
+    jest ciągła w $p$, gdy $\lim_{x \to p} f(x) = f(p)$. Powiemy, że $f$ jest ciągła, gdy jest
+    ciągła w każdym punkcie swojej dziedziny.
+\end{Def}
+
+\subsubsection*{Przykłady (ważne granice)}
+
+Widać, że $\lim_{x \to 0} \frac{e^x - 1}{x} = 1$, bo dla każdego ciągu $x_n \to 0$ mamy $
+\frac{\exp(x_n)-1}{x_n}$. Granica istnieje w tym punkcie, chociaż funkcja nie jest tam określona.
+Można więc zdefiniować funkcję
+
+\[
+    f(x) =
+    \left\{
+        \begin{array}{r}
+            \frac{e^x-1}{x} \text{ dla } x \ne 0 \\
+            1 \text{ dla } x = 0
+        \end{array}
+    \right.
+\]
+
+Która jest ciągła w $x = 0$.
+
+\bigbreak
+
+Także $\lim{x \to 0} \frac{\ln(1 + x)}{x} = 1$, to jest jedna ze znanych już wartości logarytmu.
+
+\bigbreak
+
+Funkcje $\exp$ i $\ln$ są ciągłe, bo pokazaliśmy, że jeśli $x_n \to x$, to $\exp(x_n) \to \exp(x)$ i
+$\ln(x_n) \to \ln(x)$. Aby zilustrować definicję Cauchy'ego granicy sprawdźmy ciągłość funkcji
+$x^2$. Ustalmy $p \in \R$. Wybierzmy $\epsilon > 0$. Szukamy $\delta > 0$ takiej, że jeśli $|x-p| <
+\delta$, to $|x^2 - p^2| < \epsilon$.
+
+\[
+    |x^2 - p^2| = |x - p| * |x + p| \le |x-p| \left(|x| + |p|\right) \le |x-p| \left(2|p| + 1\right)
+\]
+
+Zatem możemy wybrać $\delta = min (1, \frac{\epsilon}{2|p| + 1})$, wówczas
+
+\[
+    |x^2 - p^2| \le |x-p|(2|p| + 1) < \delta(2|p| + 1) \le \epsilon
+\]
+
+\begin{Twi}
+    Definicje Cauchy'ego i Heine'go granicy (i ciągłości) funkcji w punkcie są równoważne.
+\end{Twi}
+
+\subsubsection*{Dowód}
+
+Rozważmy $f: A \to \R$, $A = (a, b) \setminus \{p\}$, $p \in (a,b)$. Udowodnijmy, że z Heinego wynika
+Cauchyego. Udowodnimy to pokazując, że z nie Cauchy'ego wynika nie Heinego. Zaprzeczeniem definicji
+Cauchy'ego jest zdanie
+
+\[
+    \ex{\epsilon_0 > 0} \fa{\delta > 0} \ex{x_\delta \in A} |x-p| < \delta, |f(x) - g| \ge
+    \epsilon_0
+\]
+
+W szczególności dla $\delta = \frac{1}{n}$ mamy $x_n \in A$ taki, że $|x_n - p| < \frac{1}{n}$ oraz
+$|f(x_n) - g| > \epsilon_0$ Stąd widać, że $x_n \to p$, ale $f(x_n) \not\to g$, czyli zaprzeczona
+jest także definicja Heinego. Pozostał dowód Heinego z Cauchy'ego. Załóżmy, że definicja Cauchy'ego
+jest spełniona. Wybierzmy ciąg $\seq{x_n} \subset A$ zbieżny do punktu $p$. Chcemy pokazać, że
+$f(x_n) \to g$. Ustalmy $\epsilon > 0$ i niech $\delta > 0$ będzie takie, jak w definicji
+Cauchy'ego. Skoro $x_n \to p$, to $\ex{n_0} \fa {n > n_0} |x_n - p| < \delta$, ale wtedy $|f(x_n) -
+g| < \epsilon$ zatem $\fa{n > n_0}$ mamy $|f(x_n) - g| < \epsilon \iff f(x_n) \to g$ co kończy
+dowód.
+
+\begin{Def}
+    Definicję granicy funkcji w punkcie można łatwo rozszerzyć na przypadek granic niewłaściwych
+    (zarówno jeśli chodzi o argumenty funkcji, jak i wartości). Rozważmy $f: (a,b) \setminus \{p\}
+    \to \R$. Dopuszczamy sytuację, gdy $a, b \in \R \cup \{\infty\} \cup \{-\infty\} =
+    \overline{\R}$. Powiemy, że:
+    \begin{enumerate}
+        \item $\lim_{x \to p} f(x) = \infty$ gdy następują równoważne warunki:
+            \begin{enumerate}
+                \item $\fa{\seq{x_n} \subset A} x_n \to p \implies f(x_n) \to \infty$
+                \item $\fa{M > 0} \ex{\delta > 0} \fa{x \in A} |x-p| < \delta \implies f(x) > M$
+            \end{enumerate}
+        \item $\lim_{x \to \infty} f(x) = g$ gdy następują równoważne warunki:
+            \begin{enumerate}
+                \item $\fa{\seq{x_n} \subset A} x_n \to \infty \implies f(x_n) \to g$
+                \item $\fa{\epsilon > 0} \ex{N > 0} \fa{x \in A} x > N \implies |f(x)-g| < \epsilon$
+            \end{enumerate}
+        \item $\lim_{x \to \infty} f(x) = \infty$ gdy następują równoważne warunki:
+                \item $\fa{\seq{x_n} \subset A} x_n \to \infty \implies f(x_n) \to \infty$
+                \item $\fa{M > 0} \ex{N > 0} \fa{x \in A} x > N \implies f(x) > M$
+    \end{enumerate}
+    i tak dalej
+\end{Def}
+
+\subsubsection*{Przykłady (ważne granice)}
+
+\begin{enumerate}
+    \item $\lim_{x \to \infty}\left(1 + \frac{1}{x}\right)^x = e$.
+    \item $\lim_{x \to \infty} e^x = \infty$
+    \item $\lim_{x \to -\infty} e^x = \infty$
+    \item $\lim_{x \to 0^+} \ln(x) = -\infty$
+    \item $\lim_{x \to \infty} \frac{x^\alpha}{c^x} = 0$ dla dowolnego $c > 1$
+    \item $\lim_{x \to \infty} \frac{\ln(x)}{x^\alpha} = 0$ dla dowolnego $\alpha > 0$
+\end{enumerate}
+
+\subsubsection*{Dowód}
+
+Dowód (5): Z wykładu o ciągach mamy, że ciąg
+
+\[
+    \lim_{n \to \infty} \frac{n^\alpha}{c^n} = 0
+\]
+
+Widać to, bo ciąg $n^{\alpha+1}$ jest od pewnego miejsca malejący, bo
+
+\[
+    \frac{(n+1)^{\alpha+1}}{c^{n+1}} < \frac{n^\alpha}{c^n} \iff
+    \left(\frac{n+1}{n}\right)^\alpha < c
+\]
+Skoro $\lim_{n \to \infty} \left( \frac{n+1}{n}\right)^\alpha = 1 < c$, to od pewnego miejsca
+nierówność $<$ jest prawdziwa (z twierdzenia o szacowaniu). Stąd istnieje $D > 0$ takie, że
+\[
+    \frac{n^{\alpha+1}}{c^n} < D \implies 0 < \frac{n^\alpha}{c^n} < \frac{D}{n}
+\]
+
+Wiec $ \frac{n^\alpha}{c^n} \to 0$ z twierdzenia o trzech ciągach. Teraz jeśli $x_n \to \infty$ , to
+$k_n = \left\lfloor x_n \right\rfloor$ też rozbiega do $\infty$ (bo $k_n \le \left\lfloor x_n
+\right\rfloor < k_n + 1$). Stąd
+
+\[
+    0
+    <
+    \frac{{x_n}^\alpha}{c^{x_n}}
+    <
+    \frac{{k_{n+1}}^\alpha}{c^{k_n}}
+    =
+    \frac{(k_n+1)^\alpha}{c^{k_n+1}} * C
+    \to
+    0
+\]
+
+Ciąg $\frac{(k_n+1)^\alpha}{c^{k_n+1}}$ to podciąg z powtórzeniami ciągu $\frac{n^2}{c^n}$ zbieżnego
+do zera. Zatem z twierdzenia o trzech ciągach $\frac{{x_n}^\alpha}{c^{x_n}} \to 0$
+
+\bigbreak
+
+Dowód (6): rozważmy ciąg $\seq{x_n}$ rozbieżny do $\infty$. Bez straty ogólności możemy założyć, że
+$x_n > 1$. Wybierzmy $l_n \in \N$ w taki sposób, aby $2^{l_n} \le x_n^\alpha < 2^{l_n+1}$. Oczywiście $l_n
+\to \infty$, bo $x_n \to \infty$. Teraz 
+
+\[
+    0
+    <
+    \frac{\ln(x_n)}{x_n^\alpha}
+    =
+    \frac{1}{\alpha} * \frac{\alpha \ln(x_n)}{x_n^\alpha}
+    =
+    \frac{1}{\alpha} * \frac{\ln(x_n^\alpha)}{x_n^\alpha}
+    <
+    \frac{1}{\alpha} * \frac{\ln\left(2^{l_n + 1}\right)}{2^{l_n}}
+    =
+    \frac{1}{\alpha} * \frac{(l_n + 1)\ln(2)}{2^{l_n}}
+    =
+\]
+\[
+    =
+    \frac{l_n+1}{2^{l_n+1}} * \frac{2\ln(2)}{\alpha}
+\]
+
+Na mocy (5) ciąg 
+$\frac{l_n+1}{2^{l_n+1}} \to 0$
+, stąd (z trzech ciągów)
+
+\[
+    \frac{\ln(x_n)}{x_n^\alpha} \to 0
+\]
+
+\bigbreak
+
+\subsection{Jednostronne granice}
+
+Wcześniej pojawił się zapis
+
+\[
+    \lim_{x \to 0^+} \ln (x) = -\infty
+\]
+
+Wyjaśnijmy go bardziej formalnie.
+
+\begin{Def}
+    Rozważmy funkcję $f: (a,b) \to \R$ i niech $p \in [a,b]$. Powiemy, że $f$ ma w $p$ granicę
+    prawostronną (lewostronną) równą $g$, gdy zachodzi jeden z równoważnych warunków
+
+    \begin{enumerate}
+        \item
+            \[
+                \fa{\seq{x_n} \subset (a,b) \setminus \{p\}, x_n > p} x_n \to p \implies f(x_1) \to
+                g
+            \]
+        \item 
+            \[
+                \fa{\epsilon > 0} \ex{\delta > 0} \fa{x \in (a,b)\setminus\{p\}} \left(|x-p| < \delta
+                \land x > p\right) \implies |f(x)-g| < \epsilon
+            \]
+    \end{enumerate}
+\end{Def}
+
+\subsection{Informacja o granicy i ciągłości funkcji określonych na dowolnych podzbiorach $\R$}
+
+\begin{Def}
+    Niech $A \subset \R$. Punkt $p \in \overline{\R} = \R \cup \{-\infty, \infty\}$. Nazywamy
+    punktem skupienia zbioru $A$, gdy istnieje ciąg $\seq{x_n} \subset A \setminus \{p\}$ zbieżny do
+    $p$ (punkty skupienia to punkty, w których jest sens liczyć granicę $f: A \to \R$)
+\end{Def}
+
+\begin{Def}
+    Rozważmy funkcję $f: A \to \R, A \subset \R$. Niech $p \in \R$ będzie punktem skupienia zbioru
+    $A$. Powiemy, że $f$ ma w $p$ granicę równą $g$, gdy jest jeden z równoważnych warunków.
+    \[
+        \fa{\seq{x_n} \subset A \setminus \{p\}} x_n \to p \implies f(x_n) \to g
+    \]
+    \[
+        \fa{\epsilon > 0} \ex{\delta > 0} \fa{x \in A \setminus \{p\}} |x-p| < \delta \implies
+        |f(x)-g| < \epsilon
+    \]
+    Jeśli dodatkowo $p \in A$ to powiemy, że $f$ jest ciągła w $p$ gdy $\lim_{x \to p} f(x) = f(p)$.
+\end{Def}
+
+\subsection{Podstawowe własności funkcji ciągłych}
+
+Ponieważ definicja Heinego granicy i ciągłości używa pojęcia granicy ciągu, możemy łatwo przenieść
+znane fakty o ciągach (arytmetyka granic, trzy ciągi, szacowanie, nierówność słaba, nierówność
+$\le$, ciąg monotoniczny) na fakt y o granicach funkcji.
+
+\begin{Twi}[o trzech funkcjach]
+    Rozważmy funkcje $f, g, h: (a,b) \setminus \{p\} \to \R$. Oznaczmy $a = (a,b) \setminus \{p\}$.
+    Oznaczmy, że dla wszystkich $x \in A$ zachodzi nierówność
+    \[
+        f(x) \le g(x) \le h(x)
+    \]
+    Jeśli $\lim_{x \to p} f(x) = \lim_{x \to p} h(x) = \zeta$, to funkcja $g$ ma w $p$ granicę
+    $\zeta$.
+\end{Twi}
+
+\subsubsection*{Dowód}
+
+Jeśli $x_n \to p$, to mamy
+
+\[
+    \zeta \leftarrow f(x_n) \le g(x_n) \le h(x_n) \to \zeta
+\]
+
+I z twierdzenia o trzech ciągach mamy $g(x_n) \to \zeta$
+
+\begin{Twi}[o szacowaniu]
+    Niech $A = (a,b) \setminus \{p\}$ Rozważmy $f: A \to \R$. Jeśli $\lim_{x \to p} f(x)$ istnieje i
+    jest większe od $C$, to istnieje $\delta > 0$, że dla każdego $x \in A \cap (p-\delta,
+    p+\delta)$ mamy $f(x) > C$.
+\end{Twi}
+
+\begin{Twi}[o zachodwaniu nierówności słabej]
+    Niech $A = (a,b) \setminus \{p\}$ Rozważmy $f, g: A \to \R$. Załóżmy, że $\fa{x \in A}$ mamy
+    $f(x) \le g(x)$. Wówczas, jeśli $f, g$ mają granice w punkcie $p$, to
+    \[
+        \lim_{x \to p} f(x) = 
+        \lim_{x \to p} g(x)
+    \]
+\end{Twi}
+
+\begin{Twi}[o arytmetyce granic]
+    Niech $A = (a,b) \setminus \{p\}$ Rozważmy $f, g: A \to \R$. Jeśli $f$ i $g$ mają granice w
+    punkcie $p$, to
+    \begin{enumerate}
+        \item
+            $f+g$ ma granicę w $p$ równą $\lim_{x \to p} f(x) + \lim_{x \to p} g(x)$
+        \item
+            $f-g$ ma granicę w $p$ równą $\lim_{x \to p} f(x) - \lim_{x \to p} g(x)$
+        \item
+            $f*g$ ma granicę w $p$ równą $\lim_{x \to p} f(x) * \lim_{x \to p} g(x)$
+    \end{enumerate}
+    Jeśli dodatkowo $\lim_{x \to p} g(x) \ne 0$ i $g(x) \ne 0$ dla wszystkich $x \in A$, to
+            $\frac{f}{g}$ ma granicę w $p$ równą $\frac{\lim_{x \to p} f(x)}{\lim_{x \to p} g(x)}$
+\end{Twi}
+
+Jeśli $f, g: (a,b) \to \R$ są ciągłe, to funkcje
+\begin{itemize}
+    \item $f+g$ jest ciągłe.
+    \item $f-g$ jest ciągłe.
+    \item $f*g$ jest ciągłe.
+\end{itemize}
+
+Ponadto, jeśli $g(p) \ne 0$, to istnieje $\delta > 0$ takie, że $g(x) \ne 0$ dla $x \in B := (a,b)
+\cap (p-\delta, p + \delta)$, funkcja $\frac{f}{g}|_B$ jest ciągła.
+
+\subsubsection*{Dowód}
+
+Dowody pierwszych trzech są proste. Udowodnijmy czwarty.
+
+Skoro $g$ jest ciągła  w $p$ to
+
+\[
+    \fa{\alpha > 0} \ex{\delta > 0} \fa{x \in A} |x-p| < \delta \implies \left|g(x)-g(p) <
+    \epsilon \right|
+\]
+
+W szczególności dla $\epsilon = |g(p)| > 0$ istnieje pewne $\epsilon > 0$ takie, że o ile
+
+\[
+    x \in A \land |x - p| < \epsilon 
+\]
+
+Mamy $|g(x) - g(p)| < |g(p)|$. Widzimy zatem, że gdyby $g(x) = 0$, to mamy sprzeczność
+
+\[
+    |-g(p)| < |g(p)|
+\]
+
+Zatem faktycznie przy tym wyborze $\delta$, $g(x) \ne 0$ dla $x \in B$. Teraz jeśli $q \in B$ i ciąg
+$\seq{x_n} \subset B$ zbiega do $q$, to 
+
+\[
+    \frac{f(x_n)}{g(x_n)} \to \frac{f(q)}{g(q)}
+\]
+
+Bo $f$, $g$ ciągłe w $q$ oraz $g \ne 0$ na $B$.
+
+\subsubsection*{Wniosek}
+
+Każdy wielomian $Q(x) \in R[x] = \left\{a_0 + a_1 x + ... + a_n x^n \sat n \in N, a_0, ..., a_n \in
+\R \right\}$  jest funkcją ciągłą, bo powstaje przez wykonanie skończonej liczby operacji $+, -, *$
+na funkcjach ciągłych $f(x)=x, g(x) = c$.
+
+\bigbreak
+
+Dodatkowo, każda funkcja funkcja wymierna $\frac{P(x)}{Q(x)}$, gdzie $P, Q \in \R[x]$, jest ciągła
+tam gdzie jest dobrze określona (mianownik nie jest równy zero).
+
+\begin{Twi}[składanie funkcji ciągłych]
+    Rozważmy funkcje $f:A \to \R$ oraz $g: B \to \R$ określone na przedziałach odpowiednio $A, B$
+    Załóżmy, że $f(A) \subseteq B$. Niech $p \in A$ i $f(p) \in B$. Jeśli $f$ jest ciągła w $p$, a
+    $g$ jest ciągła w $f(p)$, to $g(f): A \to \R$ jest ciągła w $p$.
+\end{Twi}
+
+\subsubsection*{Dowód}
+
+Jeśli $x_n \to p$ to $f(x_n) \to f(p)$ bo $f$ ciągła. Z ciągłości $g$ w $f(p)$ wiem, że $g(f(x_n))
+\to f(g(p))$
+
+\begin{Def}
+    Powiemy, że funkcja $f: A \to \R$ jest
+    \begin{itemize}
+        \item rosnąca, gdy $\fa{x, y \in A} f(x) < f(y)$
+        \item niemalejąca, gdy $\fa{x, y \in A} f(x) \le f(y)$
+        \item malejąca, gdy $\fa{x, y \in A} f(x) > f(y)$
+        \item nierosnąca, gdy $\fa{x, y \in A} f(x) \ge f(y)$
+    \end{itemize}
+\end{Def}
+
+Funkcję spełniającą jeden z tych warunków nazywamy monotoniczną. W przypadku punktu pierwszego i
+trzeciego mówimy o ścisłej monotoniczności.
+
+\begin{Twi}[o funkcji monotonicznej]
+    Jeśli $f(a,b) \to \R$ jest funkcją monotoniczną, to $\fa{p \in (a,b)}$ istnieją skończone
+    granice $\lim_{x \to p^-} f(x)$ i $\lim_{x \to p^+} f(x)$. Ponadto jeśli $f$ jest niemalejąca,
+    to $\lim_{x \to p^-} \le \lim_{x \to p^+}$. Jeśli $f$ jest nierosnąca, to $\lim_{x \to p^-} \ge
+    \lim_{x \to p^+}$. Ponadto istnieją granice (być może niewłaściwe) $\lim_{x \to b^-}, \lim_{x
+    \to a^+}f(x)$
+\end{Twi}
+
+\subsubsection*{Dowód}
+
+Bez straty ogólności możemy przyjąć, że $f$ jest niemalejąca oraz rozważmy $p \in (a,b)$ i rosnący
+ciąg $\seq{x_n}$ zbieżny do $p$. W szczególności $x_n \to p^-$. Ciąg $f(x_n)$ jest niemalejący (bo
+$f$ monotoniczna, $\seq{x_n}$ też) i ograniczony z góry przez $f(p + \epsilon)$ gdzie $\epsilon$
+jest takie, aby $p+\epsilon < a$. Z twierdzenia o ciągu monotonicznym i ograniczonym $f(x_n)$ ma
+granicę skończoną. To granica $\lim_{x \to p^-} f(x)$. Widać, że przy każdym wyborze $x_n$
+otrzymujemy tę samą granicę, bo mając $\seq{x_n}$, $\seq{y_n}$ możemy zrobić nowy ciąg z połączenia
+tych dwóch, który zbiega do tej granicy, więc oba muszą zbiegać do tej samej. Pozostaje problem, że
+założyliśmy, iż ciąg $\seq{x_n}$ jest monotoniczny. Możemy go rozwiązać znajdując dwa ciągi rosnące
+$\seq{a_n}, \seq{b_n}$ zbieżne do zbieżne do $p^-$ tak, aby $a_n \le x_n \le b_n$ więc $f(a_n) \le
+f(x_n) \le f(b_n)$ i $f(a_n), f(b_n)$ zbiegają do wspólnej granicy jako dwa ciągi z poprzedniego
+fragmentu dowodu. Wtedy z twierdzenia o trzech ciągach $\lim_{x_n \to p^-} f(x_n) = g$
+
+Na końcach przedziału $x_n \nearrow b$ to $f(x_n)$ jest ciągiem monotonicznym i niekoniecznie
+ograniczonym, więc ma granicę (być może niewłaściwą).
+
+\subsubsection*{Przykład (zadanie z klamerką)}
+
+Funkcja $f$ jest określona następująco:
+
+\[
+    f(x) =
+    \left\{
+        \begin{array}{l}
+            \ln(1+x) \for x \ge 0 \\
+            x + a \for x < 0
+        \end{array}
+    \right.
+\]
+
+Dla jakich wartości $a \in \R$ funkcja $f$ jest ciągła
+
+\begin{itemize}
+    \item Jeśli $x < 0$, to $f$ jest ciągła w $x$ bo $x+a$ jest funkcją ciągłą
+    \item Podobnie dla $x > 0$, bo $\ln(1+x)$ jest funkcją ciągłą
+    \item Trudniejsza jest granica w zerze. Jeśli $f$ jest ciągła w zerze, to
+        $\lim_{x \to 0} = f(c) = 0$.
+        W szczególności wtedy również
+        $\lim_{x \to 0^-} f(x) = f(c) = \lim_{x \to 0^+} f(x)$.
+        Inaczej, równość
+        $\lim_{x \to 0^-} = \lim_{x \to 0^+} = f(0)$
+        to warunek konieczny ciągłości funkcji w zerze. Okazuje się, że jest to też warunek
+        dostateczny.
+\end{itemize}
+
+\begin{Twi}
+    Rozważmy $f: (a, b) \to \R$, $p \in (a, b)$.
+    Jeśli $\lim_{x \to p^-} f(x) = \lim_{x \to p^+} f(x) = f(p)$
+    to $f$ jest ciągła w $p$.
+\end{Twi}
+
+\begin{proof}
+
+    Skorzystamy z definicji Cauchy`ego granicy. Ustalmy $\epsilon > 0$, wobec
+    $\lim_{x \to p^-} = f(p)$ wiemy, że
+
+    \[
+        \ex{\delta^- > 0} x \in (a,b) \land x < p \land |x - p| < \delta^-
+        \implies
+        |f(x) - f(p)| < \epsilon
+    \]
+
+    Wobec tego $\lim_{x \to p^+}$ wiemy, że
+
+    \[
+        \ex{\delta^+ > 0} x \in (a,b) \land x > p \land |x - p| < \delta^+
+        \implies
+        |f(x) - f(p)| < \epsilon
+    \]
+
+    Teraz jeśli przyjmiemy $\delta = \min (\delta^-, \delta^+)$. Mamy 
+
+    \[
+        \fa{x \in (a,b)} |x-p| < \delta
+        \implies
+        \left|f(x) - f(p)\right| < \epsilon
+    \]
+
+    A więc $f$ jest ciągła w $p$.
+\end{proof}
+
+\begin{Twi} [charakteryzacja funkcji $\exp$]
+     $\exp$ to jedyna funkcja $f: \R \to \R$ spełniająca następujące warunki:
+     \begin{enumerate}
+        \item $f(1) = e$
+        \item $\fa{x, y \in \R} f(x+y) = f(x) f(y)$
+        \item $f$ jest ciągła
+     \end{enumerate}
+\end{Twi}
+
+\begin{proof}
+    Będziemy systematycznie powiększać zbiór na którym $f = \exp$.
+    \begin{itemize}
+        \item $f(1) = e = e^1$
+            Jeśli $n \in \N$ to z warunku $(2)$ mamy
+            $f(n) = f(\underbrace{1+1+...+1}{n \text{ jedynek}} = f(1)^n = e^n$
+            Mamy więc, że $f(x) = \exp(x)$ w $\N$
+        \item $f(1) = f(1*0) = f(1) * f(0)$ zatem $f(0) = 1$, bo $f(1) \ne 0$.
+            Jeśli $n \in \N$ to $f(0) = 1 = f\left(n + (-n)\right) = f(n) f(-n) = e^n f(-n)$
+            Zatem $f(-n) = \frac{1}{e^n} = e^{-n}$.
+            Mamy więc, że $f(x) = \exp(x)$ w $\Z$
+        \item Rozważmy liczbę $q = \frac{k}{n}$, $k \in \Z$, $n \in \N$.
+            Mamy $e^k = f(k) = f(n*q) = f(q + q + ... + q) = f(q)^n$
+            więc $f(q) = \left(e^k\right)^\frac{1}{n} = e^{\frac{k}{n}} = e^q$
+            Mamy więc, że $f(x) = \exp(x)$ w $\Q$
+        \item Rozważmy teraz $x \in \R$. Istnieje ciąg $\seq{q_n} \subset \Q$ zbieżny do $x$.
+            Teraz $f(a_n) \to f(x)$ bo $f$ jest ciągła, ale $f(q_n) = e^{q_n} \to e^x$
+            Stąd $f(x) = e^x$.
+    \end{itemize}
+\end{proof}
+
+\subsection{Własność Darboux}
+
+\begin{Twi}[Własność Darboux]
+    Rozważmy funkcję ciągłą $f: [a,b] \to \R$ i liczbę leżącą pomiędzy $f(a)$ oraz $f(b)$. Wówczas
+    istnieje $c \in [a,b]$ takie, że $f(c) = y$.
+\end{Twi}
+
+\begin{proof}
+    Dla ustalenia uwagi przyjmijmy, że $f(a) \le f(b)$. Ustalmy $y \in [f(a), f(b)]$ i rozważmy
+    \[
+        A = \left\{x \in [a,b] \sat f(x) \le y\right\}
+    \]
+    Pokażemy, że $c = \sup(A)$ spełnia tezę twierdzenia.
+    \begin{enumerate}
+        \item $A$ jest niepusty (bo $a \in A$) oraz ograniczony z góry przez $b$, zatem istnieje
+            $c = \sup(A)$.
+        \item Łatwo pokazać, że $f(c) \le y$. Ponieważ $c = \sup(A)$, istnieje ciąg
+            $\seq{x_n} \subset A$ taki, że $x_n \to c$. Ale skoro $x_n \in A$, to $f(x_n) \le y$.
+            Przechodzę do granicy (korzystam z ciągłości $f$ i twierdzenia o zachowaniu nierówności
+            słabej) i dostaję, że $f(c) \le y$
+        \item Na koniec wykluczymy sytuację, gdy $f(c) < y$. Załóżmy przeciwnie $f(c) < y$.
+            Wybierzmy $\epsilon = \frac{g-f(c)}{2} > 0$ i niech $\delta$ będzie takie jak w
+            definicji Cauchy`ego ciągłości $f$ w $c$. Wówczas jeśli
+            $\left|x - c\right| < \delta$ to $\left|f(x) - f(c)\right| < \epsilon$
+            W szczególności $f(x) < f(c) + \epsilon < y$
+            zatem punkty z przedziału $(c-\delta, c+\delta)$ leżą w $A$ stąd $c$ nie może być kresem
+            górnym zbioru $A$. Zatem $f(c) = y$.
+    \end{enumerate}
+\end{proof}
+
+\begin{Twi}[O funkcji ciągłej i różnowartościowej]
+    Rozważmy funkcję ciągłą i różnowartościową $f: A \to \R$, gdzie $A$ jest przedziałem. Wówczas
+    \begin{enumerate}
+        \item $f$ jest ściśle monotoniczna (rosnąca albo malejąca)
+        \item $f(A)$ = $B$ jest przedziałem tego samego typu co $A$
+        \item $f^{-1}: B \to A$ jest ciągła i monotoniczna.
+    \end{enumerate}
+\end{Twi}
+
+\begin{proof}[Dowód pierwszego podpunktu]
+    Rozważmy dowolne $x < y < z$ z przedziału $A$. Chcemy pokazać, że zawsze mamy
+    $f(x) < f(y) < f(z)$
+    bądź
+    $f(x) > f(y) > f(z)$.
+    Przyjmijmy, że $f(x) < f(z)$ i załóżmy, że nierówność
+    $f(x) < f(y) < f(z)$
+    nie zachodzi. Wówczas mamy albo
+    $f(y) < f(x) < f(z)$
+    albo
+    $f(x) < f(z) < f(y)$
+    W pierwszym przypadku mamy $\left(f(y), f(x)\right) \subset \left(f(y), f(z)\right)$. Wybierzmy
+    zatem $s \in \left(f(y), f(x)\right) \subset \left(f(y), f(z)\right)$. Z twierdzenia Darboux
+    $\ex{c_1 \in (x, y)} f(c_1) = s$
+    i podobnie
+    $\ex{c_2 \in (y, z)} f(c_2) = s$
+    Mamy zatem $c_1 \ne c_2$, ale $f(c_1) = f(c_2)$, zatem mamy sprzeczność, bo $f$ jest
+    różnowartościowa.
+\end{proof}
+
+\begin{proof}[Dowód trzeciego podpunktu]
+    Z drugiego podpunktu mamy $f(A) = B$ jest przedziałem. $f$ jest różnowartościowa z $A$ i na $B$,
+    jest więc bijekcją $A$ na $B$ zatem istnieje funkcja odwrotna $f^{-1}: B \to A$.
+    Jest jasne, że $f^{-1}$ jest monotoniczna (w ten sam sposób co $f$). Udowodnijmy ciągłość.
+    Rozważmy $\epsilon > 0$. Obrazem przedziału $(x_0 - \epsilon, x_0 + \epsilon)$ dla $x_0 \in A$
+    jest $\left(f(x_0 - \epsilon), f(x_0 + \epsilon)\right)$
+    zatem
+    $
+    \ex{\delta > 0}
+    \left(f(x_0) - \delta, f(x_0) + \delta\right)
+    \subset
+    \left(f(x_0 - \epsilon), f(x_0 + \epsilon)\right)
+    $.
+    To znaczy, jeśli dla $\left|f(x) -f(x_0)\right| < \delta$, to
+    $\left|x - x_0\right| < \epsilon$
+    czyli
+    $\left|f(x) - f(x_0)\right| < \delta$
+    to
+    $\left|f^{-1}(f(x)) - f(x_0)\right|  < \delta$.
+\end{proof}
+
+\begin{proof}[Dowód drugiego podpunktu]
+    Wobec pierwszego podpunktu mamy, że $f$ jest ściśle monotoniczna, możemy dla ustalenia uwagi
+    przyjąć, że $f$ jest rosnąca. Mamy kilka możliwości:
+    $A = \left[a,b\right], \left(a, b\right], \left[a, b\right), \left(a, b\right)$
+    \begin{itemize}
+        \item $A = \left[a,b\right]$. Ponieważ $f$ rosnąca i $\fa{x \in \left[a,b\right]} a \le x$
+            to $\fa{x \in \left[a, b\right]} f(a) \le f(x)$ to znaczy $f(a) = \min(f(A))$. Podobnie
+            $f(b) = \max(f(A))$. Stąd $f(A) \subseteq \left[f(a), f(b)\right]$. Z własności Darboux
+            wiemy, że $\fa{y \in \left[f(a), f(b)\right]} \ex{c \in \left[a, b\right]} f(c) = y$. To
+            oznacza $f(A) = \left[f(a), f(b)\right]$
+        \item $A = \left[a, b\right)$. W tej sytuacji $f(a)$ to nadal $\min \left(f(A)\right)$. Z
+            drugiej strony $A = \cup_{n = n_0}^\infty \left[a,b - \frac{1}{n}\right]$. Stąd
+            $f(A) =
+            \cup_{n = n_0}^\infty f\left(\left[a, b- \frac{1}{n}\right]\right) =
+            \cup_{n = n_0}^\infty \left[f\left(a\right), f\left(b- \frac{1}{n}\right)\right] =
+            \left[f(a), \lim_{x \to b^-} f(x)\right]
+            $
+            Ciąg $f(b- \frac{1}{n}) \nearrow \lim_{x \to b^-} f(x)$. To istnieje (być może
+            nieskończone) na mocy twierdzenia o funkcji monotonicznej. Możemy więc rozszerzyć
+            funkcję $f$ do funkcji $\overline{f}$ określonej następująco:
+            \[
+                \overline{f} =
+                \left\{
+                    \begin{array}{l}
+                        f \for x \in \left[a, b\right) \\
+                        \lim_{x \to b^-} f(x)
+                    \end{array}
+                \right.
+            \]
+            Która spełnia założenia poprzedniego przypadku.
+        \item Podobnie dowodzimy przypadki $\left(a,b\right], \left(a, b \right)$
+    \end{itemize}
+\end{proof}
+
+\subsection{Funkcje trygonometryczne, cyklometryczne i hiperboliczne}
+
+\begin{Twi}[Własności funkcji $\sin$ i $\cos$]
+    Funkcje $\sin: \R \to \left[-1, 1\right]$ i $\cos: \R \to \left[-1, 1\right]$ mają następujące
+    własności.
+    \begin{enumerate}
+        \item $\sin$ i $\cos$ są ciągłe 
+        \item $\sin^2(x) + \cos^2(x) = 1$
+        \item $\lim_{x \to 0} \frac{\sin(x)}{x} = 1$
+        \item $\lim_{x \to 0} \frac{1-\cos(x)}{x} = \frac{1}{2}$
+    \end{enumerate}
+\end{Twi}
+
+Funkcje arkus kosinus i arkus sinus definiujemy odpowiednio jako funkcje odwrotne do
+$\cos\vert_{\left[0,\pi\right]}$ i $\sin\vert_{\left[-\pi, \pi\right]}$.
+
+\begin{Twi}[Własności $\sin$ i $\cos$]
+    Funkcje trygonometryczne spełniają następujące własności
+    \begin{itemize}
+        \item $\sin(x+y) = \sin(x)\cos(y) + \cos(x)\sin(y)$
+        \item $\cos(x+y) = \cos(x)\cos(y) - \sin(x)\sin(y)$
+    \end{itemize}
+\end{Twi}
+
+\begin{Def}
+    Funkcję tangens (ozn. $\tg: \R \setminus \left\{(k+ \frac{1}{2})\pi \sat k \in \Z\right\}\to \R$
+    definiujemy jako iloraz sinusa i cosinusa
+    \[
+        \tg(x) = \frac{\sin(x)}{\cos(x)}
+    \]
+    Z twierdzenia o arytmetyce funkcji ciągłych tangens jest funkcją ciągłą na swojej dziedzinie.
+    Arkusem tangensem oznaczamy $\arctg: \R \to \left( \frac{-\pi}{2}, \frac{\pi}{2}\right)$
+\end{Def}
+
+\begin{Def}
+    Funkcje sinus hiperboliczny (oznaczamy $\sinh$) i cosinus hiperboliczny (oznaczamy $\cosh$)
+    definiujemy wzorami
+    \[
+        \sinh(x) = \frac{e^x - e^{-x}}{2}
+    \]
+    \[
+        \cosh(x) = \frac{e^x + e^{-x}}{2}
+    \]
+\end{Def}
+
+Funkcje $\sinh$ i $\cosh$ spełniają tożsamości $\cosh(x)^2 - \sinh(x)^2 = 1$
+
+\subsection{Zwartość przedziału domkniętego i twierdzenie Weierstraßa}
+
+\begin{Def}
+    Zbiór $K \subset \R$ nazywamy zwartym, gdy dla każdego ciągu $\seq{x_n} \subset K$ można wybrać
+    podciąg zbieżny do elementu $k \in K$
+\end{Def}
+
+\subsubsection*{Przykłady}
+
+$\left[a,b\right]$ jest zbiorem zwartym, to wynika z twierdzenia Bolzano-Weierstraßa i z twierdzenia
+o zachowaniu nierówności słabej. Istotnie. Rozważmy dowolny ciąg
+$\seq{x_n} \subset \left[a,b\right]$. $\seq{x_n}$ jest ograniczony, więc na mocy twierdzenia
+Bolzano-Weierstraßa ma podciąg $\seqq{x_{n_k}}{k} \to g$. Skoro $a \le x_{n_k} \le b$, to 
+$a \le g = \lim_{k \to \infty} \le b$, a więc $g \in \left[a,b\right]$.
+
+\begin{Twi}[Twierdzenie Weierstraßa]
+    Rozważmy funkcję ciągłą $f: K \to \R$ określoną na zbiorze zwartym $K$. Wówczas istnieją $a, b
+    \in K$ takie, że
+    \[
+        f(a) = \inf \left\{f(x) \sat x \ in K\right\}
+    \]
+    \[
+        f(b) = \sup \left\{f(x) \sat x \ in K\right\}
+    \]
+    Znaczy to, że funkcja ciągła na zbiorze zwartym przyjmuje swoje kresy.
+\end{Twi}
+
+\begin{proof}[1]
+    Zbiór wartości $f(K)  = \left\{f(x) \sat x \in K\right\}$ jest ograniczony. Istotnie, załóżmy,
+    że $\fa{n \in \N}\ex{a_n \in K}\left|f(a_n)\right| > n$, ale $K$ jest zwarty. Zatem istnieje
+    podciąg $\seqq{a_{n_k}}{k} \to c \in K$ Z ciągłości mamy $f(a_{n_k}) \to f(c)$ - liczba.
+    Tymczasem, $\left|f(a_{n_k})\right|$ jest rozbieżne do $\infty$.
+\end{proof}
+\begin{proof}[2]
+    Oznaczmy przez $s$ supremum zbioru wartości $f(K)$. Z (1) $s < \infty$. Istnieje ciąg elementów
+    $x_n \in K$ taki, że $f(x_n) \to s$ (z definicji supremum). Ale $K$ był zwarty, więc z $x_n$
+    wybiorę podciąg $\seqq{x_{n_k}}{k}$ zbieżny do pewnego $b \in K$. Z ciągłości $f$ mamy $f(x_n) \to
+    f(b)$. Znaleźliśmy $b$ takie, że $f(b) = \sup f(K)$.
+\end{proof}
+
+\subsubsection*{Przykład}
+
+Pokażemy, że każdy wielomian parzystego stopnia osiąga swoje minimum bądź maksimum. Rozważmy
+wielomian $W(x) = a_{2n}x^{2n} + a_{2n-1}x^{2n-1} + ... + a_1 x + a_0$. Bez straty ogólności możemy
+przyjąć, że $a_{2n} > 0$. Oczywiście $\lim_{x \to \infty} W(x) = \lim_{x \to -\infty} W(x) =
+\infty$. Zatem $\ex{M}\left(\fa{x > M} f(x) > a_0 \land \fa{x < -M} f(x) > a_0\right)$. Z kolei mamy
+z twierdzenia Weierstraßa, że $\ex{x_0}$ takie, że $W(x_0) = \min_{x \in [-M, M]} W(x)$ Bo $W(x)$
+jest ciągłe a przedział $[-M, M]$ jest zwarty. $x_0$ to globalne minimum funkcji $W$, bo
+$W(x_0) \le W(0) = a_0$, bo $0 \in [-M, M]$ a dla $|x| > M$ mamy $W(x) > a_0 \ge W(x_0)$. Zatem
+$\fa{x \in (-\infty, -M) \cup [-M, M] \cup (M, \infty)} W(x_0) \le W(x)$ czyli $W(x_0) = \min
+W(\R)$.
+
+\begin{Def}
+    Zbiór $A \subset \R$ nazwiemy domkniętym, jeśli każdy ciąg zbieżny $\seq{x_n} \subset A$ ma
+    granicę w $A$.
+\end{Def}
+
+\subsubsection*{Przykład}
+
+Zbiór $A = [a, \infty)$ jest domknięty, ale nie jest zwarty. Istotnie. Jeśli $\seq{x_n} \subset A$
+jest ciągiem zbieżnym, to z twierdzenia o zachowaniu nierówności słabej
+$\lim_{n \to \infty} x_n \ge a$, a więc $\lim x_n \in [a, \infty)$. Ale nie ma zwartości, bo
+$\seq{x_n = n+a}$ nie ma podciągu zbieżnego do granicy skończonej.
+
+\begin{Twi}[Charakteryzacja zwartych podzbiorów $\R$]
+    Zbiór $K \subset \R$ jest zwarty wtedy i tylko wtedy, gdy jest domknięty i ograniczony.
+\end{Twi}
+
+\begin{proof}[Dowód w prawo]
+    Udowodnijmy, że z faktu, iż zbiór jest zwarty wynika, iż jest domknięty i ograniczony,
+    udowadniając, że jeśli nie jest domknięty lub nie jest ograniczony to jest zwarty. Jeśli $K$ nie
+    jest domknięty, to istnieje ciąg zbieżny $\seq{x_n} \subset K$ taki, że $\lim x_n = g \notin K$.
+    Dowolny podciąg ciągu $\seq{x_n}$ też zbiega do $g \in K$, a więc z $\seq{x_n}$ nie da się
+    wybrać takiego podciągu, o jakim mowa w definicji zwartości. Jeśli natomiast $K$ nie jest
+    ograniczony, to istnieje ciąg $\seq{x_n} \subset K$ taki, że $|x_n| \to \infty$. Oczywiście ciąg
+    $\seq{x_n}$ nie ma żadnego podciągu zbieżnego do granicy skończonej. Stąd $K$ nie spełnia
+    definicji zwartości.
+\end{proof}
+
+\begin{proof}[Dowód w lewo]
+    Weźmy $K \subset \R$ domknięty i ograniczony. Dowolny ciąg $\seq{x_n} \subset K$. Ponieważ $K$
+    jest ograniczony, to $\ex{a, b \in \R} \seq{x_n} \subset [a,b]$. Na mocy twierdzenia
+    Bolzano-Weierstraßa istnieje pewien zbieżny podciąg $\seqq{x_{n_k}}{k}$ ciągu $\seq{x_n}$. Ale 
+    $\seqq{x_{n_k}}{k} \subset K$ domknięty, stąd $\lim x_{n_k} \in K$. Właśnie sprawdziliśmy
+    warunek z definicji zwartości.
+\end{proof}
+
+\subsection{Ciągłość jednostajna}
+
+\begin{Def}
+    Rozważmy funkcję $f: A \to \R$ określoną na przedziale $A \subset \R$. Powiemy, że $f$ jest
+    jednostajnie ciągła, gdy
+    \[
+        \fa{\epsilon > 0} \ex{\delta > 0} \fa{x , p \in A} |x-p| < \delta \implies |f(x)-f(p) < \epsilon
+    \]
+    Równoważnie w wersji Heinego
+    \[
+        \fa{\seq{x_n}, \seq{y_n} \subset A} x_n-y_n \to 0 \implies f(x_n) - f(y_n) \to 0
+    \]
+\end{Def}
+
+Jeśli $f$ jest jednostajnie ciągła, to jest też ciągła.
+
+\subsubsection*{Przykład}
+$f(x) = x^2, x \in \R$ oraz $g(x) = \frac{1}{x}, x \in \left(0, 1\right]$ są funkcjami ciągłymi, ale
+nie są jednostajnie ciągłe. Wskażemy ciągi zaprzeczające definicji ciągłości w wersji Heinego. Dla
+$f$ weźmy $\seq{x_n = n}, \seq{y_n = n+ \frac{1}{n}}$ Widać, że $x_n - y_n \to 0$, oraz $f(x_n) -
+f(y_n) \not\to 0$. Dla $g$ weźmy $\seq{x_n = \frac{1}{n}}$ oraz $\seq{y_n = \frac{1}{2n}}$. Także
+widać, że dla tych ciągów nie działa definicja.
+
+\begin{Twi}[Cantora]
+    Funkcja ciągła określona na zbiorze zwartym jest jednostajnie ciągłą.
+\end{Twi}
+
+\begin{proof}
+    Udowodnijmy nie wprost. Rozważmy $f: K \to \R$ ciągłe, gdzie $K \subset \R$ jest zwarty.
+    Załóżmy, że $f$ nie jest jednostajnie ciągła to znaczy
+    \[
+        \ex{\epsilon_0 > 0}
+        \fa{\delta > 0}
+        \ex{x, y \in K}
+        |x-y| < \delta \land |f(x) - f(y)| \ge \epsilon_0
+    \]
+    W szczególności dla $\delta = \frac{1}{n}$
+    \[
+        \ex{x_n, y_n}
+        |x_n-y_n| < \frac{1}{n} \land |f(x_n) - f(y_n)| \ge \epsilon_0
+    \]
+    Ale skoro $K$ jest zbiorem zwartym, to z ciągu $\seq{x_n}$ wybierzemy podciąg
+    $\seqq{x_{n_k}}{k}$ zbieżny do $a \in K$. Ale skoro $|x_n - y_n| < \frac{1}{n}$ to
+    $y_{n_k} \to a$ (inaczej $0 \le |y_{n_k} - a| \le |x_{n_k} - y_{n_k}| + |x_{n_k} - a| \to 0$, z
+    twierdzenia o trzech ciągach $y_{n_k} - a \to 0$). Z kolei
+    $f(x_{n_k}) \to f(a)$ i $f(y_{n_k}) \to f(a)$ bo $f$ ciągła, ale $x_n$ i $y_n$ wybraliśmy takie,
+    że $0 \leftarrow\left|f(x_{n_k}) - f(y_{n_k})\right| \ge \epsilon_0 > 0$. Sprzeczność.
+\end{proof}
+
+\begin{Twi}
+    Weźmy dowolną funkcję $f: \R \to \R$ ciągłą. Jeśli $f$ ma skończone granice w $\infty$ i
+    $-\infty$, to jest jednostajnie ciągła.
+\end{Twi}
+
+\begin{proof}
+    Ustalmy $\epsilon > 0$. Skoro $\lim_{x \to \infty} f(x) = g$ to
+    $\ex{M > 0} \fa{x > M} |f(x) - g| < \frac{\epsilon}{2}$ podobnie
+    $\ex{N < 0} \fa{x < N} |f(x) - h| < \frac{\epsilon}{2}$. Obcięcie
+    $f|_{[N-1, M+1]}$ jest jednostajnie ciągła na mocy twierdzenia Cantora.
+    Zatem $\ex{\delta > 0} x,y \in [N-1, M+1] \land |x-y| < \delta$ to
+    $|f(x) - f(y)| < \epsilon$ Wyznaczmy teraz dowolne $x, y \in \R$ takie, że
+    $|x-y| < \min (\delta, \frac{1}{2})$. Wówczas zachodzi na pewno jedna z sytuacji:
+    \[
+        x, y < N,  |f(x)-f(y)| \le |f(x)-h| + |h-f(y)| < 2*\frac{\epsilon}{2} = \epsilon
+    \]
+    \[
+        x, y \in [N-1, M+1], \text{skąd } |x-y| < \delta \text{ to } |f(x) - f(y)| < \epsilon
+    \]
+    \[
+        x, y > M, |f(x) - f(y)| \le |f(x)-g| + |g-f(y)| < 2* \frac{\epsilon}{2} = \epsilon
+    \]
+\end{proof}
+
+\begin{Twi}
+    Definicja jednostajnej ciągłości Cauchy'ego i Heine
+    go są równoważne.
+\end{Twi}
+
+\begin{proof}[Dowód $C \implies H$]
+    Weźmy dowolne $\seq{x_n}, \seq{y_n} \subset A$ takie, że $x_n - y_n \to 0$. Ustalmy
+    $\epsilon > 0$. Weźmy $\delta$ jak w definicji Cauchy'ego. Skoro $x_n - y_n \to 0$, to
+    $\ex{n_0}\fa{n > n_0} \left|x_n - y_n\right| < \delta$. Ale wtedy z definicji Cauchy'ego mamy
+    $\left|f(x_n) - f(y_n)\right| < \epsilon$. Zatem dla wybranego $\epsilon$ znalazłem $n_0$ takie,
+    że dla $n > n_0$ mamy $\left|f(x_n) - f(y_n)\right| < \epsilon \iff f(x_n) - f(y_n) \to 0$.
+\end{proof}
+
+\begin{proof}[Dowód $H \implies C$]
+    Dowiedziemy nie wprost. Załóżmy, że warunek z definicji $C$ nie jest spełniony, to znaczy
+    $\ex{\epsilon_0 > 0}\fa{\delta > 0}\ex{x, y \in A} \left|x-y\right| < \delta \land
+    \left|f(x)-f(y)\right| \ge \epsilon$. W szczególności to zachodzi dla $\delta = \frac{1}{n}$
+    i daje $x_n, y_n \in A$ takie, że
+    $\left|x_n - y_n\right| < \frac{1}{n} \land \left|f(x_n) - f(y)n\right| \ge \epsilon_0$.
+    To znaczy $x_n - y_n \to 0$, ale $f(x_n) - f(y_n) \not\to 0$.
+\end{proof}
+
+\section{Szeregi liczbowe}
+
+\subsection{Podstawowe definicje i przykłady}
+
+\[
+    \sum_{n = 1}^{\infty} a_n = a_1 + a_2 + ...
+\]
+
+\begin{Def}
+    Szeregiem nazywamy parę ciągów $\left(a_n\right)_{n \ge n_0}$ i
+    $S_n = a_{n_0} + a_{n_0+1} + ... + a_n = \sum_{k = n_0}^n a_k$. Elementy ciągu
+    $\seq{a_n}$ nazywamy wyrazami szeregu, a ciąg $\seq{S_n}$ nazywamy ciągiem sum
+    częściowych szeregu. Oznaczamy $\sum_{n = n_0}^{\infty} a_n$. Powiemy, że szereg
+    $\sum_{n = n_0}^{\infty}a_n$ jest zbieżny, gdy ciąg $S_n$ ma granicę skończoną. Wówczas powiemy, że
+    $\lim_{n \to \infty}S_n$ to suma szeregu $\sum_{n = n_0}^{\infty}a_n$. W przeciwnym wypadku
+    powiemy, że szereg $\sum_{n = n_0}^{\infty} a_n$ jest rozbieżny.
+\end{Def}
+
+Zazwyczaj bardzo trudno obliczyć sumę danego szeregu zbieżnego (istnieją od tej zasady nieliczne
+wyjątki). W badaniach szeregów skupiamy się raczej na stwierdzeniu, czy dany szereg jest zbieżny,
+czy rozbieżny.
+
+\begin{Twi}
+    Pominięcie skończonej liczby wyrazów szeregu nie wpływa na jego zbieżność / rozbieżność (ale
+    oczywiście może wpływać na wartość sumy).
+\end{Twi}
+
+\begin{proof}
+    Widać, że jeśli ciągowi $\sum_{n = 1}^{\infty} a_n$ odpowiada ciąg sum częściowych $S_n$, to ciągowi
+    $\sum_{n = n_0}^{\infty} a_n$ odpowiada ciąg sum częściowych $\overline{S_n} = S_n + A$, gdzie 
+    $A = a_1 + a_2 + ... + a_{n_0-1}$. Teraz widać, że $S_n$ jest zbieżny wtedy i tylko wtedy, kiedy
+    $\overline{S_n}$ jest zbieżny.
+\end{proof}
+
+\begin{Twi}[Warunek Cauchy'ego]
+    Szereg $\sum_{n=n_0}^{\infty} a_n$ jest zbieżny wtedy i tylko wtedy, gdy
+    \[
+        \fa{\epsilon > 0} \ex{N} \fa{k > n > N} \left|a_n + a_{n+1} + ... + a_k \right| < \epsilon
+    \]
+\end{Twi}
+
+\begin{proof}
+    Szereg jest zbieżny wtedy i tylko wtedy, gdy jego ciąg sum częściowych jest zbieżny, a to jest
+    wtedy i tylko wtedy, gdy $\seq{S_n}$ spełnia warunek Cauchy'ego, a to jest równoważne
+    \[
+        \fa{\epsilon > 0} \ex{N} \fa{n, k > N} \left|S_k - S_{n-1}\right| < \epsilon
+    \]
+\end{proof}
+
+\subsubsection*{Wniosek}
+
+$\sum_{n = n_0}^{\infty} a_n$ jest zbieżny $\implies a_n \to 0$.
+
+\begin{proof}
+    Biorę warunek Cauchy'ego dla $n=k$.
+    \[
+        \fa{\epsilon > 0}\ex{N}\fa{n > N} \left|a_n\right| < \epsilon
+        \iff
+        a_n \to 0
+    \]
+\end{proof}
+
+\begin{Przy}[Zapis dziesiętny liczb rzeczywistych]
+    Każdą liczbę $x \in \R$ można zapisać w postaci
+    \begin{equation}
+        d + \sum_{n = 1}^{\infty} \frac{a_n}{10^n}
+        \label{forma}
+    \end{equation}
+    gdzie $d \in \Z$, $a_n \in \{0,1,...,9\}$.
+    \begin{equation}
+        x = (d,a_1 a_2,...)_{10}
+        \label{reprezentacja}
+    \end{equation}
+    Konstrukcja:
+    $d = \lfloor x \rfloor$
+    dalej $S_n$ konstruujemy indukcyjnie
+    $S_n \le x < S_n + \frac{1}{10^n}$
+    W kolejnym kroku przedział $[S_n, S_n+ \frac{1}{10^n})$ dzielę
+    na $10$ części dzielę
+    na $10$ części.
+    \[
+        \left[S_n, S_n + \frac{1}{10^n+1}\right) \cup
+        \left[S_n + \frac{1}{10^n}, S_n + \frac{2}{10^n+1}\right) \cup
+        ... \cup
+        \left[S_n + \frac{9}{10^n}, S_n + \frac{10}{10^n+1}\right)
+    \]
+    Z konstrukcji mamy $\left|x - S_n\right| < \frac{1}{10^n}$, a więc
+    $S_n \to x$.
+    O ile wynik algorytmu opisanego w dowodzie jest jednoznaczny, o tyle samo przedstawienie $x$ w
+    postaci \eqref{forma} nie jest jednoznaczne.
+    Jeśli liczba $x$ ma zapis \eqref{reprezentacja} w formie okresowej od pewnego miejsca, to $x$ jest
+    liczbą wymierną. W drugą stronę, każda liczba wymierna $x$ jest wymierna, to ma zapis w formie
+    \eqref{reprezentacja} i jest okresowa.
+\end{Przy}
+
+\begin{Twi}
+    Dla dowolnej liczby $x \in \R$ mamy, że $\exp(x)$ to suma szeregu
+    $\sum_{k = 0}^{\infty} \frac{x^k}{k!}$.
+\end{Twi}
+
+\begin{proof}
+    Ustalmy $x \in \R$. Oznaczmy $a_n = \left(1+ \frac{x}{n}\right)^n \to e^x$.
+    \[
+        a_n = \sum_{k = 0}^n \left(\frac{x}{n}\right)^k * \binom{n}{k} =
+        \sum_{k = 0}^n \frac{x^k}{k!} * \frac{n^{\underline{k}}}{n^k} =
+        \sum_{k = 0}^n \frac{x^k}{k!} * 
+        \underbrace{
+            1 * \left(1 - \frac{1}{n}\right) * ... * \left(1- \frac{k-1}{n}\right)
+        }_{b_{n, k}}
+    \]
+    Oznaczmy przez $S_n$ n-tą sumę częściową szeregu $\sum_{k = 0}^{\infty} \frac{x^k}{k!}$.
+    Będziemy badali ciąg $a_n - S_n$. Pokażemy, że zbiega on do zera.
+    \[
+        a_n - S_n = \sum_{k = 0}^n \frac{x^k}{k!} b_{n, k} - \sum_{k = 0}^n \frac{x^k}{k!}
+        =
+        \sum_{k = 0}^n \frac{x^k}{k!} \left(b_{n, k} - 1\right)
+        =
+    \]
+    (Ustalmy $\epsilon > 0$. Ponieważ $\frac{\left|x\right|^n}{n!} \to 0$ i
+    $\frac{\left|x\right|}{n} \to 0$, to istnieje pewna liczba naturalna $l \in \N$ taka, że
+    $\frac{|x|^l}{l!} < \frac{\epsilon}{4}$ i $\frac{|x|}{l} < \frac{1}{2}$.)
+    \[
+        =
+        \underbrace{
+            \sum_{k = 0}^l
+            \frac{x^k}{k!} (b_{n, k} - 1)
+        }_{A_n}
+        +
+        \underbrace{
+            \sum_{k = l+1}n
+            \frac{x^k}{k!} (b_{n, k} - 1)
+        }_{B_n}
+    \]
+    $A_n$ to skończona suma ciągów zbieżnych do $0$, stąd istnieje $n_0$ takie, że $|A_n| <
+    \frac{\epsilon}{2}$ dla $n > n_0$.
+    \[
+        |B_n| =
+        \left|
+        \sum_{k = l+1}^n \frac{x^k}{k!} (b_{n, k} - 1) \le
+        \sum_{k = l+1}^n \frac{|x|^k}{k!} \left|b_{n,k} - 1\right|
+        \right|
+        \le
+        2 \sum_{k = l+1}^n \frac{|x|^k}{k!}
+        =
+    \]
+    \[
+        =
+        2 \left(
+        \frac{|x|}{l!} \frac{|x|}{(l+1)} +
+        \frac{|x|}{l!} \frac{|x|^2}{(l+1)(l+2)} +
+        \frac{|x|}{l!} \frac{|x|^3}{(l+1)(l+2)(l+3)} + ...
+        \right)
+        \le
+    \]
+    \[
+        \le
+        2 \left(
+            \frac{\epsilon}{4} * \frac{1}{2} +
+            \frac{\epsilon}{4} * \frac{1}{2^2} +
+            \frac{\epsilon}{4} * \frac{1}{2^3} + ...
+        \right)
+        = \frac{\epsilon}{2}
+    \]
+    Teraz dla $n > n_0$ mamy
+    $\left|a_n - S_n\right| \le
+    \left|A_n\right| + \left|B_n\right| < \frac{\epsilon}{2} + \frac{\epsilon}{2}
+    = \epsilon$.
+\end{proof}
+
+\subsection{Szeregi o wyrazach dodatnich}
+
+Od tej pory do odwołania badamy szeregi $\sum_{n = n_0}^{\infty} a_n$, gdzie $a_n \ge 0$.
+
+\begin{Twi}
+    Szereg o wyrazach nieujemnych jest zbieżny wtedy i tylko wtedy, kiedy jego ciąg sum częściowych
+    jest ograniczony z góry.
+\end{Twi}
+
+\begin{Twi}[Kryterium porównawcze]
+    Rozważmy dwa szeregi: $\sum a_n$, $\sum b_n$ o wyrazach nieujemnych. Twierdzenie to ma trzy
+    wersje:
+    \begin{description}
+        \item[Wersja 1] Jeśli dla dostatecznie dużych $n$ mamy $a_n \le b_n$, to jeśli suma
+            $\sum b_n$ jest zbieżna, to suma $\sum a_n$ jest zbieżna. Za to jeśli $\sum a_n$ jest
+            rozbieżna, to $\sum b_n$ także jest rozbieżna.
+        \item[Wersja 2] Jeśli istnieją liczby $0 < A < M$ takie, że dla dostatecznie dużych $n$
+            zachodzi $A < \frac{a_n}{b_n} < M$ to $\sum a_n$ i $\sum b_n$ są jednocześnie zbieżne
+            bądź rozbieżne.
+        \item[Wersja 3] Jeśli $\lim_{n \to \infty} \frac{a_n}{b_n} = g > 0$ to szeregi to $\sum a_n$
+            i $\sum b_n$ są jednocześnie zbieżne bądź rozbieżne.
+    \end{description}
+\end{Twi}
+
+\begin{proof}[Dowód wersji 1]
+    Pomińmy najpierw skończoną liczbę wyrazów początkowych. To nie wpływa na zbieżność. Wtedy wobec
+    $a_n \le b_n$ mamy $A_n \le B_n$, gzie $A_n$ oznacza ciąg sum częściowych szeregu $\sum a_n$, a
+    $B_n$ oznacza ciąg sum częściowych $\sum b_n$. Jeśli $\seq{B_n}$ ograniczone ($\iff \sum b_n$
+    jest zbieżny), to $\seq{A_n}$ jest ograniczony. W drugą stronę, jeśli $\seq{A_n}$ nie jest
+    ograniczone, to $\seq{B_n}$ też nie jest ograniczone ($\iff \sum b_n$ jest rozbieżny).
+\end{proof}
+
+\begin{proof}[Dowód wersji 2]
+    Pomińmy skończenie wiele wyrazów szeregu. Możemy założyć, że
+    $\fa{n \in \N} A \le \frac{a_n}{b_n} \le M$. Stąd $A b_n \le a_n \le M b_n$ (oraz
+    $\frac{1}{M} a_n \le b_n \le \frac{1}{A}a_n$). Zatem $A B_n \le A_n \le M B_n$. I widzimy, że
+    $\seq{A_n}$ jest ograniczone $\iff$ $\seq{B_n}$ jest ograniczone, co jest równoważne ze
+    zbieżnością.
+\end{proof}
+
+\begin{proof}[Dowód wersji 3]
+    Wobec $\frac{a_n}{b_n} \to g > 0$ mamy 
+    $\ex{\epsilon > 0} \ex{n_0} \fa {n > n_0} 0 < g-\epsilon < \frac{a_n}{b_n} < g+\epsilon$.
+    Stosujemy warunek drugi biorąc $A = g-\epsilon$, $M = g + \epsilon$.
+\end{proof}
+
+\begin{Twi}[Kryterium D'Alemberta, ilorazowe]
+    Rozważmy szereg $\sum a_n$ o wyrazach dodatnich. Jeśli
+    \begin{description}
+        \item[Wersja 1] Dla dostatecznie dużych $n$ zachodzi
+            \[
+                \frac{a_{n+1}}{a_n} \le g < 1
+            \]
+            To szereg $\sum a_n$ jest zbieżny, a jeśli
+            \[
+                \frac{a_{n+1}}{a_n} \le g > 1
+            \]
+            To szereg $\sum a_n$ jest rozbieżny.
+        \item[Wersja 2]
+            Jeśli istnieje granica $\lim_{n \to \infty} \frac{a_{n+1}}{a_n} = g$, to
+            \begin{itemize}
+                \item gdy $g < 1$, to $\sum a_n$ jest zbieżna.
+                \item gdy $g > 1$, to $\sum a_n$ jest rozbieżna
+            \end{itemize}
+    \end{description}
+\end{Twi}
+
+\begin{proof}[Dowód wersji 1]
+    Jeśli dla $n \ge n_0$ zachodzi $\frac{a_{n+1}}{a_n} \le g < 1$ to mamy
+    \[
+        \frac{a_n}{a_{n_0}} = \frac{a_{n_0+1}}{a_{n_0}}*\frac{a_{n_0+2}}{a_{n_0+1}}
+        *...* \frac{a_n}{a_{n-1}} \le g^{n-n_0}
+    \]
+    Zatem $a_n \le \frac{a_{n_0}}{q^{n_0}} q^n = c q^n$.
+    Zatem od wyrazu $n_0$ wyrazy $a_n$ są mniejsze niż wyrazy szeregu $\sum cq^n$,
+    $q < 1$, który jest zbieżny. Z kryterium porównawczego (wersji 1) mamy tezę. Jeśli jednak
+    $\frac{a_{n+1}}{a_n} \ge 1$ dla $n \ge n_0$, to $a_n$ jest od pewnego miejsca niemalejący, więc
+    $a_n \not\to 0$. Nie jest spełniony warunek konieczny zbieżności.
+\end{proof}
+
+\begin{proof}[Dowód wersji 2]
+    Jeśli $\frac{a_{n+1}}{a_n} \to q$, to
+    $\fa{\epsilon > 0} \ex{n_0} g-\epsilon < \frac{a_{n+1}}{a_n} < g+\epsilon$ dla $n \ge n_0$.
+    Jeśli $q < 1$ dodam $\epsilon$ tak, aby $g + \epsilon < 1$ i mamy
+    $\frac{a_{n+1}}{a_n} < g+\epsilon < 1$ - stosujemy warunek $1$, co kończy dowód. Jeśli $g > 1$,
+    to dobieramy $\epsilon$ tak, aby $g-\epsilon \ge 1$ i stosujemy warunek $1$.
+\end{proof}
+
+\begin{Twi}[Kryterium Cauchy'ego pierwiastkowe]
+    Rozważmy $\sum a_n$, $a_n \ge 0$. Jeśli dla dostatecznie dużych $n$    
+   \begin{description}
+        \item[Wersja 1]
+            \begin{itemize}
+                \item $\sqrt[n]{a_n} \le g < 1$, to $\sum a_n$ jest zbieżny
+                \item $\sqrt[n]{a_n} \ge g > 1$, to $\sum a_n$ jest rozbieżny
+            \end{itemize}
+        \item[Wersja 2]
+            Jeśli istnieje granica $\lim_{n \to \infty} \sqrt[n]{a_n} = g$ to
+                \item $g < 1$, to $\sum a_n$ jest zbieżny
+                \item $g > 1$, to $\sum a_n$ jest rozbieżny
+   \end{description}
+\end{Twi}
+
+\begin{proof}[Dowód warunku 1]
+    Skoro $\sqrt[n]{a_n} \le g < 1$ dla $n > n_0$, to $a_n \le g^n$ dla $n \ge n_0$ i zbieżność
+    wynika z kryterium porównawczego (warunek 1) i zbieżności szeregu geometrycznego. Jeśli
+    $\sqrt[n]{a_n} \ge 1$, to $a_n \ge 1^n = n$ i $a_n \not\to 0$ i szereg jest rozbieżny.
+\end{proof}
+
+\begin{Twi}[Kryterium zagęszczające]
+    Rozważmy szereg $\sum_{n = 1}^\infty a_n$, $a_n \ge 0$. Ciąg $\seq{a_n}$ jest nierosnący.
+    Wówczas szereg $\sum a_n$ jest zbieżny wtedy i tylko wtedy, kiedy zbieżny jest szereg
+    \[
+        \sum_{n = 1}^\infty 3^n a_{3^n}
+    \]
+\end{Twi}
+\begin{proof}
+    Sumę częściową $S_{3^n}$ szeregu $\sum a_n$ możemy oszacować z dołu przez
+    \[
+        2 a_3 + 2 *3a_{3^2} + ... + 2 3^{n-1} a_{3^n} =
+        \frac{2}{3} 
+        \left(
+        3 a_3 + 3^2 a_{3^2} + ... + 3^{n} a_{3^n}
+        \right)
+        = \frac{2}{3} \overline{S}_n
+    \]
+    Gdzie $\overline{S_n}$ oznacza $n$-tą sumę częściową szeregu $\sum 3^n a_{3^n}$. Podobnie
+    szacuję $S_{3^n}$ z góry przez
+    \[
+        (a_1 + a_2 + a_{3^n}) + 2 * 3 a_3 + 2* 3^2 a_{3^2} + ... + 2 * 3^{n-1}a_{3^n-1}
+        =
+        a_1 + a_2 + a_{3^n} + 2 \overline{S}_{n-1}
+    \]
+    Z obu szacowań widzimy, że $\seq{S_{3^n}}$ jest ograniczone wtedy i tylko wtedy, kiedy
+    $\seq{\overline{S}_n}$ jest ograniczone. Zatem $\seq{S_{3^n}}$ jest zbieżny wtedy i tylko wtedy,
+    kiedy $\sum_{n = 1}^{\infty} 3^n a_{3^n}$ jest zbieżny. Pozostaje zauważyć, że $\seq{S_n}$ jest
+    ograniczony wtedy i tylko wtedy, kiedy $\seq{S_{3^n}}$ jest ograniczony.
+\end{proof}
+
+\begin{Twi}
+    Szereg $\sum_{n = 1}^\infty \frac{1}{n^p}$ jest zbieżny dla $p > 1$ i rozbieżny dla $p \le 1$.
+\end{Twi}
+
+\begin{proof}
+    Użyjmy kryterium ciągu zagęszczającego, ciąg $\seq{ \frac{1}{n^p}}$ jest nierosnący dla
+    $p \ge 0$. Mamy, że szereg $\sum \frac{1}{n^p}$ jest zbieżny wtedy i tylko wtedy, kiedy zbieżny
+    jest ciąg
+    \[
+        3^n \frac{1}{(3^n)^p} = \sum \frac{1}{(3^{p-1})^n}
+    \]
+    To jest szereg geometryczny o postępie $g = \frac{1}{3^{p-1}}$.Dla $p > 1$, $q < 1$, szereg jest
+    zbieżny. Dla $p \le 1$, $q \ge 1$ i szereg jest rozbieżny.
+\end{proof}
+
+\subsubsection*{Ważny przykład}
+
+\[
+    \sum \frac{1}{n (\ln(n))^p}
+\]
+Jest zbieżny dla dowolnego $p > 1$, a rozbieżny dla dowolnego $p \le 1$. Mamy, że dla $p \ge 0$ ciąg
+$\frac{1}{n(\ln(n))^p}$ jest malejący. Używam kryterium zagęszczającego
+
+\[
+    \sum 3^n \frac{1}{3^n \ln (3^n)^p} =
+    \sum \frac{1}{(n\ln(3))^p} =
+    \sum \frac{1}{n^p} \frac{1}{(\ln(3))^p}
+\]
+Z poprzedniego twierdzenia mamy, że to jest zbieżne dla $p > 1$ i rozbieżny dla $p \le 1$.
+
+\begin{Twi}[Szeregi Abela]
+    Dla $k \in \N$ szereg
+    \[
+        \sum \frac{1}{n \ln(n) \ln(\ln(n)) ... \underbrace{(\ln(\ln(...(\ln(n)))))}_{k-1})
+            \underbrace{(\ln(\ln(...(\ln(n)))))^p}_{k}
+        }
+    \]
+    Jest zbieżny dla $p > 1$ i rozbieżny dla $p \le 1$.
+\end{Twi}
+
+\begin{Twi}[Kryterium Raabego]
+    Rozważmy ciąg $\sum a_n$ o wyrazach dodatnich.
+    \begin{description}
+        \item[Wersja 1:] Jeśli dla dostatecznie dużych $n$ zachodzi
+            \[
+                n \left(\frac{a_n}{a_{n+1}} - 1\right) \le 1
+            \]
+            to $\sum a_n$ jest rozbieżne, a jeśli dla dostatecznie dużych $n$ zachodzi
+            \[
+                n \left(\frac{a_n}{a_{n+1}} - 1\right) \ge p > 1
+            \]
+            to $\sum a_n$ jest zbieżne.
+        \item[Wersja 2:]
+            Jeśli istnieje granica
+            $\lim_{n \to \infty} n \left(\frac{a_n}{a_{n+1}} - 1\right) = g$
+            to jeśli $g < 1$, to $\sum a_n$ jest rozbieżne, a jeśli $g > 1$ to
+            $\sum a_n$ jest zbieżne.
+    \end{description}
+\end{Twi}
+
+\begin{proof}[Dowód wersji 1 a:]
+    \[
+        \fa{n \ge n_0} n\left(\frac{a_n}{a_{n+1}} - 1\right) \le 1
+    \]
+    Mamy
+    \[
+        \frac{a_n}{a_{n+1}} \le \frac{1}{n} + 1 = \frac{n+1}{n} = \frac{\frac{1}{n}}{ \frac{1}{n+1}}
+    \]
+    zatem
+    \[
+        \frac{a_{n+1}}{a_n} \ge \frac{\frac{1}{n+1}}{\frac{1}{n}}
+    \]
+    Teraz
+    \[
+        \frac{a_{n_0+1}}{ a_{n_0}} *
+        \frac{a_{n_0+2}}{ a_{n_0 + 1}} * ... *
+        \frac{a_{n}}{ a_{n - 1}}
+        \ge
+        \frac{\frac{1}{n_0+1}}{ \frac{1}{n_0}} *
+        \frac{\frac{1}{n_0+2}}{ \frac{1}{n_0+1}} * ... *
+        \frac{\frac{1}{n}}{ \frac{1}{n-1}}
+    \]
+    Czyli $\frac{a_n}{a_{n_0}} \ge \frac{\frac{1}{n}}{ \frac{1}{n_0}}$ więc
+    $a_n \ge \frac{1}{n} * (n_0 a_0) = c * \frac{1}{n}$.
+    Zatem dla dostatecznie dużych $n$ mamy $a_n \ge \frac{c}{n}$. Z kryterium porównawczego wersji 1
+    mamy, że $\sum a_n$ rozbieżne.
+\end{proof}
+
+\begin{proof}[Dowód wersji 1 b:]
+    \[
+        n \left(\frac{a_n}{a_{n+1}} - 1\right) \ge p > 1
+    \]
+    Wybierzmy $r \in (1, p)$.
+    \[
+        n \left(\frac{\frac{1}{n^r}}{ \left(\frac{1}{n+1}\right)^r} - 1\right)
+        =
+        n \left( \left(\frac{n+1}{n}\right)^r - 1\right)
+        =
+    \]
+    \[
+        =
+        \frac{\left(1 + \frac{1}{n}\right)^r - 1}{ \frac{1}{n}}
+        =
+        \frac{e^{\ln\left(1 + \frac{1}{n}\right)^r} - 1}{ \frac{1}{n}}
+        \to r
+    \]
+    $x = r \ln (1+ \frac{1}{n}) \to r \ln(1) \to r*0 = 0$
+    Całość zmierza do $r < p$. Zatem da dostatecznie dużych $n$ ($n \ge n_0$) mamy
+    \[
+        n \left(\frac{a_n}{a_{n+1}}\right)
+        \ge p
+        >
+        n (\frac{\frac{1}{n}r}{ \frac{1}{(n+1)^r}} - 1)
+    \]
+    Stąd
+    $\frac{a_n}{a_{n+1}} > \frac{\frac{1}{n^r}}{ \frac{1}{(n+1)^r}}$
+    Więc
+    $\frac{a_{n+1}}{a_n} < \frac{\frac{1}{(n+1)^r}}{ \frac{1}{n^r}}$ dla $n > n_0$.
+    Postępujemy tak samo jak w dowodzie części pierwszej.
+    \[
+        \frac{a_{n_0+1}}{ a_{n_0}} *
+        \frac{a_{n_0+2}}{ a_{n_0 + 1}} * ... *
+        \frac{a_{n}}{ a_{n - 1}}
+        <
+        \frac{\frac{1}{(n_0+1)^r}}{ \frac{1}{(n_0)^r}} *
+        \frac{\frac{1}{(n_0+2)^r}}{ \frac{1}{(n_0+1)^r}} * ... *
+        \frac{\frac{1}{n^r}}{ \frac{1}{(n-1)^r}}
+    \]
+    Dostajemy $\frac{a_n}{a_{n_0}} < \frac{\frac{1}{n^r}}{ \frac{1}{n_0^r}}$ a więc
+    $a_n < \frac{1}{n^r} * a_{n_0} * n_0^r = \bar{c} \frac{1}{n^r}$. Z kryterium porównawczego
+    $\sum a_n$ jest zbieżna (bo $\sum \bar{c} \frac{1}{n^r}$ jest zbieżne dla $r > 1$.
+\end{proof}
+
+\begin{proof}[Dowód wersji 2]
+    Jeśli $n \left(\frac{a_n}{a_{n+1}} - 1\right) \to g$, to gdy
+    \begin{itemize}
+        \item $g < 1$, znajdziemy $\epsilon > 0$ i $n_0$ takie, że
+            \[
+                n \left(\frac{a_n}{a_{n+1}}\right) < g+\epsilon \le 1
+            \]
+            dla $n \ge n_0$. I teza wynika z wersji 1.
+        \item $g > 1$, to znajdziemy $\epsilon > 0$ i $n_0$ takie, że
+            \[
+                n \left(\frac{a_n}{a_{n+1}} - 1\right) > g-\epsilon > 1
+            \]
+            dla $n \ge n_0$. I teza wynika z wersji 1.
+    \end{itemize}
+\end{proof}
+
+\begin{Twi}[Tempo rozbieżności szeregu harmonicznego]
+    Ciąg $a_n = 1 + \frac{1}{2} + \frac{1}{3} + ... + \frac{1}{n} - \ln (n+1)$. Jest monotonicznie
+    zbieżny do granicy skończonej $\gamma = 0.577...$. Tę granicę nazywamy stałą
+    Eulera-Masheroniego.
+\end{Twi}
+
+\begin{proof}
+    \[
+        \ln(n+1) = \ln \left( \frac{2}{1} * \frac{3}{2} * \frac{4}{3} * ... * \frac{n+1}{n}\right)
+        =
+        \ln \left(\frac{2}{1}\right) + \ln \left(\frac{3}{2}\right) + ... + \ln \left(\frac{n+1}{n}\right)
+        =
+    \]
+    \[
+        =
+        \ln \left(1+ \frac{1}{1}\right) + 
+        \ln \left(1+ \frac{1}{2}\right) + 
+        \ln \left(1+ \frac{1}{3}\right) + ... +
+        \ln \left(1+ \frac{1}{n}\right)
+    \]
+    \[
+        a_n =
+        \left(\frac{1}{1} - \ln\left(1 + \frac{1}{1}\right)\right) +
+        \left(\frac{1}{2} - \ln\left(1 + \frac{1}{2}\right)\right) + ... +
+        \left(\frac{1}{n} - \ln\left(1 + \frac{1}{n}\right)\right)
+        =
+        \sum_{k = 1}^n b_k
+    \]
+    Gdzie $b_k = \frac{1}{k} - \ln (1 + \frac{1}{k}) \ge 0$ Czyli $a_n$ to ciąg sum częściowych
+    szeregu $\sum b_n$, $b_n \ge 0$, zatem $a_n$ jest niemalejący.
+    \[
+        a_n = 1 + \left(
+        \frac{1}{2} - \ln \left(1 + \frac{1}{1}\right) +
+        \frac{1}{3} - \ln \left(1 + \frac{1}{2}\right) + ... +
+        \frac{1}{n} - \ln \left(1 + \frac{1}{n-1}\right) +
+        \frac{1}{n+1} - \ln \left(1 + \frac{1}{n}\right)
+        \right) - \frac{1}{n+1}
+        =
+    \]
+    \[
+        =
+        1 + \sum_{k = 1}^n \left(\frac{1}{k+1} - \ln \left(1+ \frac{1}{k}\right)\right) - \frac{1}{n+1}
+        =
+        1 + \sum_{k = 1}^n c_k - \frac{1}{n+1}
+    \]
+    Gdzie $c_k = \left(\frac{1}{k+1} - \ln \left(1+ \frac{1}{k}\right)\right)$. Wtedy
+    $c_k = \frac{\frac{1}{k}}{ \frac{1}{k}+1} - \ln \left(1+ \frac{1}{k}\right) \le 0$, bo
+    $\ln (1+x) \ge \frac{x}{1+x}$ dla $x >-1$. Stąd ciąg $a_n + \frac{1}{n+1}$ jest malejący i
+    mniejszy niż $1$.
+\end{proof}
+
+\subsection{Szeregi o wyrazach dowolnych}
+
+\begin{Twi}
+    Rozważmy szereg $\sum_{n = n_0}^{\infty} a_n$. Jeśli szereg modułów
+    $\sum_{n = n_0}^{\infty} |a_n|$ jest zbieżny to jest zbieżny też szereg
+    $\sum_{n = n_0}^{\infty} a_n$. Jednak implikacja odwrotna nie zachodzi.
+\end{Twi}
+
+\begin{proof}
+    Skoro $\sum |a_n|$ jest zbieżne, to musi spełniać warunek Cauchy'ego, to znaczy
+    $\fa{\epsilon > 0} \ex{n_0} \fa{k \ge n \ge n_0} |a_n| + |a_{n+1}| + ... + |a_n| < \epsilon$.
+    Teraz dla $\sum a_n$ mamy dla $k \ge n \ge n_0$
+    \[
+        \left|
+        a_n + a_{n+1} + ... + a_n
+        \right|
+        \le
+        \left|a_n\right| + 
+        \left|a_{n+1}\right| +  ... +
+        \left|a_k\right|
+        < \epsilon
+    \]
+    Zatem szereg $\sum a_n$ też spełnia warunek Cauchy'ego, więc jest zbieżny.
+\end{proof}
+
+\begin{Def}
+    Szereg $\sum_{n = n_0}^{\infty} a_n$ jest zbieżny bezwzględnie, jeśli zbieżny jest szereg
+    $\sum_{n = n_0}^{\infty} |a_n|$. Jeśli $\sum a_n$ jest zbieżny, ale $\sum |a_n|$ jest rozbieżny,
+    to mówimy, że szereg jest zbieżny warunkowo.
+\end{Def}
+
+\subsubsection*{Ważne}
+
+Kryterium porównawcze nie działa dla szeregów o wyrazach dowolnych.
+Rozważmy
+$\sum_{n = 1}^{\infty} (-1)^n \frac{1}{\sqrt{n}}$.
+Jest on zbieżny na mocy kryterium Leibniza bo $\frac{1}{\sqrt{n}} \searrow 0$
+Mamy też szereg $\sum_{n = 2}^{\infty} \frac{\ln(1+\frac{(-1)^n}{})}{x}$. Z faktu, że jeśli
+$x \to 0$, to $\frac{ln(1+x}{x} \to 1$ mamy
+\[
+    \frac{\ln(1+\frac{(-1)^n}{\sqrt{n}})}{\frac{(-1)^n}{\sqrt{n}}} \to 1
+\]
+tymczasem drugi z naszych szereg nie jest zbieżny.
+Rozpatrzmy jego $2n+1$ wszą sumę częściową
+
+\[
+    S_{2n+1} =
+    \left(
+        \ln\left(1+\frac{1}{\sqrt{2}}\right) +
+        \ln\left(1-\frac{1}{\sqrt{3}}\right)
+    \right) + ... +
+    \left(
+        \ln\left(1+\frac{1}{\sqrt{2n}}\right) +
+        \ln\left(1-\frac{1}{\sqrt{2n+1}}\right)
+    \right)
+\]
+
+Policzmy
+
+\[
+    \ln\left(1+\frac{1}{\sqrt{2n}}\right) + \ln \left(1-\frac{1}{\sqrt{2n+1}}\right) =
+    \ln\left(\frac{\sqrt{2n} + 1}{\sqrt{2n}}\right) + \ln \left(\frac{\sqrt{2n+1}-1}{\sqrt{2n+1}}\right) =
+\]
+\[
+    \ln\left(\frac{\sqrt{2n} + 1}{\sqrt{2n}}\cdot\frac{\sqrt{2n+1}-1}{\sqrt{2n+1}}\right) =
+    \ln\left(1 +\frac{\sqrt{2n+1}-\sqrt{2n}-1}{\sqrt{2n}\sqrt{2n+1}}\right) =
+    \ln\left(1 +\frac{\frac{2n+1-2n}{\sqrt{2n}+\sqrt{2n+1}}-1}{\sqrt{2n}\sqrt{2n+1}}\right)
+\]
+Po jeszcze trochę rachunkach okazuje się, że ten szereg jest rozbieżny.
+
+\subsection{Mnożenie szeregów}
+
+\begin{Def} [Iloczyn Cauchy'ego]
+    Rozważmy szeregi $\sum_{n = 0}^{\infty} a_n$ i $\sum_{n = 0}^{\infty} b_n$. Iloczynem Cauchy'ego
+    tych szeregów nazywamy szereg
+    \[
+        \sum_{n = 0}^{\infty} c_n
+    \]
+    gdzie
+    \[
+        c_n = \sum_{i = 0}^{n} a_i b_{n-i}
+    \]
+\end{Def}
+
+\begin{Twi}[Martensa]
+    Rozważmy szeregi $\sum_{n = 0}^\infty a_n$ i $\sum_{n = 0}^\infty b_n$. Załóżmy, że szereg
+    $\sum a_n$ jest zbieżny do sumy $A$, a szereg $\sum b_n$ jest zbieżny bezwzględnie do sumy $B$.
+    Wówczas ich iloczyn Cauchy'ego jest zbieżny do sumy $AB$. Jeśli dodatkowo $\sum a_n$ jest
+    zbieżne bezwzględnie, to iloczyn Cauchy'ego też jest zbieżny bezwzględnie. Nie można pominąć
+    założenia o zbieżności absolutnej jednego z szeregów, ponieważ wtedy twierdzenie nie zachodzi.
+\end{Twi}
+
+\begin{proof}[Dowód twierdzenia Martensa]
+    Oznaczmy przez $A_n, B_n, C_n$ $n$-te sumy częściowe szeregów $\sum a_n, \sum b_n, \sum c_n$,
+    odpowiednio
+    \[
+        c_n = a_0 b_0 + (a_0 b_1 + a_1 b_0) + ...  + (a_0 b_N + ... + a_N b_0) =
+    \]
+    \[
+        b_0 (a_0 + ... + b_N) + b_1 (a_0 + ... + a_{N-1}) + ... + b_N a_0 = 
+        \sum_{j = 0}^N b_j A_{N-j}
+    \]
+    Wiemy:
+    \begin{enumerate}
+        \item Ciąg $\seq{A_n}$ jest zbieżny, zatem $\left|A_n\right|$ jest ograniczony przez pewną
+            liczbę $M > 0$.
+        \item $\left|A_n - A\right| \to 0$ przy $n \to \infty$.
+        \item $\left|B_n - B\right| \to 0$ przy $n \to \infty$.
+        \item $\sum \left|b_n\right|$ jest zbieżny do pewnej sumy $\overline{B}$.
+    \end{enumerate}
+    Niech $M$ będzie jakimś ograniczeniem górnym $\left|A_i\right|$. Wtedy
+    Ustalmy $\epsilon > 0$. Przyjmijmy $\epsilon' = \frac{\epsilon}{|A| + \overline{B} + M}$.
+    Wobec (1) - (4) istnieje liczba $r > 0$
+    taka, że
+    \begin{itemize}
+        \item z (2) $\left|A_n - A\right| < \epsilon'$ dla $n > r$.
+        \item z (3) $\left|B_n - B\right| < \epsilon'$ dla $n > r$.
+        \item z (4) $\sum_{n =r+1}^N \left|b_n\right| < \epsilon'$ (z warunku Cauchy'ego)
+    \end{itemize}
+    Teraz dla $N > 2r$ mamy
+    \[
+    \left|C_N - A B_r\right| = \left|\sum_{j = 0}^N b_j A_{N-j} - \sum_{j = 0}^r b_j A\right|
+    =\left|\sum_{j = 0}^r b_j (A_{N-j} - A) + \sum_{j = r+1}^N b_j A_{N-j}\right| \le
+    \]
+    \[
+        \le
+        \sum_{j = 0}^r \left|b_j\right| \left|A_{N-j} - A\right|
+        +
+        \sum_{j = r+1}^N \left|b_j\right| \left|A_{N-j}\right|
+    \]
+    \[
+        \sum_{j = 0}^r \left|b_j\right| \left|A_{N-j} - A\right|
+        +
+        \sum_{j = r+1}^N \left|b_j\right| \left|A_{N-j}\right|
+        \le
+        \sum_{j = 0}^r \left|b_j\right| \epsilon'
+        +
+        \sum_{j = r+1}^N \left|b_j\right| M
+        \le
+        \overline{B} \epsilon' + \epsilon' M
+    \]
+    Teraz
+    \[
+        \left|C_N - AB\right| =
+        \left|
+            (C_N - A B_r) + (A B_r - AB)
+        \right|
+        \le
+        \left|
+            C_N - A B_r
+        \right|
+        + \left|A\right| \left|B_r - B\right|
+        \le
+        \epsilon' (\overline{B} + M) + \left|A\right|\epsilon'
+        =
+    \]
+    \[
+        \epsilon' \left(\left|A\right| + \overline{B} + M\right) =
+        \epsilon
+    \]
+    To kończy dowód pierwszej części. Następnie udowodnimy drugą część. Załóżmy, że
+    $\sum \left|a_n\right|$ oraz $\sum \left|b_n\right|$ są zbieżne, wtedy z pierwszej części ich
+    iloczyn Cauchy'ego jest zbieżny. Z kolei
+    \[
+        \left|c_n\right| =
+        \left|a_0 b_n + a_1 b_{n-1} + ... + a_n b_0\right|
+        \le
+        \left|a_0 b_n\right| + \left|a_1 b_{n-1}\right| + ... + \left|a_n b_0\right|
+    \]
+    a to jest $n$-ty wyraz iloczynu Cauchy'ego $\sum \left|a_n\right|, \sum \left|b_n\right|$
+    (zbieżnego). Zatem $\left|c_n\right|$ szacuje się przez $n$-ty wyraz szeregu zbieżnego. Na mocy
+    kryterium porównawczego $\sum \left|c_n\right|$ jest zbieżny.
+\end{proof}
+
+\subsection{Uzupełnienia}
+
+\subsubsection{Szeregi o wyrazach zespolonych}
+
+Rozważmy szereg $\sum_{n = 1}^\infty z_n$, gzie $z_n = x_n + y_n \in \C$. Wtedy $n$-ta suma
+częściowa tego szeregu to
+\[
+    S_n = (x_1 + y_1 i) + (x_2 + y_2 i) + ... + (x_n + y_n i) =
+    (x_1 + x_2 + ... + x_n) + i (y_1 + y_2 + ... + y_n)
+\]
+Zauważmy, że $\Re(S_n)$ to $n$-ta suma częściowa szeregu $\sum x_n$, a $\Im(S_n)$ to $n$-ta suma
+częściowa szeregu $\sum y_n$.
+
+\begin{Def}
+    Powiemy, że szereg $\sum_{n = 1}^\infty z_n$ o wyrazach zespolonych $z_n = x_n + y_n$ jest
+    zbieżny, gdy zbieżne są jednocześnie szeregi $\sum_{n = 1}^\infty x_n$ i
+    $\sum_{n = 1}^\infty y_n$. Wówczas powiemy, że liczba zespolona
+    $\sum_{n = 1}^\infty x_n + i \sum_{n = 1}^\infty y_n$ jest sumą szeregu
+    $\sum_{n = 1}^\infty z_n$.
+\end{Def}
+
+\begin{Twi}
+    Rozważmy szereg $\sum z_n$ o wyrazach zespolonych. Jeśli zbieżny jest szereg
+    $\sum \left|z_n\right|$, to zbieżny jest też szereg $\sum z_n$. Wówczas powiemy, że szereg
+    $\sum z_n$ jest zbieżny bezwzględnie
+\end{Twi}
+
+\begin{proof}
+    Niech $z_n = x_n + y_n i$. Skoro $\left|z_n\right| = \sqrt{x_n^2 + y_n^2}$ to
+    $\left|z_n\right| \ge \left|x_n\right|$ i $\left|z_n\right| \ge \left|y_n\right|$, zatem
+    jeśli $\sum \left|z_n\right|$ jest zbieżne to na mocy kryterium porównawczego zbieżne są szeregi
+    $\sum \left|x_n\right|$ i $\sum \left|y_n\right|$. Zatem szeregi $\sum x_n$ i $\sum y_n$ są
+    zbieżne (bezwzględnie). Z definicji oznacza to, że zbieżny jest szereg $\sum z_n$.
+\end{proof}
+
+Przypomnijmy, że dla $x \in \R$ mamy
+\[
+    \exp(x) = \frac{1}{0!} + \frac{x}{1!} + \frac{x^2}{2!} + ... + \frac{x^n}{n!} + ...
+\]
+Możemy zdefiniować dla $z \in \C$
+\[
+    \exp(z) = \frac{1}{0!} + \frac{z}{1!} + \frac{z^2}{2!} + ... + \frac{z^n}{n!} + ...
+    = \sum_{n = 0}^\infty \frac{z^n}{n!}
+\]
+
+Sprawdźmy, że szereg definiujący $\exp(z)$ jest zbieżny (bezwzględnie) Istotnie
+\[
+    \sum\left|\frac{z^n}{n!}\right| = \sum \frac{\left|z^n\right|}{n!}
+    = \sum \frac{\left|z\right|^n}{n!} = \exp(|z|) < \infty
+\]
+W szczególności dla $z = iy$, gdzie $y \in \R$ mamy
+\[
+    \exp(iy) = 1 + \frac{iy}{1!} + \frac{(iy)^2}{2!} + \frac{(iy)^3}{3!} + ... =
+    1 + i \frac{y}{1!} - \frac{y^2}{2!} - i \frac{y^3}{3!} + \frac{y^4}{4!} + ... =
+\]
+\[
+    (1 - \frac{y^2}{2!} + \frac{y^4}{4!} - \frac{y^6}{6!} + ...) +
+    i(\frac{y}{1!} - \frac{y^3}{3!} + \frac{y^5}{5!} - ...) =
+    \cos (y) + i \sin (y)
+\]
+
+Możemy tego użyć na przykład do wyprowadzenia wzoru na $\sin(3y)$.
+\[
+    \sin(3y) = \Im (e^{3iy}) = \Im (e^{yi} \cdot e^{yi} \cdot e^{yi})
+\]
+Korzystając z twierdzenia Martensa można dość łatwo to pokazać.
+\[
+    \sin(3y) = \Im (e^{iy} \cdot e^{iy} \cdot e^{iy}) =
+    \Im \left((\cos(y) + i \sin (y))^3\right) =
+\]
+\[
+    \Im \left(\cos^3(y) + 3i\cos^2(y)\sin(y) -3\cos(y) \sin^2(y) - i \sin^3(y)\right) =
+\]
+\[
+    \Im \left((\cos^3(y)-3\cos(y) \sin^2(y)) + i (3\cos^2(y)\sin(y) - \sin^3(y))\right) =
+\]
+\[
+    (3\cos^2(y)\sin(y) - \sin^3(y))
+\]
+
+\subsubsection{Niewymierność liczby $e$}
+
+Wiemy, że $e = \exp (1) = 1 + 1 + \frac{1}{2!} + \frac{1}{3!} + ... + \frac{1}{n!}$ Pokażemy, że
+$e \notin \Q$. Załóżmy przeciwnie, że $e = \frac{p}{q}$ dla $p, q \in \N$. Policzmy
+$q!e = q!\frac{p}{q} = p(q-1)! \in \Z$. Z drugiej strony
+\[
+    q!e =
+    q! \cdot 1 + q! \cdot 1 + q! \cdot \frac{1}{2!} + q! \cdot \frac{1}{3!} + ... +
+    q! \cdot \frac{1}{q!} + ...
+\]
+Mamy, że suma pierwszych $q+1$ wyrazów jest liczbą całkowitą, bo jest sumą liczb całkowitych.
+Wnioskujemy, że liczba
+\[
+    x =
+    q! \cdot \frac{1}{(q+1)!} + q! \cdot \frac{1}{(q+2)!} + ...
+    \in \Z
+\]
+Jednak mamy, że
+\[
+    0 < x = \frac{1}{q+1} + \frac{1}{(q+1)(q+2)} + \frac{1}{(q+1)(q+2)(q+3)} + ... \le
+\]
+\[
+    \frac{1}{q+1} + \frac{1}{(q+1)^2} + \frac{1}{(q+1)^3} + ...
+    = \frac{1}{q+1} \cdot \frac{1}{1-\frac{1}{q+1}} = \frac{1}{q} < 1
+\]
+Bo $q > 1$. Sprzeczność, bo nie ma żadnej liczby naturalnej pomiędzy $0$ a $1$.
+
+\section{Funkcje wypukłe}
+
+\subsection{Definicje i przykłady}
+
+Każdy punkt $c \in [a,b]$ można jednoznacznie przedstawić w postaci
+\[
+    c = \lambda a + \mu b
+\]
+gdzie $\lambda, \mu \ge 0, \lambda + \mu = 1$. Inaczej
+$c = \lambda a + (1-\lambda)b, \lambda \in [0, 1]$.
+Istotnie, $\lambda = \frac{b-c}{b-a}, \mu = \frac{c-a}{b-a}$.
+Mówimy wówczas, że $c$ jest \emph{kombinacją wypukłą} punktów $a, b$, zaś liczby $\lambda$ i $\mu$
+nazywamy \emph{wagami}. Podobnie, każdy punkt $(c, c')$ odcinka $[(a,a'), (b, b')]$ możemy zapisać
+jednoznacznie jako $(c, c') = \lambda (a,a'), \mu (b, b')$ gdzie $\lambda, \mu \ge 0$,
+$\lambda + \mu = 1$.
+
+\begin{Def}
+    Funkcję $f: P \to \R$ określoną na przedziale $P \subseteq \R$ nazywamy wypukłą, jeśli dla
+    każdych $a, b \in P$ i każdych wag $\lambda, \mu \ge 0$, $\lambda + \mu = 1$ zachodzi nierówność
+    Jensena
+    \[
+        f (\lambda a + \mu b) \le \lambda f(a) + \mu f(b)
+    \]
+    Powiemy, że $f$ jest wklęsła, gdy $-f$ jest wypukła.
+    Jeśli dla każdych $a \ne b$ oraz $\lambda, \mu \notin \left\{0, 1\right\}$ mamy nierówność
+    ostrą, to mówimy o ścisłej wypukłości bądź wklęsłości.
+\end{Def}
+
+\subsection{Własności funkcji wypukłych}
+
+\begin{Twi}
+    Funkcja ciągła $f: R \to \R$ określona na przedziale $P \subseteq \R$ jest wypukła wtedy i tylko
+    wtedy, kiedy
+    \[
+        \fa{a, b \in P} f \left(\frac{1}{2}a + \frac{1}{2}b\right) \le \frac{1}{2}f(a) + \frac{1}{2}f(b)
+    \]
+    Innymi słowy wypukłość funkcji ciągłej wystarczy sprawdzić dla wag
+    $\lambda = \mu = \frac{1}{2}$.
+\end{Twi}
+
+\begin{proof}
+    Pokażemy, że nierówność
+    \begin{equation}
+        f (\lambda a + \mu b) \le \lambda f(a) + \mu f(b)
+        \label {założenie}
+    \end{equation}
+    działa dla wag $\lambda = \frac{k}{2^n}, \mu = \frac{2^n-k}{2^n}$, gdzie $n, k \in \N$.
+    Będziemy rozumować indukcyjnie po $n$. Dla $n = 1$ mamy dane. Załóżmy, że \eqref{założenie}
+    działa dla wag w postaci $\lambda = \frac{k}{2^n}, \mu = 1-\lambda$. Chcemy pokazać, że
+    \eqref{założenie} działa dla wag postaci $\lambda = \frac{k}{2^{n+1}}, \mu = \frac{s}{2^{n+1}}$,
+    $k, s \in \N \cup \{0\}$.
+    \[
+        f (\frac{k}{2^{n+1}} a + \frac{(2^{n+1}-k)}{2^{n+1}}) =
+        f \left(
+        \frac{1}{2} \left(\frac{k}{2^n}a + \frac{2^n-k}{2^n} b\right) +
+        b \left(\frac{(2^{n+1}-k)}{2^{n+1}} - \frac{(2^{n}-k)}{2^{n+1}}\right)
+        \right)
+    \]
+    \[
+        =
+        f \left(
+        \frac{1}{2} \left(\frac{k}{2^n} a + \frac{2^n-k}{2^n} b\right) + \frac{1}{2} b
+        \right)
+        \le 
+        \frac{1}{2}
+        f \left(
+        \frac{k}{2^n} a + \frac{2^n-k}{2^n} b
+        \right)
+        + \frac{1}{2} f \left(
+        \frac{1}{2} b
+        \right)
+    \]
+    \[
+        \le
+        \frac{1}{2}
+        \left(
+        \frac{k}{2^n}f(a) + \frac{2^n - k}{2^n} f(b)
+        \right)
+        + \frac{1}{2} f(b)
+        =
+        \frac{k}{2^{n+1}} f(a) +
+        \left(
+        \frac{2^n-k}{2^{n+1}} + \frac{2^n}{2^{n+1}}
+        \right) f(b)
+    \]
+    \[
+        =
+        \frac{k}{2^{n+1}} f(a) + \frac{(2^{n+1}-k)}{2^{n+1}} f(b)
+    \]
+    co daje nam krok indukcyjny. Zauważmy, że $\fa {\lambda \in [0,1]}$ istnieje ciąg
+    $\frac{k_n}{2^n} \to \lambda$. Przechodząc do granicy w nierówności
+    \[
+        f (\frac{k_n}{2^n} a + \frac{2^n-k_n}{2^n} b) \le
+        \frac{k_n}{2^n} f(a) + \frac{2^n - k_n}{2^n} f(b)
+    \]
+    dalej dostaję (korzystając z ciągłości $f$
+    \[
+        f (\lambda a + (1-\lambda) b) \le \lambda f(a) + (1-\lambda) f(b)
+    \]
+\end{proof}
+
+\begin{Twi}[Nierówność Younga]
+    Dla $a, b > 0$ oraz liczb dodatnich $p, q$ spełniających zależność
+    $\frac{1}{p} + \frac{1}{q} = 1$ zachodzi
+    \begin{equation}
+        ab \le \frac{a^p}{p} + \frac{b^p}{p}
+        \label{young}
+    \end{equation}
+\end{Twi}
+
+\begin{proof}
+    $\ln$ jest rosnący, zatem \eqref{young} jest równoważne nierówności
+    \[
+        \ln (ab) \le \ln \left(\frac{a^p}{p} + \frac{b^q}{q}\right) \iff
+        \ln \left(\frac{a^p}{p} + \frac{b^p}{p}\right)
+        \ge
+        \ln (a) + \ln (b)
+        =
+        \frac{1}{p} \ln\left(a^p\right) + \frac{1}{q} \ln \left(b^q\right)
+    \]
+    Dostaliśmy nierówność Jensena dla punktów $a^p$, $b^q$ oraz wag
+    $\frac{1}{p}, \frac{1}{q}$.
+\end{proof}
+
+\begin{Lem}
+    Funkcja $f: P \to \R$ określona na przedziale $P \subseteq \R$ jest wypukła wtedy i tylko wtedy,
+    gdy dla każdych $x < y < z$ leżących na $P$ zachodzi jeden z równoważnych warunków.
+    \begin{enumerate}
+        \item $\frac{f(y)-f(x)}{y-x} \le \frac{f(z)-f(x)}{z-x}$
+        \item $\frac{f(y)-f(x)}{y-x} \le \frac{f(z)-f(y)}{z-y}$.
+        \item $\frac{f(z)-f(x)}{z-x} \le \frac{f(z)-f(y)}{z-y}$.
+    \end{enumerate}
+\end{Lem}
+
+\begin{proof}
+    Udowodnimy, że druga nierówność jest równoważna wypukłości $f$. Pozostałe dowodzi się
+    analogicznie. Skoro $y \in [x,z]$, to $y = \lambda x + \mu z$ dla pewnych wag $\lambda, \mu$
+    takich, że $\lambda, \mu \ge 0$, $\lambda+\mu = 1$. Druga nierównośc jest równoważna
+    \[
+        \frac{f(\lambda x + \mu z) - f(x)}{\lambda x + \mu z - x}
+        \le
+        \frac{f(z)-f(\lambda x + \mu z)}{z - (\lambda x + \mu z)}
+    \]
+    \[
+        \frac{f(\lambda x + \mu z) - f(x)}{\mu z - \mu x}
+        \le
+        \frac{f(z)-f(\lambda x + \mu z)}{\lambda z - \lambda x}
+    \]
+    \[
+        \frac{f(\lambda x + \mu z) - f(x)}{\mu z - \mu x}
+        \le
+        \frac{f(z)-f(\lambda x + \mu z)}{\lambda z - \lambda x}
+    \]
+    cośtam cośtam nierówność jensena.
+\end{proof}
+
+\begin{Twi}[Ciągłość funkcji wypukłej]
+    Funkcja wypukła $f: (a,b) \to \R$ jest ciągła. 
+\end{Twi}
+
+\begin{proof}
+    Wybierzmy dowolne $x \in (a, b)$ oraz $\Delta > 0$ tab, aby odcinek
+    $[\alpha = x - \Delta, \beta = x + \Delta]$ był zawarty w $(a,b)$. Rozważmy
+    $y \in (x, \beta)$. Będziemy szacować różnicę $f(y) - f(x)$. Z lematu mamy, że
+    \[
+        \frac{f(\beta) - f(x)}{\beta-x} \ge \frac{f(y)-f(x)}{y-x} \ge \frac{f(x)-f(x)}{x-a}
+    \]
+    Zatem
+    \[
+        \frac{f(\beta) - f(x)}{\beta-x} \cdot (y-x)
+        \ge f(y)-f(x) \ge
+        \frac{f(x)-f(x)}{x-a} \cdot (y-x)
+    \]
+    Mamy, że lewa i prawa strona tego równania dążą do zera, kiedy
+    $y \to x^+$. Zatem z twierdzenia o trzech funkcjach $f(y)-f(x) \to 0$ przy $y \to x^+$.
+    Analogicznie dowodzimy, że $f(y)-f(x)$ zbiega do zera przy $y \to x^-$.
+\end{proof}
+
+\begin{Twi}
+    Rozważmy funkcję wypukłą $f: (a,b) \to \R$. Wówczas dla każdego $y \in (a,b)$ istnieją skończone
+    granice
+    \[
+        f'_- (y) := \lim_{x \to y^-} \frac{f(y)-f(x)}{y-x}
+    \]
+    \[
+        f'_+ (y) := \lim_{z \to y^+} \frac{f(z)-f(y)}{z-y}
+    \]
+    Ponadto dla $x < y < z$ spełnione są nierówności
+    \[
+        f'_+(x) \le f'_-(y) \le f'_+ (y) \le f'_- (z)
+    \]
+\end{Twi}
+
+\begin{proof}
+    Z lematu mamy, że dla $x < y$ funkcja
+    $x \to \frac{f(y)-f(x)}{y-z}$ jest niemalejąca i ograniczona z góry przez
+    \[
+        \frac{f(z) - f(x)}{z-x}
+    \]
+    gdzie $z > x$ dowolne. Z twierdzenia o funkcji monotonicznej istnieje skończona granica
+    \[
+        \lim_{x \to y^-} \frac{f(y)-f(x)}{y-x} = f'_- (y)
+    \]
+    Analogicznie istnieje granica
+    \[
+        \lim_{z \to x^+} \frac{f(z)-f(y)}{z-y} = f'_+ (y)
+    \]
+    Wobec nierówności
+    \[
+        \frac{f(y)-f(x)}{y-x} \le \frac{f(z)-f(y)}{z-y}
+    \]
+    W granicy dostaję
+    \[
+        f'_- (y) \le f'_+ (y)
+    \]
+\end{proof}
+
+\begin{Twi}[Ogólna nierówność Jensena]
+    Rozważmy funkcję wypukłą $f: P \to \R$ określoną na przedziale $P \subset \R$. Wówczas dla
+    dowolnych $a_1, a_2, ..., a_n \in P$ oraz $\lambda_1, \lambda_2, ..., \lambda_n \ge 0$
+    spełniających $\lambda_1 + \lambda_2 + ... + \lambda_n = 1$ zachodzi nierówność
+    \[
+        f (\lambda_1 a_1 + \lambda_2 a_2 + ... + \lambda_n a_n) \le
+        \lambda_1 f(a_1) + \lambda_2 f(a_2) + ... + \lambda_n f(a_n)
+    \]
+\end{Twi}
+
+\begin{proof}
+    Robimy dowód indukcją po $n$. Dla $n = 2$ jest to definicja wypukłości. Zróbmy krok indukcyjny.
+    Rozważmy [] $a_1, ..., a_n, b \in P$, oraz wagi $\lambda_1, ..., \lambda_n, \mu \ge 0$.
+    \[
+        \lambda_1 + \lambda_2 + ... + \lambda_n = 1-\mu
+    \]
+    Wtedy $t_i = \frac{\lambda_i}{1-\mu}$ jest układem wag.
+    \[
+        f ((\lambda_1 a_1 + \lambda_2 a_2 + ... + \lambda_n a_n) + \mu b) =
+        f \left(
+            (1-\mu) \left(
+                \frac{\lambda_1}{1-\mu} a_1 +
+                \frac{\lambda_2}{1-\mu} a_2 + ... +
+                \frac{\lambda_n}{1-\mu} a_n
+            \right) + \mu b
+        \right)
+        \le
+    \]
+    \[
+        (1-\mu)
+        f \left(  
+            \frac{\lambda_1}{1-\mu} a_1 +
+            \frac{\lambda_2}{1-\mu} a_2 + ... +
+            \frac{\lambda_n}{1-\mu} a_n
+        \right)
+        + \mu f\left(b\right)
+        \le
+    \]
+    \[
+        (1-\mu)
+        \left[
+            \frac{\lambda_1}{1-\mu} f(a_1) +
+            \frac{\lambda_2}{1-\mu} f(a_2) + ... + 
+            \frac{\lambda_n}{1-\mu} f(a_n)
+        \right]
+        + \mu f\left(b\right)
+        =
+    \]
+    \[
+        =
+        \lambda_1 f(a_1) + ... + \lambda_n f(a_n) + \mu f(b)
+    \]
+\end{proof}
+
+Dla liczb dodatnich $a_1, a_2, ..., a_n$ oraz wag
+$\lambda_1, \lambda_2, ..., \lambda_n \ge 0, \lambda_1 + \lambda_2 + ... + \lambda_n = 1$ spełniona
+jest nierówność
+\[
+    a_1^{\lambda_1} \cdot
+    a_2^{\lambda_2} \cdot ... \cdot
+    a_n^{\lambda_n}
+    \le
+    \lambda_1 a_1 +
+    \lambda_2 a_2 + ... +
+    \lambda_n a_n
+\]
+Dowód: Zlogarytmujmy dwustronnie.
+\[
+    \lambda_1 \ln (a_1) +
+    \lambda_2 \ln (a_2) + ... +
+    \lambda_n \ln (a_n)
+    \le
+    \ln (\lambda_1 a_1 + \lambda_2 a_2 + ... + \lambda_n a_n)
+\]
+Możemy równoważnie pomnożyć przez $-1$, i dostać
+\[
+    \lambda_1 (-\ln (a_1)) +
+    \lambda_2 (-\ln (a_2)) + ... +
+    \lambda_n (-\ln (a_n))
+    \ge
+    -\ln (\lambda_1 a_1 + \lambda_2 a_2 + ... + \lambda_n a_n)
+\]
+I dostajemy nierówność Jensena dla funkcji $-\ln (x)$.
+
+\begin{Twi}[Nierówność Höldera]
+    Dla liczb dodatnich $x_1, x_2, ..., x_n$ oraz $y_1, y_2, ..., y_n$ oraz liczb $p, q > 0$
+    spełniających warunek $\frac{1}{p} + \frac{1}{q} = 1$ zachodzi nierówność
+    \[
+        x_1 y_1 + x_2 y_2 + ... + x_n y_n \le
+        \left(x_1^p + x_2^p + ... + x_n^p\right)^{\frac{1}{p}}
+        \left(y_1^g + y_2^g + ... + y_n^g\right)^{\frac{1}{g}}
+    \]
+    Szczególny przypadek dla $p=q=2$ dostajemy nierówność Cauchy'ego-Schwarza
+\end{Twi}
+
+\begin{proof}
+    Oznaczmy
+    \[
+        X = (x_1^p + x_2^p + ... + x_n^p)^{\frac{1}{p}}
+    \]
+    \[
+        Y = (y_1^q + y_2^q + ... + y_n^q)^{\frac{1}{q}}
+    \]
+    Mamy pokazać, że $\sum_{i = 1}^n \frac{x_i y_i}{XY} \le 1$. Zastosujmy teraz nierówność Younga
+    do $a = \frac{x_i}{X}, b = \frac{y_i}{Y}$. Dostajemy
+    \[
+        \frac{x_i}{X} \cdot \frac{y_i}{Y} \le
+        \frac{1}{p} \left(\frac{x_i^p}{X^p}\right) +
+        \frac{1}{q} \left(\frac{y_i^q}{Y^q}\right)
+        =
+        \frac{1}{p}
+        \left(
+            \frac{x_i^p}{x_1^p + ... + x_n^p}
+        \right)
+        +
+        \frac{1}{q}
+        \left(
+            \frac{y_i^q}{y_1^q + ... + y_n^q}
+        \right)
+    \]
+    Zatem
+    \[
+        \sum_i \frac{x_i y_i}{XY} \le
+        \frac{1}{p}
+        \left(
+            \frac{\sum_i x_i^p}{\sum_i x_i^p}
+        \right)
+        +
+        \frac{1}{q}
+        \left(
+            \frac{\sum_i y_i^q}{\sum_i y_i^q}
+        \right)
+        = 1
+    \]
+\end{proof}
+
+\begin{Twi}[Uogólniona nierówność średnich]
+    Dla dowolnych liczb dodatnich $a_1, a_2, ..., a_n$ i wag
+    $\lambda_1, \lambda_2, ..., \lambda_n \ge 0, \lambda_1 + \lambda_2 + ... + \lambda_n = 1$ oraz
+    liczb $0 < r < s$ zachodzi nierówność
+    \[
+        (\lambda_1 a_1^r + \lambda_2 a_2^r + ... + \lambda_n a_n^r)^{\frac{1}{r}}
+        \le
+        (\lambda_1 a_1^s + \lambda_2 a_2^s + ... + \lambda_n a_n^s)^{\frac{1}{s}}
+    \]
+\end{Twi}
+
+\begin{proof}
+    Niech $\frac{1}{p} = \frac{r}{s} < 1, \frac{1}{q} = 1-\frac{r}{s} = \frac{s-r}{s}$, czyli
+    $p = \frac{s}{r}, q = \frac{s}{s-r}$. Mamy, że
+    \[
+        \sum \lambda_i a_i^r =
+        \sum \underbrace{\left(\lambda_i a_i^s\right)^{\frac{r}{s}}}_{x_i} 
+        \underbrace{\lambda_i^{1-\frac{r}{s}}}_{y_i}
+    \]
+    Używając twierdzenia Höldera mamy, że jest to mniejsze lub równe
+    \[
+        \left(
+            \sum \lambda_i a_i^s
+        \right)^{\frac{r}{s}}
+        \cdot
+        \left(
+            \sum \lambda_i
+        \right)^{\frac{s-r}{s}}
+        =
+        \left(\right)
+    \]
+\end{proof}
+
+\begin{Twi}
+    Jeśli $f$ jest wypukła, rosnąca, to $f^{-1}$ jest wklęsła.
+\end{Twi}
+
+\begin{proof}
+    \[
+        \fa{a, b} \fa {\lambda, \mu \ge 0, \lambda + \mu = 1}
+        f(\lambda a + \mu b)
+        \le
+        \lambda f(u) + \mu f(b)
+    \]
+    Skoro $f$ rosnąca, to
+    \[
+        f (a) = a' \iff a= f^{-1}(a)
+    \]
+    \[
+        f (b) = b' \iff b = f^{-1}(b')
+    \]
+    więc
+    \[
+        f^{-1}(f(\lambda a + \mu b)) = \lambda a + \mu b =
+        \lambda f^{-1} a' + \mu f^{-1} b' \le
+        f^{-1} (\lambda  f(a) + \mu f(b))
+        =
+        f^{-1} (\lambda  a' + \mu b')
+    \]
+    [[Końcówka może być źle przepisana]]
+\end{proof}
+
+\section{Rachunek różniczkowy}
+
+\subsection{Definicja pochodnej}
+
+\begin{Def}
+    Rozważmy funkcję $f: A \to \R$ określoną na pewnym otoczeniu punktu $x_0 \in A$ (to znaczy
+    \[
+        \ex{\epsilon > 0} (x_0-\epsilon, x_0 + \epsilon) \subset A
+    \]
+    Jeśli istnieje granica
+    \[
+        \lim_{h \to 0} \frac{f(x_0+h)-f(x_0)}{h} = \lim_{x \to x_0} \frac{f(x)-f(x_0)}{x-x_0}
+    \]
+    to nazwiemy ją pochodną funkcji $f$ w punkcie $x_0$ (oznaczana $f'(x_0)$, $\frac{df}{dx}(x_0)$).
+    O funkcji $f$ powiemy wtedy, że jest różniczkowalna w punkcie $x_0$.
+\end{Def}
+
+\begin{Def}
+    Styczną do wykresu funkcji $f: A \to \R$ nazywamy prostą $y =f'(x_0) \cdot (x-x_0) + f(x_0)$.
+    Jest to prosta o współczynniku kierunkowym $f'(x_0)$ przechodząca przez punkt $(x_0, f(x_0))$
+\end{Def}
+
+\begin{Def}
+    Powiemy, że funkcja $f: (a,b) \to \R$ jest różniczkowalna, jeśli jest różniczkowalna w każdym
+    punkcie swojej dziedziny. Funkcję $x \to f'(x)$ nazwiemy pochodną funkcji.
+\end{Def}
+
+\begin{Twi}
+    Mamy pochodne
+    \begin{enumerate}
+        \item $\left(e^x\right)' = e^x$
+        \item $\left(a^x\right)' = \ln(a) a^x$
+        \item $\left(x^a\right)' = ax^{a-1}$
+        \item $\ln(x)' = \frac{1}{x}$
+    \end{enumerate}
+\end{Twi}
+
+\begin{Twi}[Pochodna jako najlepsze liniowe przybliżenie funkcji]
+    Rozważmy funkcję $f: A \to \R$ określoną na otoczeniu punktu $x_0 \in A$. Wówczas równoważne są
+    warunki
+    \begin{enumerate}
+        \item $f$ jest różniczkowalne w $x_0$ i $f'(x_0) = a$
+        \item $f(x_0+h) = f(x_0) + a(x-x_0) + \alpha (h)$, gdzie funkcja $\alpha(h)$ spełnia warunek
+            $\frac{\alpha(h)}{h} \underbrace{\to}_{h \to 0} 0$.
+    \end{enumerate}
+\end{Twi}
+
+\begin{proof}[Dowód 1 $\implies$ 2]
+    Zdefiniujmy $\alpha(h) = f(x_0+h) - f(x_0) - ah$. Chcemy pokazać, że
+    $\lim_{h \to 0} \frac{\alpha}{h} = 0$. Ale
+    \[
+        \frac{\alpha}{h} = \frac{f(x_0+h)-f(x_0) - ah}{h} = \frac{f(x_0+h) - f(x_0)}{h} - a \to
+        f'(x_0) - a = 0
+    \]
+\end{proof}
+
+\begin{proof}[Dowód 2 $\implies$ 1]
+    Liczę granicę (przy $h \to 0$) wyrażenia
+    \[
+        \frac{f(x_0+h)-f(x_0)}{h} =
+        \frac{f(x_0)+ah+\alpha(h)-f(x_0)}{h} = \frac{ah+\alpha(h)}{h} = a + \frac{\alpha(h)}{h}
+        \to a
+    \]
+    Zatem $f(x_0) = a$.
+\end{proof}
+
+\begin{Wni}
+    Jeśli $f$ jest różniczkowalne w $x_0$, to jest też ciągłe w $x_0$.
+\end{Wni}
+
+\begin{proof}
+    Z poprzedniego twierdzenia
+    \[
+        f(x+h) - f(x_0) = h f(x_0) + \alpha(h) = h f'(x_0) + \frac{\alpha(h)}{h} \cdot h \to
+        0
+    \]
+    A więc $f(x_0+h) \to f(x_0)$.
+\end{proof}
+
+\begin{Twi}[Arytmetyczne własności pochodnej]
+    Rozważmy funkcje $f, g: A \to \R$ określone na otoczeniu punktu $x_0$, oraz liczbę $c \in \R$.
+    Załóżmy, że $f, g$ są różniczkowalne w $x_0$. Wówczas:
+    \begin{enumerate}
+        \item $c \cdot f$ ma pochodną w tym punkcie i jest ona równa $c f'(x_0)$.
+        \item $f + g$ ma pochodną w tym punkcie i jest ona równa $f'(x_0) + g'(x_0)$.
+        \item $f - g$ ma pochodną w tym punkcie i jest ona równa $f'(x_0) - g'(x_0)$.
+        \item $f \cdot g$ ma pochodną w tym punkcie i jest ona równa $f'(x_0) g(x_0) + f(x_0)
+            g'(x_0)$.
+        \item $\frac{f}{g}$ (o ile $g(x_0) \ne 0$) ma pochodną w tym punkcie i jest ona równa
+            $\frac{f'(x_0) g(x_0) - f(x_0) g'(x_0)}{g^2(x_0)}$.
+        \item $c \cdot f$ ma pochodną w tym punkcie i jest ona równa $c f'(x_0)$.
+    \end{enumerate}
+\end{Twi}
+
+\begin{Twi}[Różniczkowanie złożonej funkcji]
+    Rozważmy $f: A \to \R$, $g: B \to \R$, takie, że $f(A) \subset B$ określone odpowiednio na
+    otoczeniach punktów $x_0 \in A$ i $f(x_0) \in B$. Załóżmy także, że $f$ jest różniczkowalne w
+    $x_0$, a $g$ jest różniczkowalne w $f(x_0)$. Wówczas złożenie $g(f(x_0))$ jest różniczkowalne w
+    $x_0$ oraz
+    \[
+        (g \circ f)' (x_0) = g'(f(x_0)) f'(x_0)
+    \]
+\end{Twi}
+
+\begin{proof}
+    \[
+        f (x_0+h) = f(x_0) + ah + \alpha(h)
+    \]
+    \[
+        g (f(x_0)+s) = g(f(x_0)) + bs + \beta(s)
+    \]
+    gdzie jeśli $h, s \to 0$, to $\frac{\alpha(h)}{h} \to 0, \frac{\beta(s)}{s} \to 0$. Wtedy
+    \[
+        g (f (x_0+h)) = g(f(x_0)+ \underbrace{ah+\alpha(h)}_{s}) =
+        g(f(x_0)) + b(ah + \alpha(h)) + \beta (ah + \alpha(h)) =
+    \]
+    \[
+        =
+        g\bigg(f(x_0) + \underbrace{ba}_{g'(f(x_0))f'(x_0)} \cdot h +
+        \underbrace{b \alpha(h) + \beta (ah + \alpha(h))}_{\gamma(h)}\bigg)
+    \]
+    Pokażemy, że $\frac{\gamma(h)}{h} \to 0$.
+    \[
+        \frac{\gamma(h)}{h} = b \cdot \frac{\alpha(h)}{h} +
+        \frac{\beta (ah + \alpha(h))}{ah+\alpha(h)} \cdot
+        \frac{ah + \alpha(h)}{h} \to 0
+    \]
+\end{proof}
+
+\subsection{Pochodna funkcji odwrotnej}
+
+\paragraph{Motywacja}
+Rozważmy $f, f^{-1}$ różniczkowalne. Wówczas $f^{-1}(f(x)) = x$. Różniczkując to równanie dostajemy
+\[
+    (f^{-1})'(f(x)) f'(x) = 1
+\]
+Zatem
+\[
+    (f^{-1})'(f(x)) = \frac{1}{f'(x)}
+\]
+
+\begin{Twi}[O pochodnej funkcji odwrotnej]
+    Rozważmy $f: I \to J$ będącą ciągłą bijekcją przedziału otwartego $I$ na przedział otwarty $J$.
+    Załóżmy, że $f$ jest różniczkowalna w $f(x_0) \in J$ oraz
+    \[
+        (f^{-1})'(f(x_0)) = \frac{1}{f'(x_0)}
+    \]
+\end{Twi}
+
+\begin{proof}
+    liczymy
+    \[
+        \lim_{y \to y_0} \frac{f^{-1}(y) - f^{-1}(y_0)}{y-y_0}
+    \]
+    gdzie $y_0 = f(x_0)$.
+    Mogę zapisać $y = f(x)$ i z twierdzenia o ciągłości funkcji pochodnej wiem, że $x \to x_0$ gdy
+    $f(x) = y \to y_0 = f(x_0)$. Zatem
+    \[
+        \frac{f^{-1}(y) - f^{-1}(y_0)}{y-y_0} =
+        \frac{f^{-1}(f(x)) - f^{-1}(f(x_0))}{f(x)-f(x_0)}
+        =
+        \frac{x-x_0}{f(x)-f(x_0)}
+    \]
+    \[
+        =
+        \left(\frac{f(x)-f(x_0)}{x-x_0}\right)^{-1}
+        \to (f'(x_0))^{-1}
+    \]
+\end{proof}
+
+\begin{Twi}[Znak pochodnej a monotoniczność]
+    Rozważmy funkcję ciągłą $f: [a,b] \to \R$ różniczkowalną na $(a,b)$. Wówczas $f$ jest
+    niemalejąca wtedy i tylko wtedy, gdy pochodna na przedziale $(a,b)$ jest nieujemna, a jest
+    nierosnąca jeśli pochodna na tym przedziale jest niedodatnia.
+\end{Twi}
+
+\begin{proof}[Dowód $\implies$]
+    Jeśli $f$ jest niemalejąca to
+    \[
+        \fa{h > 0} f(x+h) \ge f(x)
+    \]
+    a zatem
+    \[
+        \frac{f(x+h)-f(x)}{h} \ge 0
+    \]
+    W granicy $h \to 0^+$ mamy $\lim_{h \to 0^+} \frac{f(x+h)-f(x)}{h} \ge 0$. Ale skoro $f$ jest
+    różniczkowalna, to $\lim_{h \to 0^+} \frac{f(x+h)-f(x)}{h} = f'(x) \ge 0$.
+\end{proof}
+
+\begin{Def}
+    Przy okazji pojawiła się pochodna prawostronna funkcji w punkcie $x$,
+    \[
+        f_{+}' (x) = \lim_{h \to 0^+} \frac{f(x+h)-f(x)}{h}
+    \]
+    analogicznie definiujemy pochodną lewostronną
+    \[
+        f_{-}' (x) = \lim_{h \to 0^-} \frac{f(x+h)-f(x)}{h}
+    \]
+\end{Def}
+
+\begin{proof}[Dowód $\Leftarrow$]
+    Wybierzmy $x < y$ z przedziału $(a, b)$. Chcemy pokazać, że $f(x) \le f(y)$. Wybierzmy
+    $\epsilon > 0$ i zdefiniujmy
+    \[
+        A = \left\{s \in [x,y] \sat f(s)-f(x) \ge -\epsilon (s-x)\right\}
+    \]
+    to są te punkty $s \in [x, y]$, gdzie $\frac{f(s)-f(x)}{s-x} \ge -\epsilon$. Pokażemy, że
+    $\sup (A) = y$. O $A$ wiemy, że $A \ne \emptyset$, bo $x \in A$ i ograniczony z góry przez $y$.
+    A więc istnieje $c = \sup (A) \in [x,y]$. Skoro tak, to istnieje ciąg $\seq{s_n}$ punktów w $A$
+    takich, że $s_n \to c = \sup (A)$. Skoro $s_n \in A$, to
+    \[
+        f (s_n) - f(x) \ge -\epsilon (s_n - x)
+    \]
+    Przechodząc do granicy $s_n \to c$ (korzystam z ciągłości $f$) dostaję
+    \[
+        f(c) - f(x) \ge -\epsilon (c - x)
+    \]
+    a więc $c \in A$. Jeśli $c < y$, to skoro $f'(c) = f_+'(c) = \lim \frac{f(c+h)-f(c)}{h} \ge 0$.
+    Zatem dla dostatecznie małych $h > 0$ mamy $\frac{f(c+h)-f(c)}{h} \ge -\epsilon$
+    Jeśli $f(a) = f(b)$, $f'(x) \ge 0$, to z dowodu wiemy, że $f$ jest nierosnąca, zatem
+    $f(x) = f(a)$ wówczas $\frac{f(x+h)-f(x)}{h} = \frac{f(a)-f(a)}{h} = 0$. Zatem $f'(x) = 0$.
+    Odwracając jeśli $\ex{x} f'(x) > 0$, to $f(a) < f(b)$.
+\end{proof}
+
+\begin{Twi}
+    Funkcja wypukła $f: (a,b) \to \R$ jest różniczkowalna poza przeliczalnym zbiorem punktów. Z
+    własności funkcji wypukłych mamy, że istnieje pochodna jednostronna w każdym punkcie
+    $x \in (a,b)$. Funkcja $f$ jest różniczkowalna w $x$ wtedy i tylko wtedy, kiedy
+    $f_-'(x) = f_+'(x)$, a to jest równoważne temu, żeby odcinek
+    $I_x := (f_-'(x), f_+'(x)) = \emptyset$. Zatem
+    $Z_f = \left\{x \in (a, b) \sat f \text{ nie jest różniczkowalna w } x\right\} =
+    \left\{x \in (a,b) \sat I_x \ne \emptyset\right\}$. Zauważmy, że jeśli $x \ne y$, to
+    $I_x \cap I_y = \emptyset$, bo jeśli $x, y \in Z_f$ (a więc $I_x \ne \emptyset \ne I_y$) to gdy
+    $x < y$ mamy $f_-'(y) > f_+'(y)$, a więc dolny koniec odcinka $I_y$ leży powyżej górnego końca
+    odcinka $I_x$. Znane jest także, że w liczbach rzeczywistych można dać co najwyżej przeliczalnie
+    wiele otwartych przedziałów.
+\end{Twi}
+
+\begin{Twi}
+    Rozważmy funkcję różniczkowalną $f: (a,b) \to \R$. Wówczas równoważne są warunki:
+    \begin{enumerate}
+        \item $f$ jest wypukła
+        \item $\fa{x_0 \in (a,b)} f(x) \ge f(x_0) + f'(x_0)(x-x_0)$
+        \item Pochodna $f'(x)$ jest niemalejąca
+    \end{enumerate}
+\end{Twi}
+
+Należy zwrócić uwagę, że 1 $\implies$ 3 już było.
+
+\begin{proof}[Dowód 3 $\implies$ 2]
+    Chcemy pokazać, że funkcja $g(x) = f(x)-f(x_0) - f'(x_0) (x-x_0)$ jest nieujemna. Policzmy
+    $g'(x)$. Mamy $g'(x) = f'(x) - f'(x_0)$. Skoro $f'$ jest niemalejąca, to $g'(x) \ge 0$ dla
+    $x \ge x_0$ i $g(x) \le 0$ dla $x = x_0$. Z twierdzenia o związku znaku pochodnej z
+    monotonicznością mamy, że $g(x)$ jest niemalejąca na odcinku $(x_0, b)$ i nierosnąca na odcinku
+    $(a, x_0)$. 
+\end{proof}
+
+\end{document}
